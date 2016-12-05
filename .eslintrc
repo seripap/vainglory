@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb",
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "forOf": true,
+    "classes": true
+  },
+  "env": {
+    "amd": false,
+    "node": true,
+    "browser": false
+  },
+  "rules": {
+    "max-len": [0]
+  }
+}

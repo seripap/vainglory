@@ -1,0 +1,50 @@
+{
+  "name": "vainglory",
+  "version": "0.0.1",
+  "description": "Vainglory API client",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint index.js src/**",
+    "test:dev": "jest --watch",
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seripap/vainglory.git"
+  },
+  "keywords": [
+    "vainglory",
+    "client",
+    "api",
+    "game"
+  ],
+  "author": "Daniel Seripap",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seripap/vainglory/issues"
+  },
+  "homepage": "https://github.com/seripap/vainglory#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.16.0",
+    "lodash": "^4.17.2",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-jest": "^17.0.2",
+    "babel-loader": "^6.2.8",
+    "babel-plugin-transform-object-rest-spread": "^6.19.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-latest": "^6.16.0",
+    "eslint": "^3.11.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0",
+    "jest": "^17.0.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}

@@ -1,0 +1,87 @@
+# Work In Progress
+
+This client is very alpha, consider it not stable and do not use it- yet. The endpoints may change without notices and methods may be renamed. This is a **very** premature project.
+
+# Vainglory.js - A Javascript API Client
+
+[![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.com/seripap/vainglory)
+
+This is a premature API client for [Vainglory](http://vainglorygame.com).
+
+## Installation
+
+```
+$ yarn add vainglory
+# or npm install vainglory
+```
+
+To initalize the library
+
+```javascript
+import Vainglory from 'vainglory';
+
+const vainglory = new Vainglory('api-key');
+```
+
+## Tests
+
+```
+$ yarn test
+```
+
+## Reference
+Official [API Reference](http://developer.vainglorygame.com/api). The methods are named with references from the API documentation. Any methods with arguments will return a `Promise`.
+
+```
+    vainglory...then(results => results).catch(err => err);
+```
+
+## Matches
+
+`vainglory.matches` 
+
+#### searchPlayers(players, startTime, endTime) (INACTIVE)
+
+Searches for players in matches
+
+__Arguments__
+* `players` - Array of strings `Array`
+* `startTime` - Start time to query `Integer` 
+* `endTime` - End time to query `Integer` 
+
+__Example__
+```javascript
+const players = ['famous', 'dan', 'vaingloryPerson'];
+vainglory.matches.searchPlayers(players).then((results) => {
+    // do something with results
+})
+```
+
+#### searchUuid(uuid, startTime, endTime, shouldResolve)
+
+Searches for match on UUID, if shouldResolve is `true`, aggregated data of the inner results will be returned.
+
+__Arguments__
+* `uuid` - UUID of match to search `String`
+* `startTime` - Start time to query `Integer` 
+* `endTime` - End time to query `Integer` 
+
+```javascript
+const uuid = '12345-123';
+vainglory.matches.searchPlayers(uuid).then((results) => {
+    // do something with results
+})
+```
+
+### Meta (INACTIVE)
+
+`vainglory.meta` 
+
+#### status()
+
+Returns a boolean of current status.
+
+__Example__
+```javascript
+    vainglory.meta.status();
+```
