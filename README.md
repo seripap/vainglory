@@ -4,7 +4,7 @@ This client is very alpha, consider it not stable and do not use it- yet. The en
 
 # Vainglory.js - A Javascript API Client
 
-[![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.com/seripap/vainglory)
+[![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.org/seripap/vainglory)
 
 This is a premature API client for [Vainglory](http://vainglorygame.com).
 

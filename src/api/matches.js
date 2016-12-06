@@ -6,7 +6,6 @@ import isBoolean from 'lodash/isBoolean';
 const ENDPOINT_PREFIX = 'matches';
 
 export default (http) => {
-
   // Find a match by which players played
   function searchPlayers(players, options = {
     gameType: 'string',

@@ -1,10 +1,10 @@
 {
   "name": "vainglory",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Vainglory API client",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js src/**",
+    "lint": "./node_modules/.bin/eslint index.js src/**",
     "test:dev": "jest --watch",
     "test": "jest --coverage"
   },
