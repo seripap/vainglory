@@ -1,12 +1,13 @@
 {
   "name": "vainglory",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Vainglory API client",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint index.js src/**",
     "test:dev": "jest --watch",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "prepublish": "babel index.js src --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "request-promise": "^4.1.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-jest": "^17.0.2",
     "babel-loader": "^6.2.8",
