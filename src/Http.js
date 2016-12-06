@@ -71,6 +71,8 @@ export default class Http {
 
       const queryParsed = query && JSON.parse(query);
 
+      console.log('parsed query', queryParsed);
+
       this.options.method = method;
       this.options.url += endpoint;
 
@@ -78,6 +80,8 @@ export default class Http {
         this.options.body = queryParsed;
         this.options.json = true;
       }
+
+      console.log(this.options);
 
       request(this.options).then((body) => {
         const parsedBody = parseBody(body, options);

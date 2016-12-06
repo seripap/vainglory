@@ -40,21 +40,36 @@ Official [API Reference](http://developer.vainglorygame.com/api). The methods ar
 
 `vainglory.matches` 
 
-#### searchPlayers(players, startTime, endTime) (INACTIVE)
+#### searchPlayers(players, {...options}) (INACTIVE)
 
 Searches for players in matches
 
 __Arguments__
 * `players` - Array of strings `Array`
-* `startTime` - Start time to query `Integer` 
-* `endTime` - End time to query `Integer` 
+* `options` - Options Object `Object` 
+
+__Options__
+* `gameType` - Defaults 'string' `String`
+* `actor` - Defaults 'string' `String`
+* `startTime` - Defaults '0' `Integer`
+* `endTime` - Defaults '0' `Integer`
 
 __Example__
 ```javascript
 const players = ['famous', 'dan', 'vaingloryPerson'];
-vainglory.matches.searchPlayers(players).then((results) => {
-    // do something with results
-})
+vainglory.matches.searchPlayers(players).then((matches) => {
+    // do something with matches
+});
+
+const options = {
+    gameType: 'string',
+    actor: 'string',
+    startTime: 0,
+    endTime: 0,
+};
+vainglory.matches.searchPlayers(players, options).then((matches) => {
+    // do something with matches
+});
 ```
 
 #### searchUuid(uuid, startTime, endTime, shouldResolve)
