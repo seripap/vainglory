@@ -1,13 +1,13 @@
 {
   "name": "vainglory",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Vainglory API client",
-  "main": "dist/index.js",
+  "main": "dist/Vainglory.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint index.js src/**",
     "test:dev": "jest --watch",
     "test": "jest --coverage",
-    "prepublish": "babel index.js src --out-dir dist"
+    "prepublish": "babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
