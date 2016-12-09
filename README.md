@@ -30,7 +30,7 @@ $ yarn test
 ```
 
 ## Reference
-Official [API Reference](http://developer.vainglorygame.com/api). The methods are named with references from the API documentation. Any methods with arguments will return a `Promise`.
+Official [API Reference](http://developer.vainglorygame.com/api). The methods are named with references from the API documentation. All methods will return a promise.
 
 ```
     vainglory...then(results => results).catch(err => err);
@@ -40,7 +40,7 @@ Official [API Reference](http://developer.vainglorygame.com/api). The methods ar
 
 `vainglory.matches` 
 
-#### searchPlayers(players, {...options}) (INACTIVE)
+#### searchPlayers(players, {...options})
 
 Searches for players in matches
 
@@ -74,12 +74,13 @@ vainglory.matches.searchPlayers(players, options).then((matches) => {
 
 #### searchUuid(uuid, startTime, endTime, shouldResolve)
 
-Searches for match on UUID, if shouldResolve is `true`, aggregated data of the inner results will be returned.
+Searches for match on UUID. If shouldResolve is `true`, aggregated data of the inner results will be returned.
 
 __Arguments__
 * `uuid` - UUID of match to search `String`
 * `startTime` - Start time to query `Integer` 
 * `endTime` - End time to query `Integer` 
+* `shouldResolve` - Resolving inner URLs (defaults true)
 
 ```javascript
 const uuid = '12345-123';

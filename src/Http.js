@@ -80,6 +80,7 @@ export default class Http {
       }
 
       request(this.options).then((body) => {
+        console.log(body);
         const parsedBody = parseBody(body, options);
         if (parsedBody.error) {
           return reject(new Error(parsedBody));

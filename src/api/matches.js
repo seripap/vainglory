@@ -3,7 +3,7 @@ import isString from 'lodash/isString';
 import isInteger from 'lodash/isInteger';
 import isBoolean from 'lodash/isBoolean';
 
-const ENDPOINT_PREFIX = 'matches';
+const ENDPOINT_PREFIX = 'Matches';
 
 export default (http) => {
   // Find a match by which players played
@@ -67,14 +67,12 @@ export default (http) => {
         throw reject(new Error('Expecting boolean for transverse'));
       }
 
-      const endpoint = `${ENDPOINT_PREFIX}/search-uuid`;
+      const endpoint = `${ENDPOINT_PREFIX}/SearchUUID`;
       const query = `{
-        "Criteria": {
           "UUID": "${uuid.trim()}",
           "StartTime": ${options.startTime},
           "EndTime": ${options.endTime}
-        }
-      }`;
+        }`;
 
       // If transverse is provided, the client will resolve inner level urls
       const httpOptions = {
