@@ -23,6 +23,12 @@ import Vainglory from 'vainglory';
 const vainglory = new Vainglory('api-key');
 ```
 
+## Examples
+
+```
+$ yarn run example
+```
+
 ## Tests
 
 ```
