@@ -27,6 +27,7 @@
   "homepage": "https://github.com/seripap/vainglory#readme",
   "dependencies": {
     "babel-polyfill": "^6.16.0",
+    "eslint-config-airbnb": "^14.0.0",
     "lodash": "^4.17.2",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"

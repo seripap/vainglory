@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var HOST = 'https://api.madglory.com';
+var HOST = 'https://api.dc01.gamelockerapp.com/shards/na/';
 
 var Http = function () {
   function Http(apiKey) {
@@ -27,12 +27,12 @@ var Http = function () {
     _classCallCheck(this, Http);
 
     this.options = {
-      url: HOST + '/' + version + '/',
+      url: HOST,
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'x-api-key': apiKey
-      }
+        Accept: 'application/vnd.api+json',
+        Authorization: 'Bearer ' + apiKey,
+        'X-TITLE-ID': 'semc-vainglory' }
     };
   }
 
@@ -47,46 +47,23 @@ var Http = function () {
       var query = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
-      function transverse(response, on) {
-        return new Promise(function (resolve) {
-          if (on in response) {
-            if ((0, _isArray2.default)(response[on])) {
-              var responseRequests = response[on].map(function (uri) {
-                return (0, _requestPromise2.default)(uri);
-              });
-              resolve(Promise.all(responseRequests));
-            }
-          }
-        });
-      }
+      function parseBody(body) {
+        var parseOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-      function parseBody(body, parseOptions) {
         if (parseOptions.override) {
           return body;
         }
 
         try {
-          if ('message' in body) {
+          var parsed = JSON.parse(body);
+          if ('errors' in parsed) {
             return {
               error: true,
-              message: body.message
+              message: parsed.errors
             };
           }
 
-          if ('error' in body && body.error) {
-            var message = 'Unknown Error';
-
-            if ('meta' in body) {
-              message = body.meta;
-            }
-
-            return {
-              error: true,
-              message: message
-            };
-          }
-
-          return body;
+          return parsed;
         } catch (e) {
           return {
             error: true,
@@ -100,30 +77,21 @@ var Http = function () {
           throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
         }
 
-        var queryParsed = query && JSON.parse(query);
+        // TODO: Filter query params
+        // const queryParsed = query && JSON.parse(query);
 
         _this.options.method = method;
         _this.options.url += endpoint;
 
-        if (queryParsed) {
-          _this.options.body = queryParsed;
-          _this.options.json = true;
-        }
+        // if (queryParsed) {
+        //   this.options.body = queryParsed;
+        //   this.options.json = true;
+        // }
 
         (0, _requestPromise2.default)(_this.options).then(function (body) {
-          console.log(body);
           var parsedBody = parseBody(body, options);
-          if (parsedBody.error) {
+          if ('error' in parsedBody && parsedBody.error) {
             return reject(new Error(parsedBody));
-          }
-
-          if (options.transverse) {
-            return transverse(parsedBody.response, options.transverseOn).then(function (transversedData) {
-              return resolve(transversedData);
-            }).catch(function (err) {
-              // Error
-              throw err;
-            });
           }
 
           return resolve(parsedBody);
