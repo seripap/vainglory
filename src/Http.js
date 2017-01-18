@@ -3,59 +3,37 @@
 import request from 'request-promise';
 import isArray from 'lodash/isArray';
 
-const HOST = 'https://api.madglory.com';
+const HOST = 'https://api.dc01.gamelockerapp.com/shards/na/';
 
 export default class Http {
   constructor(apiKey, version = 'v1') {
     this.options = {
-      url: `${HOST}/${version}/`,
+      url: HOST,
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'x-api-key': apiKey,
+        Accept: 'application/vnd.api+json',
+        Authorization: `Bearer ${apiKey}`,
+        'X-TITLE-ID': 'semc-vainglory', // TODO: Make manageable
       },
     };
   }
 
   execute(method = 'GET', endpoint = null, query = null, options = {}) {
-    function transverse(response, on) {
-      return new Promise((resolve) => {
-        if (on in response) {
-          if (isArray(response[on])) {
-            const responseRequests = response[on].map(uri => request(uri));
-            resolve(Promise.all(responseRequests));
-          }
-        }
-      });
-    }
-
-    function parseBody(body, parseOptions) {
+    function parseBody(body, parseOptions = {}) {
       if (parseOptions.override) {
         return body;
       }
 
       try {
-        if ('message' in body) {
+        const parsed = JSON.parse(body);
+        if ('errors' in parsed) {
           return {
             error: true,
-            message: body.message,
+            message: parsed.errors,
           };
         }
 
-        if ('error' in body && body.error) {
-          let message = 'Unknown Error';
-
-          if ('meta' in body) {
-            message = body.meta;
-          }
-
-          return {
-            error: true,
-            message,
-          };
-        }
-
-        return body;
+        return parsed;
       } catch (e) {
         return {
           error: true,
@@ -69,28 +47,21 @@ export default class Http {
         throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
       }
 
-      const queryParsed = query && JSON.parse(query);
+      // TODO: Filter query params
+      // const queryParsed = query && JSON.parse(query);
 
       this.options.method = method;
       this.options.url += endpoint;
 
-      if (queryParsed) {
-        this.options.body = queryParsed;
-        this.options.json = true;
-      }
+      // if (queryParsed) {
+      //   this.options.body = queryParsed;
+      //   this.options.json = true;
+      // }
 
       request(this.options).then((body) => {
-        console.log(body);
         const parsedBody = parseBody(body, options);
-        if (parsedBody.error) {
+        if ('error' in parsedBody && parsedBody.error) {
           return reject(new Error(parsedBody));
-        }
-
-        if (options.transverse) {
-          return transverse(parsedBody.response, options.transverseOn).then(transversedData => resolve(transversedData)).catch((err) => {
-            // Error
-            throw err;
-          });
         }
 
         return resolve(parsedBody);

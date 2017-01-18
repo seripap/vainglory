@@ -30,7 +30,7 @@ $ yarn test
 ```
 
 ## Reference
-Official [API Reference](http://developer.vainglorygame.com/api). The methods are named with references from the API documentation. All methods will return a promise.
+Official [API Reference](http://developer.vainglorygame.com/docs). The methods are named with references from the API documentation. All methods will return a promise.
 
 ```
     vainglory...then(results => results).catch(err => err);
@@ -40,24 +40,27 @@ Official [API Reference](http://developer.vainglorygame.com/api). The methods ar
 
 `vainglory.matches` 
 
-#### searchPlayers(players, {...options})
+#### collection({...options})
 
-Searches for players in matches
-
-__Arguments__
-* `players` - Array of strings `Array`
-* `options` - Options Object `Object` 
-
-__Options__
-* `gameType` - Defaults 'string' `String`
-* `actor` - Defaults 'string' `String`
-* `startTime` - Defaults '0' `Integer`
-* `endTime` - Defaults '0' `Integer`
+Retrieves all matches. [Query Paramters](http://developer.vainglorygame.com/docs/#get-a-collection-of-matches)
 
 __Example__
 ```javascript
-const players = ['famous', 'dan', 'vaingloryPerson'];
-vainglory.matches.searchPlayers(players).then((matches) => {
+// defaults
+const options = {
+  page: {
+    offset: 0,
+    limit: 50,
+  },
+  sort: 'createdAt',
+  filters: {
+    started: '3hrs ago',
+    ended: 'Now',
+    playerNames: [],
+    teamNames: [],
+  }
+}
+vainglory.matches.collection(options).then((matches) => {
     // do something with matches
 });
 
@@ -70,34 +73,4 @@ const options = {
 vainglory.matches.searchPlayers(players, options).then((matches) => {
     // do something with matches
 });
-```
-
-#### searchUuid(uuid, startTime, endTime, shouldResolve)
-
-Searches for match on UUID. If shouldResolve is `true`, aggregated data of the inner results will be returned.
-
-__Arguments__
-* `uuid` - UUID of match to search `String`
-* `startTime` - Start time to query `Integer` 
-* `endTime` - End time to query `Integer` 
-* `shouldResolve` - Resolving inner URLs (defaults true)
-
-```javascript
-const uuid = '12345-123';
-vainglory.matches.searchPlayers(uuid).then((results) => {
-    // do something with results
-})
-```
-
-### Meta (INACTIVE)
-
-`vainglory.meta` 
-
-#### status()
-
-Returns a boolean of current status.
-
-__Example__
-```javascript
-    vainglory.meta.status();
 ```

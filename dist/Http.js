@@ -111,6 +111,7 @@ var Http = function () {
         }
 
         (0, _requestPromise2.default)(_this.options).then(function (body) {
+          console.log(body);
           var parsedBody = parseBody(body, options);
           if (parsedBody.error) {
             return reject(new Error(parsedBody));

@@ -22,7 +22,7 @@ var _isBoolean2 = _interopRequireDefault(_isBoolean);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ENDPOINT_PREFIX = 'matches';
+var ENDPOINT_PREFIX = 'Matches';
 
 exports.default = function (http) {
   // Find a match by which players played
@@ -88,8 +88,8 @@ exports.default = function (http) {
         throw reject(new Error('Expecting boolean for transverse'));
       }
 
-      var endpoint = ENDPOINT_PREFIX + '/search-uuid';
-      var query = '{\n        "Criteria": {\n          "UUID": "' + uuid.trim() + '",\n          "StartTime": ' + options.startTime + ',\n          "EndTime": ' + options.endTime + '\n        }\n      }';
+      var endpoint = ENDPOINT_PREFIX + '/SearchUUID';
+      var query = '{\n          "UUID": "' + uuid.trim() + '",\n          "StartTime": ' + options.startTime + ',\n          "EndTime": ' + options.endTime + '\n        }';
 
       // If transverse is provided, the client will resolve inner level urls
       var httpOptions = {
