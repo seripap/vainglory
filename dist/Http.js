@@ -18,25 +18,62 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var HOST = 'https://api.dc01.gamelockerapp.com/shards/na/';
+var defaults = {
+  host: 'https://api.dc01.gamelockerapp.com/shards/na/',
+  title: 'semc-vainglory'
+};
 
 var Http = function () {
   function Http(apiKey) {
-    var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'v1';
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaults;
 
     _classCallCheck(this, Http);
 
     this.options = {
-      url: HOST,
+      url: options.host,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/vnd.api+json',
         Authorization: 'Bearer ' + apiKey,
-        'X-TITLE-ID': 'semc-vainglory' }
+        'X-TITLE-ID': options.title
+      }
     };
   }
 
   _createClass(Http, [{
+    key: 'serialize',
+    value: function serialize(obj) {
+      var queries = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = Object.keys(obj)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var property = _step.value;
+
+          if (Object.prototype.hasOwnProperty.call(obj, property)) {
+            queries.push(encodeURIComponent(property) + '=' + encodeURIComponent(obj[property]));
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return queries.join('&');
+    }
+  }, {
     key: 'execute',
     value: function execute() {
       var method = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'GET';
@@ -77,24 +114,20 @@ var Http = function () {
           throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
         }
 
-        // TODO: Filter query params
-        // const queryParsed = query && JSON.parse(query);
-
         _this.options.method = method;
         _this.options.url += endpoint;
 
-        // if (queryParsed) {
-        //   this.options.body = queryParsed;
-        //   this.options.json = true;
-        // }
+        if (query) {
+          _this.options.url += '?' + query;
+        }
 
         (0, _requestPromise2.default)(_this.options).then(function (body) {
           var parsedBody = parseBody(body, options);
           if ('error' in parsedBody && parsedBody.error) {
             return reject(new Error(parsedBody));
           }
-
-          return resolve(parsedBody);
+          return resolve(_this.options.url);
+          // return resolve(parsedBody);
         });
       });
     }

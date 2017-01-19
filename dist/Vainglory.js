@@ -24,7 +24,6 @@ var Vainglory = function Vainglory() {
   }
 
   var api = new _api2.default(new _Http2.default(apiKey));
-
   // Exposed methods
   this.meta = api.meta;
   this.matches = api.matches;

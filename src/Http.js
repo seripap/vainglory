@@ -2,6 +2,7 @@
 
 import request from 'request-promise';
 import isArray from 'lodash/isArray';
+import isObject from 'lodash/isObject';
 
 const defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/na/',
@@ -11,14 +12,32 @@ const defaults = {
 export default class Http {
   constructor(apiKey, options = defaults) {
     this.options = {
-      url: HOST,
+      url: options.host,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/vnd.api+json',
         Authorization: `Bearer ${apiKey}`,
-        'X-TITLE-ID': title,
+        'X-TITLE-ID': options.title,
       },
     };
+  }
+
+  serialize(obj) {
+    const queries = [];
+    const loop = (obj) => {    
+      for (const property of Object.keys(obj)) {
+        if (Object.prototype.hasOwnProperty.call(obj, property)) {
+          if (isObject(obj[property])) {
+            loop(obj[property]);
+          } else {
+            queries.push(`${encodeURIComponent(property)}=${encodeURIComponent(obj[property])}`);
+          }
+        }
+      }
+    };
+   
+    loop(obj);
+    return queries.join('&');
   }
 
   execute(method = 'GET', endpoint = null, query = null, options = {}) {
@@ -50,24 +69,20 @@ export default class Http {
         throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
       }
 
-      // TODO: Filter query params
-      // const queryParsed = query && JSON.parse(query);
-
       this.options.method = method;
       this.options.url += endpoint;
 
-      // if (queryParsed) {
-      //   this.options.body = queryParsed;
-      //   this.options.json = true;
-      // }
+      if (query) {
+        this.options.url += `?${query}`;
+      }
 
       request(this.options).then((body) => {
         const parsedBody = parseBody(body, options);
         if ('error' in parsedBody && parsedBody.error) {
           return reject(new Error(parsedBody));
         }
-
-        return resolve(parsedBody);
+        return resolve(this.options.url);
+        // return resolve(parsedBody);
       });
     });
   }
