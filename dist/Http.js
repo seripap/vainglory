@@ -133,9 +133,6 @@ var Http = function () {
           requestOptions.url += '?' + query;
         }
 
-        console.log(requestOptions.url);
-        return false;
-
         (0, _requestPromise2.default)(requestOptions).then(function (body) {
           var parsedBody = parseBody(body, options);
           if ('error' in parsedBody && parsedBody.error) {
