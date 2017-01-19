@@ -3,17 +3,20 @@
 import request from 'request-promise';
 import isArray from 'lodash/isArray';
 
-const HOST = 'https://api.dc01.gamelockerapp.com/shards/na/';
+const defaults = {
+  host: 'https://api.dc01.gamelockerapp.com/shards/na/',
+  title: 'semc-vainglory',
+};
 
 export default class Http {
-  constructor(apiKey, version = 'v1') {
+  constructor(apiKey, options = defaults) {
     this.options = {
       url: HOST,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/vnd.api+json',
         Authorization: `Bearer ${apiKey}`,
-        'X-TITLE-ID': 'semc-vainglory', // TODO: Make manageable
+        'X-TITLE-ID': title,
       },
     };
   }

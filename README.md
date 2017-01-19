@@ -6,7 +6,7 @@ This client is very alpha, consider it not stable and do not use it- yet. The en
 
 [![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.org/seripap/vainglory)
 
-This is a premature API client for [Vainglory](http://vainglorygame.com).
+This is an API client for [Vainglory](http://vainglorygame.com).
 
 ## Installation
 
@@ -21,6 +21,20 @@ To initalize the library
 import Vainglory from 'vainglory';
 
 const vainglory = new Vainglory('api-key');
+```
+
+To modify HTTP options, provide an options object
+
+```javascript
+import Vainglory from 'vainglory';
+
+/* defaults */
+const options = {
+  host: 'https://api.dc01.gamelockerapp.com/shards/na/',
+  title: 'semc-vainglory',
+};
+
+const vainglory = new Vainglory('api-key', options);
 ```
 
 ## Examples
@@ -52,7 +66,7 @@ Retrieves all matches. [Query Paramters](http://developer.vainglorygame.com/docs
 
 __Example__
 ```javascript
-// defaults
+/* defaults */
 const options = {
   page: {
     offset: 0,
@@ -68,15 +82,7 @@ const options = {
 }
 vainglory.matches.collection(options).then((matches) => {
     // do something with matches
-});
-
-const options = {
-    gameType: 'string',
-    actor: 'string',
-    startTime: 0,
-    endTime: 0,
-};
-vainglory.matches.searchPlayers(players, options).then((matches) => {
-    // do something with matches
+}).catch((errorMsg) => {
+  console.error(errorMsg);
 });
 ```

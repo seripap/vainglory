@@ -1,7 +1,7 @@
 require('babel-polyfill');
 
 import Api from './api';
-import HTTP from './Http';
+import Http from './Http';
 
 class Vainglory {
   constructor(apiKey = null) {
@@ -9,8 +9,7 @@ class Vainglory {
       throw new Error('Missing API Key.');
     }
 
-    const api = new Api(new HTTP(apiKey));
-    
+    const api = new Api(new Http(apiKey));
     // Exposed methods
     this.meta = api.meta;
     this.matches = api.matches;
