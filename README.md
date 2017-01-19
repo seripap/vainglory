@@ -62,7 +62,7 @@ Official [API Reference](http://developer.vainglorygame.com/docs). The methods a
 
 #### collection({...options})
 
-Retrieves all matches. [Query Paramters](http://developer.vainglorygame.com/docs/#get-a-collection-of-matches)
+Retrieves all matches. [Reference](http://developer.vainglorygame.com/docs/#get-a-collection-of-matches)
 
 __Example__
 ```javascript
@@ -81,6 +81,24 @@ const options = {
   }
 }
 vainglory.matches.collection(options).then((matches) => {
+    // do something with matches
+}).catch((errorMsg) => {
+  console.error(errorMsg);
+});
+```
+
+### single(matchId)
+
+Retreives a single match by ID. [Reference]http://developer.vainglorygame.com/docs/#get-a-single-match)
+
+__Paramters__
+- **matchId** [*String*] - The ID of match to retrieve
+
+__Example__
+```javascript
+const matchId = '0123b560-d74c-11e6-b845-0671096b3e30';
+
+vainglory.matches.single(matchId).then((matches) => {
     // do something with matches
 }).catch((errorMsg) => {
   console.error(errorMsg);

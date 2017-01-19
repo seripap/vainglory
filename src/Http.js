@@ -65,24 +65,25 @@ export default class Http {
     }
 
     return new Promise((resolve, reject) => {
+      const requestOptions = Object.assign(options, this.options);
       if (endpoint === null) {
         throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
       }
 
-      this.options.method = method;
-      this.options.url += endpoint;
+      requestOptions.method = method;
+      requestOptions.url += endpoint;
 
       if (query) {
-        this.options.url += `?${query}`;
+        requestOptions.url += `?${query}`;
       }
 
-      request(this.options).then((body) => {
+      request(requestOptions).then((body) => {
         const parsedBody = parseBody(body, options);
         if ('error' in parsedBody && parsedBody.error) {
           return reject(new Error(parsedBody));
         }
-        return resolve(this.options.url);
-        // return resolve(parsedBody);
+
+        return resolve(parsedBody);
       });
     });
   }

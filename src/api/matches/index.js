@@ -1,8 +1,23 @@
-// TODO: Filter Query Params
+import isString from 'lodash/isString';
 
 const ENDPOINT_PREFIX = 'matches';
 
 export default (http) => {
+  function single(matchId) {
+    return new Promise((resolve, reject) => {
+      if (!matchId) {
+        return reject(new Error('Expected required matchId. Usage: .single(matchId)'));
+      }
+
+      if (!isString(matchId)) {
+        return reject(new Error('Expected a string for matchId'));
+      }
+
+      const endpoint = `${ENDPOINT_PREFIX}/${matchId}`;
+      return http.execute('GET', endpoint).then(body => resolve(body)).catch(err => new Error(err));
+    });
+  }
+
   function collection(query = {}, options = {}) {
     return new Promise((resolve, reject) => {
       const defaults = {
@@ -27,6 +42,7 @@ export default (http) => {
   }
 
   return {
+    single,
     collection,
   };
 };

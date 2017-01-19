@@ -14,6 +14,10 @@ var _isArray = require('lodash/isArray');
 
 var _isArray2 = _interopRequireDefault(_isArray);
 
+var _isObject = require('lodash/isObject');
+
+var _isObject2 = _interopRequireDefault(_isObject);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44,33 +48,40 @@ var Http = function () {
     key: 'serialize',
     value: function serialize(obj) {
       var queries = [];
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+      var loop = function loop(obj) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-      try {
-        for (var _iterator = Object.keys(obj)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var property = _step.value;
-
-          if (Object.prototype.hasOwnProperty.call(obj, property)) {
-            queries.push(encodeURIComponent(property) + '=' + encodeURIComponent(obj[property]));
-          }
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
+          for (var _iterator = Object.keys(obj)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var property = _step.value;
+
+            if (Object.prototype.hasOwnProperty.call(obj, property)) {
+              if ((0, _isObject2.default)(obj[property])) {
+                loop(obj[property]);
+              } else {
+                queries.push(encodeURIComponent(property) + '=' + encodeURIComponent(obj[property]));
+              }
+            }
           }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
         } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
           }
         }
-      }
+      };
 
+      loop(obj);
       return queries.join('&');
     }
   }, {
@@ -110,24 +121,28 @@ var Http = function () {
       }
 
       return new Promise(function (resolve, reject) {
+        var requestOptions = Object.assign(options, _this.options);
         if (endpoint === null) {
           throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
         }
 
-        _this.options.method = method;
-        _this.options.url += endpoint;
+        requestOptions.method = method;
+        requestOptions.url += endpoint;
 
         if (query) {
-          _this.options.url += '?' + query;
+          requestOptions.url += '?' + query;
         }
 
-        (0, _requestPromise2.default)(_this.options).then(function (body) {
+        console.log(requestOptions.url);
+        return false;
+
+        (0, _requestPromise2.default)(requestOptions).then(function (body) {
           var parsedBody = parseBody(body, options);
           if ('error' in parsedBody && parsedBody.error) {
             return reject(new Error(parsedBody));
           }
-          return resolve(_this.options.url);
-          // return resolve(parsedBody);
+
+          return resolve(parsedBody);
         });
       });
     }
