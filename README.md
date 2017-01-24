@@ -72,9 +72,8 @@ Official [API Reference](http://developer.vainglorygame.com/docs). The methods a
 
 <a name="matchesCollection" />
 #### collection({...options})
-##### [Reference](http://developer.vainglorygame.com/docs/#get-a-collection-of-matches)
 
-Retrieves all matches.
+Retrieves all matches. [Reference](http://developer.vainglorygame.com/docs/#get-a-collection-of-matches)
 
 __Arguments__
 - `options` [*Object*] - Query paramaters
@@ -104,9 +103,8 @@ vainglory.matches.collection(options).then((matches) => {
 
 <a name="matchesSingle" />
 #### single(matchId)
-##### [Reference](http://developer.vainglorygame.com/docs/#get-a-single-match).
 
-Retreives a single match by ID.
+Retreives a single match by ID. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-match)
 
 __Arguments__
 - `matchId` [*String*] - The ID of match to retrieve
@@ -130,9 +128,8 @@ vainglory.matches.single(matchId).then((matches) => {
 
 <a name="playersSingle" />
 #### single(playerId)
-##### [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
 
-Retreives a player by playerId.
+Retreives a player by playerId. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
 
 __Arguments__
 - `playerId` [*String*] - The ID of player to retrieve
