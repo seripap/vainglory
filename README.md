@@ -1,12 +1,8 @@
-# Work In Progress
-
-This client is very alpha, consider it not stable and do not use it- yet. The endpoints may change without notices and methods may be renamed. This is a **very** premature project.
-
-# Vainglory.js - A Javascript API Client
+# Vainglory.js - A Javascript API Client for Vainglory
 
 [![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.org/seripap/vainglory)
 
-This is an API client for [Vainglory](http://vainglorygame.com).
+This is a Javascript API client for [Vainglory](http://vainglorygame.com), intended for server requests but works on the client as well.
 
 ## Installation
 
@@ -53,7 +49,7 @@ $ yarn test
 
 ### Reference
 
-Official [API Reference](http://developer.vainglorygame.com/docs). The methods are named with references from the API documentation. All methods will return a promise.
+All methods are named references from the [Official API Reference](http://developer.vainglorygame.com/docs). All methods will return a promise.
 
 ### Matches
 
