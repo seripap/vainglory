@@ -87,11 +87,11 @@ vainglory.matches.collection(options).then((matches) => {
 });
 ```
 
-### single(matchId)
+#### single(matchId)
 
-Retreives a single match by ID. [Reference]http://developer.vainglorygame.com/docs/#get-a-single-match)
+Retreives a single match by ID. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-match)
 
-__Paramters__
+__Parameters__
 - **matchId** [*String*] - The ID of match to retrieve
 
 __Example__
@@ -100,6 +100,27 @@ const matchId = '0123b560-d74c-11e6-b845-0671096b3e30';
 
 vainglory.matches.single(matchId).then((matches) => {
     // do something with matches
+}).catch((errorMsg) => {
+  console.error(errorMsg);
+});
+```
+
+## Players
+
+`vainglory.players` 
+#### single(playerId)
+
+Retreives a player by playerId. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
+
+__Parameters__
+- **playerId** [*String*] - The ID of player to retrieve
+
+__Example__
+```javascript
+const playerId = '6abb30de-7cb8-11e4-8bd3-06eb725f8a76';
+
+vainglory.players.single(playerId).then((player) => {
+    // do something with player
 }).catch((errorMsg) => {
   console.error(errorMsg);
 });

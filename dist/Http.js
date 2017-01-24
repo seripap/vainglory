@@ -95,32 +95,31 @@ var Http = function () {
       var query = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
-      function parseBody(body) {
-        var parseOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return new Promise(function (resolve, reject) {
+        var parseBody = function parseBody(body) {
+          var parseOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-        if (parseOptions.override) {
-          return body;
-        }
-
-        try {
-          var parsed = JSON.parse(body);
-          if ('errors' in parsed) {
-            return {
-              error: true,
-              message: parsed.errors
-            };
+          if (parseOptions.override) {
+            return body;
           }
 
-          return parsed;
-        } catch (e) {
-          return {
-            error: true,
-            message: e
-          };
-        }
-      }
+          try {
+            var parsed = JSON.parse(body);
+            if ('errors' in parsed) {
+              return {
+                error: true,
+                message: parsed.errors
+              };
+            }
 
-      return new Promise(function (resolve, reject) {
+            return parsed;
+          } catch (e) {
+            return {
+              error: true,
+              message: e
+            };
+          }
+        };
         var requestOptions = Object.assign(options, _this.options);
         if (endpoint === null) {
           throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
@@ -132,6 +131,8 @@ var Http = function () {
         if (query) {
           requestOptions.url += '?' + query;
         }
+
+        console.log(requestOptions.url);
 
         (0, _requestPromise2.default)(requestOptions).then(function (body) {
           var parsedBody = parseBody(body, options);

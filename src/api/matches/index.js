@@ -14,7 +14,7 @@ export default (http) => {
       }
 
       const endpoint = `${ENDPOINT_PREFIX}/${matchId}`;
-      return http.execute('GET', endpoint).then(body => resolve(body)).catch(err => new Error(err));
+      return http.execute('GET', endpoint).then(body => resolve(body)).catch(err => reject(new Error(err)));
     });
   }
 
@@ -37,7 +37,7 @@ export default (http) => {
       const query = http.serialize(Object.assign(options, defaults));
       const endpoint = `${ENDPOINT_PREFIX}`;
 
-      return http.execute('GET', endpoint, query).then(body => resolve(body)).catch(err => new Error(err));
+      return http.execute('GET', endpoint, query).then(body => resolve(body)).catch(err => reject(new Error(err)));
     });
   }
 

@@ -27,6 +27,7 @@ var Vainglory = function Vainglory() {
   // Exposed methods
   this.meta = api.meta;
   this.matches = api.matches;
+  this.players = api.players;
 };
 
 module.exports = Vainglory;

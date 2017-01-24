@@ -41,30 +41,29 @@ export default class Http {
   }
 
   execute(method = 'GET', endpoint = null, query = null, options = {}) {
-    function parseBody(body, parseOptions = {}) {
-      if (parseOptions.override) {
-        return body;
-      }
-
-      try {
-        const parsed = JSON.parse(body);
-        if ('errors' in parsed) {
-          return {
-            error: true,
-            message: parsed.errors,
-          };
+    return new Promise((resolve, reject) => {
+      const parseBody = (body, parseOptions = {}) => {
+        if (parseOptions.override) {
+          return body;
         }
 
-        return parsed;
-      } catch (e) {
-        return {
-          error: true,
-          message: e,
-        };
-      }
-    }
+        try {
+          const parsed = JSON.parse(body);
+          if ('errors' in parsed) {
+            return {
+              error: true,
+              message: parsed.errors,
+            };
+          }
 
-    return new Promise((resolve, reject) => {
+          return parsed;
+        } catch (e) {
+          return {
+            error: true,
+            message: e,
+          };
+        }
+      }
       const requestOptions = Object.assign(options, this.options);
       if (endpoint === null) {
         throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
@@ -76,6 +75,8 @@ export default class Http {
       if (query) {
         requestOptions.url += `?${query}`;
       }
+
+      console.log(requestOptions.url);
 
       request(requestOptions).then((body) => {
         const parsedBody = parseBody(body, options);

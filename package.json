@@ -8,7 +8,7 @@
     "test:dev": "jest --watch",
     "test": "jest --coverage",
     "example": "babel-node example/index.js",
-    "prepublish": "babel src --out-dir dist"
+    "prepublish": "babel src --ignore __mocks__ --out-dir dist"
   },
   "repository": {
     "type": "git",

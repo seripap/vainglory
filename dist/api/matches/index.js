@@ -27,7 +27,7 @@ exports.default = function (http) {
       return http.execute('GET', endpoint).then(function (body) {
         return resolve(body);
       }).catch(function (err) {
-        return new Error(err);
+        return reject(new Error(err));
       });
     });
   }
@@ -57,7 +57,7 @@ exports.default = function (http) {
       return http.execute('GET', endpoint, query).then(function (body) {
         return resolve(body);
       }).catch(function (err) {
-        return new Error(err);
+        return reject(new Error(err));
       });
     });
   }

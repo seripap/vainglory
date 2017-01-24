@@ -1,7 +1,9 @@
 
 // Mock data
-import singleMock from './single.json';
-import matchesMock from './matches.json';
+import matchSingleMock from './matchSingle.json';
+import matchCollectionMock from './matchCollection.json';
+
+import playerSingleMock from './playerSingle.json';
 
 import request from 'request-promise';
 import isArray from 'lodash/isArray';
@@ -81,11 +83,16 @@ export default class Http {
       }
 
       if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/matches?offset=0&limit=50&sort=createdAt&started=3hrs%20ago&ended=Now') {
-        return resolve(matchesMock);
+        return resolve(matchCollectionMock);
       }
 
       if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/matches/0123b560-d74c-11e6-b845-0671096b3e30') {
-        return resolve(singleMock);
+        return resolve(matchSingleMock);
+      }
+
+
+      if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/players/6abb30de-7cb8-11e4-8bd3-06eb725f8a76') {
+        return resolve(playerSingleMock);
       }
 
       if (method && endpoint) {

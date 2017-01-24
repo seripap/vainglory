@@ -13,6 +13,7 @@ class Vainglory {
     // Exposed methods
     this.meta = api.meta;
     this.matches = api.matches;
+    this.players = api.players;
   }
 
 }
