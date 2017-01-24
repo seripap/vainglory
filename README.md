@@ -49,20 +49,35 @@ $ yarn run example
 $ yarn test
 ```
 
-## Reference
+## Documentation
+
+### Reference
+
 Official [API Reference](http://developer.vainglorygame.com/docs). The methods are named with references from the API documentation. All methods will return a promise.
 
-```
-    vainglory...then(results => results).catch(err => err);
-```
+### Matches
+
+* [`collection`](#matchesCollection)
+* [`single`](#matchesSingle)
+
+### Players
+
+* [`single`](#playersSingle)
+
+---------------------------------------
 
 ## Matches
 
 `vainglory.matches` 
 
+<a name="matchesCollection" />
 #### collection({...options})
+##### [Reference](http://developer.vainglorygame.com/docs/#get-a-collection-of-matches)
 
-Retrieves all matches. [Reference](http://developer.vainglorygame.com/docs/#get-a-collection-of-matches)
+Retrieves all matches.
+
+__Arguments__
+- `options` [*Object*] - Query paramaters
 
 __Example__
 ```javascript
@@ -87,12 +102,14 @@ vainglory.matches.collection(options).then((matches) => {
 });
 ```
 
+<a name="matchesSingle" />
 #### single(matchId)
+##### [Reference](http://developer.vainglorygame.com/docs/#get-a-single-match).
 
-Retreives a single match by ID. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-match)
+Retreives a single match by ID.
 
-__Parameters__
-- **matchId** [*String*] - The ID of match to retrieve
+__Arguments__
+- `matchId` [*String*] - The ID of match to retrieve
 
 __Example__
 ```javascript
@@ -105,15 +122,20 @@ vainglory.matches.single(matchId).then((matches) => {
 });
 ```
 
+---------------------------------------
+
 ## Players
 
 `vainglory.players` 
+
+<a name="playersSingle" />
 #### single(playerId)
+##### [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
 
-Retreives a player by playerId. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
+Retreives a player by playerId.
 
-__Parameters__
-- **playerId** [*String*] - The ID of player to retrieve
+__Arguments__
+- `playerId` [*String*] - The ID of player to retrieve
 
 __Example__
 ```javascript

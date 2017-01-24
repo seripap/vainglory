@@ -96,6 +96,7 @@ var Http = function () {
       var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
       return new Promise(function (resolve, reject) {
+        var requestOptions = Object.assign(options, _this.options);
         var parseBody = function parseBody(body) {
           var parseOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -120,7 +121,7 @@ var Http = function () {
             };
           }
         };
-        var requestOptions = Object.assign(options, _this.options);
+
         if (endpoint === null) {
           throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
         }
@@ -131,8 +132,6 @@ var Http = function () {
         if (query) {
           requestOptions.url += '?' + query;
         }
-
-        console.log(requestOptions.url);
 
         (0, _requestPromise2.default)(requestOptions).then(function (body) {
           var parsedBody = parseBody(body, options);
