@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.org/seripap/vainglory)
 
-This is a Javascript API client for [Vainglory](http://vainglorygame.com), intended for server requests but works on the client as well.
+This is a Javascript API client for [Vainglory](http://vainglorygame.com).
 
 ## Installation
 
@@ -61,7 +61,15 @@ All methods are named references from the [Official API Reference](http://develo
 * [`single`](#playersSingle)
 
 ---------------------------------------
+## Base Model
 
+All single results are wrapped with a model for easier data digesting. You can request any data that comes back from the request.
+
+`.type` - Returns the type of data requested
+`.id` - Returns associated ID
+`.raw` - Returns a raw object representation of the data retrieved
+
+---------------------------------------
 ## Matches
 
 `vainglory.matches` 
@@ -91,7 +99,7 @@ const options = {
   }
 }
 vainglory.matches.collection(options).then((matches) => {
-    // do something with matches
+    // matches is the raw data represntation from the query.
 }).catch((errorMsg) => {
   console.error(errorMsg);
 });
@@ -109,8 +117,9 @@ __Example__
 ```javascript
 const matchId = '0123b560-d74c-11e6-b845-0671096b3e30';
 
-vainglory.matches.single(matchId).then((matches) => {
-    // do something with matches
+vainglory.matches.single(matchId).then((match) => {
+  console.log(match.id);
+  console.log(match.stats);
 }).catch((errorMsg) => {
   console.error(errorMsg);
 });
@@ -135,7 +144,8 @@ __Example__
 const playerId = '6abb30de-7cb8-11e4-8bd3-06eb725f8a76';
 
 vainglory.players.single(playerId).then((player) => {
-    // do something with player
+  console.log(player.id);
+  console.log(player.stats);
 }).catch((errorMsg) => {
   console.error(errorMsg);
 });

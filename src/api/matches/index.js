@@ -1,4 +1,6 @@
 import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
+import MatchModel from '../../models/match';
 
 const ENDPOINT_PREFIX = 'matches';
 
@@ -14,7 +16,7 @@ export default (http) => {
       }
 
       const endpoint = `${ENDPOINT_PREFIX}/${matchId}`;
-      return http.execute('GET', endpoint).then(body => resolve(body)).catch(err => reject(new Error(err)));
+      return http.execute('GET', endpoint).then(body => resolve(new MatchModel(body))).catch(err => reject(new Error(err)));
     });
   }
 

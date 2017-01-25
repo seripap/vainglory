@@ -24,11 +24,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/na/',
+  statusUrl: 'https://api.dc01.gamelockerapp.com/status',
   title: 'semc-vainglory'
 };
 
 var Http = function () {
-  function Http(apiKey) {
+  function Http() {
+    var apiKey = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaults;
 
     _classCallCheck(this, Http);
@@ -36,6 +38,7 @@ var Http = function () {
     this.options = {
       url: options.host,
       headers: {
+        'Content-Encoding': 'gzip',
         'Content-Type': 'application/json',
         Accept: 'application/vnd.api+json',
         Authorization: 'Bearer ' + apiKey,

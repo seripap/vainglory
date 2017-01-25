@@ -6,14 +6,16 @@ import isObject from 'lodash/isObject';
 
 const defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/na/',
+  statusUrl: 'https://api.dc01.gamelockerapp.com/status',
   title: 'semc-vainglory',
 };
 
 export default class Http {
-  constructor(apiKey, options = defaults) {
+  constructor(apiKey = null, options = defaults) {
     this.options = {
       url: options.host,
       headers: {
+        'Content-Encoding': 'gzip',
         'Content-Type': 'application/json',
         Accept: 'application/vnd.api+json',
         Authorization: `Bearer ${apiKey}`,

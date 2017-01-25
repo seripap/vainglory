@@ -8,6 +8,14 @@ var _isString = require('lodash/isString');
 
 var _isString2 = _interopRequireDefault(_isString);
 
+var _isArray = require('lodash/isArray');
+
+var _isArray2 = _interopRequireDefault(_isArray);
+
+var _match = require('../../models/match');
+
+var _match2 = _interopRequireDefault(_match);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ENDPOINT_PREFIX = 'matches';
@@ -25,7 +33,7 @@ exports.default = function (http) {
 
       var endpoint = ENDPOINT_PREFIX + '/' + matchId;
       return http.execute('GET', endpoint).then(function (body) {
-        return resolve(body);
+        return resolve(new _match2.default(body));
       }).catch(function (err) {
         return reject(new Error(err));
       });
