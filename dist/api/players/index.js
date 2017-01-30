@@ -8,6 +8,10 @@ var _isString = require('lodash/isString');
 
 var _isString2 = _interopRequireDefault(_isString);
 
+var _player = require('../../models/player');
+
+var _player2 = _interopRequireDefault(_player);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ENDPOINT_PREFIX = 'players';
@@ -26,7 +30,7 @@ exports.default = function (http) {
       var endpoint = ENDPOINT_PREFIX + '/' + playerId;
 
       return http.execute('GET', endpoint).then(function (body) {
-        return resolve(body);
+        return resolve(new _player2.default(body));
       }).catch(function (err) {
         return reject(new Error(err));
       });

@@ -1,4 +1,5 @@
 import isString from 'lodash/isString';
+import PlayerModel from '../../models/player';
 
 const ENDPOINT_PREFIX = 'players';
 
@@ -15,7 +16,7 @@ export default (http) => {
 
       const endpoint = `${ENDPOINT_PREFIX}/${playerId}`;
 
-      return http.execute('GET', endpoint).then(body => resolve(body)).catch(err => reject(new Error(err)));
+      return http.execute('GET', endpoint).then(body => resolve(new PlayerModel(body))).catch(err => reject(new Error(err)));
     });
   }
 

@@ -9,26 +9,33 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var BaseModel = function () {
-  function BaseModel(json) {
+  function BaseModel(data) {
     var included = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
     _classCallCheck(this, BaseModel);
 
     // Data can be set arbitrarily or from an HTTP response 
-    if ('data' in json) {
-      this._data = json.data;
+    if ('data' in data) {
+      this._data = data.data;
     } else {
-      this._data = json;
+      this._data = data;
     }
 
-    if ('included' in json) {
-      this._included = json.included;
+    if ('included' in data) {
+      this._included = data.included;
     } else if (included) {
       this._included = included;
     }
   }
 
   _createClass(BaseModel, [{
+    key: 'filterIncluded',
+    value: function filterIncluded(type) {
+      return this._included.length > 0 ? this._included.filter(function (item) {
+        return item.type === type;
+      }) : false;
+    }
+  }, {
     key: 'type',
     get: function get() {
       return this._data.type;
@@ -49,3 +56,6 @@ var BaseModel = function () {
 }();
 
 exports.default = BaseModel;
+
+
+function addIncluded(included) {}

@@ -11,11 +11,11 @@ class Vainglory {
     }
 
     const api = new Api(new Http(apiKey));
+    api.bindTo(this);
+  }
 
-    // Exposed methods
-    this.matches = api.matches;
-    this.players = api.players;
-    this.utils = Utils;
+  get utils() {
+    return Utils;
   }
 
 }

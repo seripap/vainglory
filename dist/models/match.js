@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -73,10 +74,9 @@ var MatchModel = function (_BaseModel) {
 
       if ('rosters' in this._data.relationships) {
         return this._data.relationships.rosters.data.map(function (roster) {
-          var normalizedRoster = _this2._included.find(function (item) {
+          return new _roster2.default(_this2.filterInclude('roster').find(function (item) {
             return item.id === roster.id;
-          });
-          return new _roster2.default(normalizedRoster, _this2._included);
+          }), _this2._included);
         });
       }
 

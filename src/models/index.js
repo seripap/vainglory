@@ -28,9 +28,7 @@ export default class BaseModel {
   }
 
   filterIncluded(type) {
-    return this._included.length > 0 ? this._included.filter((item) => {
-      return item.type === type;
-    }) : false;
+    return this._included.length > 0 ? this._included.filter((item) => item.type === type) : false;
   }
 
 }
