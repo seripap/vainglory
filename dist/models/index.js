@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,47 +8,29 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// readonly
 var BaseModel = function () {
   function BaseModel(data) {
-    var included = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
     _classCallCheck(this, BaseModel);
 
-    // Data can be set arbitrarily or from an HTTP response 
-    if ('data' in data) {
-      this._data = data.data;
-    } else {
-      this._data = data;
-    }
-
-    if ('included' in data) {
-      this._included = data.included;
-    } else if (included) {
-      this._included = included;
-    }
+    this.data = data;
+    this.relationships = null;
   }
 
   _createClass(BaseModel, [{
-    key: 'filterIncluded',
-    value: function filterIncluded(type) {
-      return this._included.length > 0 ? this._included.filter(function (item) {
-        return item.type === type;
-      }) : false;
+    key: "type",
+    get: function get() {
+      return this.data.type;
     }
   }, {
-    key: 'type',
+    key: "id",
     get: function get() {
-      return this._data.type;
+      return this.data.id;
     }
   }, {
-    key: 'id',
+    key: "raw",
     get: function get() {
-      return this._data.id;
-    }
-  }, {
-    key: 'raw',
-    get: function get() {
-      return this._data;
+      return this.data;
     }
   }]);
 
@@ -56,6 +38,3 @@ var BaseModel = function () {
 }();
 
 exports.default = BaseModel;
-
-
-function addIncluded(included) {}

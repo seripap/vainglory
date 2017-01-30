@@ -1,13 +1,17 @@
 import matches from './matches';
 import players from './players';
+import parser from './parser';
 
 export default class Api {
-  constructor(http) {
-    this._http = http;
+  constructor(http, options) {
+    this.http = http;
+    this.options = options;
+
+    this.parser = parser;
   }
 
   bindTo(context) {
-    context.matches = matches(this._http);
-    context.players = players(this._http);
+    context.matches = matches(this.http, this.options, this.parser);
+    context.players = players(this.http, this.options, this.parser);
   }
 }

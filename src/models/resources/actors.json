@@ -1,0 +1,124 @@
+{
+  "actors": [
+    {
+      "clientName": "Adagio",
+      "serverName": "*Adagio*"
+    },
+    {
+      "clientName": "Alpha",
+      "serverName": "*Alpha*"
+    },
+    {
+      "clientName": "Ardan",
+      "serverName": "*Ardan*"
+    },
+    {
+      "clientName": "Baron",
+      "serverName": "*Baron*"
+    },
+    {
+      "clientName": "Blackfeather",
+      "serverName": "*Blackfeather*"
+    },
+    {
+      "clientName": "Catherine",
+      "serverName": "*Catherine*"
+    },
+    {
+      "clientName": "Celeste",
+      "serverName": "*Celeste*"
+    },
+    {
+      "clientName": "Flicker",
+      "serverName": "*Flicker*"
+    },
+    {
+      "clientName": "Fortress",
+      "serverName": "*Fortress*"
+    },
+    {
+      "clientName": "Glaive",
+      "serverName": "*Glaive*"
+    },
+    {
+      "clientName": "Gwen",
+      "serverName": "*Gwen*"
+    },
+    {
+      "clientName": "Krul",
+      "serverName": "*Hero009*"
+    },
+    {
+      "clientName": "Skaarf",
+      "serverName": "*Hero010*"
+    },
+    {
+      "clientName": "Rona",
+      "serverName": "*Hero016*"
+    },
+    {
+      "clientName": "Idris",
+      "serverName": "*Idris*"
+    },
+    {
+      "clientName": "Joule",
+      "serverName": "*Joule*"
+    },
+    {
+      "clientName": "Kestrel",
+      "serverName": "*Kestrel*"
+    },
+    {
+      "clientName": "Koshka",
+      "serverName": "*Koshka*"
+    },
+    {
+      "clientName": "Lance",
+      "serverName": "*Lance*"
+    },
+    {
+      "clientName": "Lyra",
+      "serverName": "*Lyra*"
+    },
+    {
+      "clientName": "Ozo",
+      "serverName": "*Ozo*"
+    },
+    {
+      "clientName": "Petal",
+      "serverName": "*Petal*"
+    },
+    {
+      "clientName": "Phinn",
+      "serverName": "*Phinn*"
+    },
+    {
+      "clientName": "Reim",
+      "serverName": "*Reim*"
+    },
+    {
+      "clientName": "Ringo",
+      "serverName": "*Ringo*"
+    },
+    {
+      "clientName": "SAW",
+      "serverName": "*SAW*"
+    },
+    {
+      "clientName": "Samuel",
+      "serverName": "*Samuel*"
+    },
+    {
+      "clientName": "Taka",
+      "serverName": "*Sayoc*"
+    },
+    {
+      "clientName": "Skye",
+      "serverName": "*Skye*"
+    },
+    {
+      "clientName": "Vox",
+      "serverName": "*Vox*"
+    }
+  ]
+}

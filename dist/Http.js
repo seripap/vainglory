@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // TODO
 
 var _requestPromise = require('request-promise');
@@ -21,12 +23,15 @@ var _isObject2 = _interopRequireDefault(_isObject);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/na/',
   statusUrl: 'https://api.dc01.gamelockerapp.com/status',
-  title: 'semc-vainglory'
+  title: 'semc-vainglory',
+  remap: true
 };
 
 var Http = function () {
@@ -36,15 +41,20 @@ var Http = function () {
 
     _classCallCheck(this, Http);
 
+    var requestOptions = Object.assign(options, defaults);
     this.options = {
-      url: options.host,
+      url: requestOptions.host,
+      qs: {},
       headers: {
         'Content-Encoding': 'gzip',
         'Content-Type': 'application/json',
+        'User-Agent': 'js/vainglory',
         Accept: 'application/vnd.api+json',
         Authorization: 'Bearer ' + apiKey,
-        'X-TITLE-ID': options.title
-      }
+        'X-TITLE-ID': requestOptions.title
+      },
+      json: true,
+      simple: false
     };
   }
 
@@ -53,6 +63,7 @@ var Http = function () {
     value: function serialize(obj) {
       var queries = [];
       var loop = function loop(obj) {
+        var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -63,9 +74,13 @@ var Http = function () {
 
             if (Object.prototype.hasOwnProperty.call(obj, property)) {
               if ((0, _isObject2.default)(obj[property])) {
-                loop(obj[property]);
+                loop(obj[property], property);
               } else {
-                queries.push(encodeURIComponent(property) + '=' + encodeURIComponent(obj[property]));
+                if (prefix) {
+                  queries.push(prefix + '[' + encodeURIComponent(property) + ']=' + encodeURIComponent(obj[property]));
+                } else {
+                  queries.push(encodeURIComponent(property) + '=' + encodeURIComponent(obj[property]));
+                }
               }
             }
           }
@@ -89,64 +104,97 @@ var Http = function () {
       return queries.join('&');
     }
   }, {
-    key: 'execute',
-    value: function execute() {
-      var method = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'GET';
-      var endpoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    key: 'parseBody',
+    value: function parseBody(body) {
+      var parseOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-      var _this = this;
+      if (parseOptions.override) {
+        return body;
+      }
 
-      var query = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+      if ('errors' in body) {
+        return { error: true, message: body.errors };
+      }
 
-      return new Promise(function (resolve, reject) {
-        var requestOptions = Object.assign(options, _this.options);
-        var parseBody = function parseBody(body) {
-          var parseOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-          if (parseOptions.override) {
-            return body;
-          }
-
-          try {
-            var parsed = JSON.parse(body);
-            if ('errors' in parsed) {
-              return {
-                error: true,
-                message: parsed.errors
-              };
-            }
-
-            return parsed;
-          } catch (e) {
-            return {
-              error: true,
-              message: e
-            };
-          }
-        };
-
-        if (endpoint === null) {
-          throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
-        }
-
-        requestOptions.method = method;
-        requestOptions.url += endpoint;
-
-        if (query) {
-          requestOptions.url += '?' + query;
-        }
-
-        (0, _requestPromise2.default)(requestOptions).then(function (body) {
-          var parsedBody = parseBody(body, options);
-          if ('error' in parsedBody && parsedBody.error) {
-            return reject(new Error(parsedBody));
-          }
-
-          return resolve(parsedBody);
-        });
-      });
+      return body;
     }
+  }, {
+    key: 'execute',
+    value: function () {
+      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+        var method = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'GET';
+        var endpoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+        var query = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+        var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+        var requestOptions, body, parsedBody;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                requestOptions = _extends({}, this.options, { options: options });
+
+                if (!(endpoint === null)) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt('return', new Error('HTTP Error: No endpoint to provide a request to.'));
+
+              case 3:
+
+                requestOptions.method = method;
+                requestOptions.url += endpoint;
+
+                if (query) {
+                  requestOptions.url += '?' + this.serialize(query);
+                }
+
+                _context.prev = 6;
+                _context.next = 9;
+                return (0, _requestPromise2.default)(requestOptions);
+
+              case 9:
+                body = _context.sent;
+
+                if (body) {
+                  _context.next = 12;
+                  break;
+                }
+
+                return _context.abrupt('return', { error: true, message: 'NO DATA' });
+
+              case 12:
+                parsedBody = this.parseBody(body, options);
+
+                if (!parsedBody.error) {
+                  _context.next = 15;
+                  break;
+                }
+
+                throw new Error(parsedBody);
+
+              case 15:
+                return _context.abrupt('return', parsedBody);
+
+              case 18:
+                _context.prev = 18;
+                _context.t0 = _context['catch'](6);
+                throw new Error(_context.t0);
+
+              case 21:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[6, 18]]);
+      }));
+
+      function execute() {
+        return _ref.apply(this, arguments);
+      }
+
+      return execute;
+    }()
   }]);
 
   return Http;

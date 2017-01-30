@@ -1,8 +1,8 @@
-# Vainglory.js - A Javascript API Client for Vainglory
+# Vainglory.js(BETA) - A Javascript API Client for Vainglory
 
 [![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.org/seripap/vainglory)
 
-This is a Javascript API client for [Vainglory](http://vainglorygame.com).
+This is a Javascript API client for [Vainglory](http://vainglorygame.com). This client is still in active development, please excuse the tests, they still need to be mocked.
 
 ## Installation
 
@@ -19,7 +19,15 @@ import Vainglory from 'vainglory';
 const vainglory = new Vainglory('api-key');
 ```
 
-To modify HTTP options, provide an options object
+## Options
+
+Base options can be modified by passing an object during initalization.
+
+__Properties__
+- `host` [*String*] - HTTP Url to call
+- `title` [*String*] - X-TITLE-ID modifier
+- `remapped` [*Boolean*] - Returns `clean` values for actors and items, sanitized from the API call. For example, if the results returned `*1000_Item_HalcyonPotion*`, the client will return `Halcyon Potion`
+
 
 ```javascript
 import Vainglory from 'vainglory';
@@ -28,6 +36,7 @@ import Vainglory from 'vainglory';
 const options = {
   host: 'https://api.dc01.gamelockerapp.com/shards/na/',
   title: 'semc-vainglory',
+  remapped: true
 };
 
 const vainglory = new Vainglory('api-key', options);
@@ -65,9 +74,9 @@ All methods are named references from the [Official API Reference](http://develo
 
 All single results are wrapped with a model for easier data digesting. You can request any data that comes back from the request.
 
-`.type` - Returns the type of data requested
-`.id` - Returns associated ID
-`.raw` - Returns a raw object representation of the data retrieved
+- `.type` - Returns the type of data requested
+- `.id` - Returns associated ID
+- `.raw` - Returns a raw object representation of the data retrieved
 
 ---------------------------------------
 ## Matches
@@ -91,15 +100,16 @@ const options = {
     limit: 50,
   },
   sort: 'createdAt',
-  filters: {
-    started: '3hrs ago',
-    ended: 'Now',
+  filter: {
+    'createdAt-start': '3hrs ago', // TODO: Parse times (soon!)
+    'createdAt-end: 'Now', // TODO: Parse times (soon!)
     playerNames: [],
     teamNames: [],
   }
 }
 vainglory.matches.collection(options).then((matches) => {
-    // matches is the raw data represntation from the query.
+    // matches is an object representation of that dataset;
+    // matches.match[n -> limit].rosters , ..etc, etc
 }).catch((errorMsg) => {
   console.error(errorMsg);
 });

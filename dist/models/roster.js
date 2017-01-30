@@ -11,10 +11,6 @@ var _ = require('./');
 
 var _2 = _interopRequireDefault(_);
 
-var _participant = require('./participant');
-
-var _participant2 = _interopRequireDefault(_participant);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26,31 +22,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Roster = function (_BaseModel) {
   _inherits(Roster, _BaseModel);
 
-  function Roster(data, included) {
+  function Roster(data) {
     _classCallCheck(this, Roster);
 
-    return _possibleConstructorReturn(this, (Roster.__proto__ || Object.getPrototypeOf(Roster)).call(this, data, included));
+    var _this = _possibleConstructorReturn(this, (Roster.__proto__ || Object.getPrototypeOf(Roster)).call(this, data));
+
+    _this.relationships = [{
+      type: 'participants'
+    }];
+    return _this;
   }
 
   _createClass(Roster, [{
     key: 'stats',
     get: function get() {
-      return this._data.stats;
+      return this.data.attributes.stats;
     }
   }, {
     key: 'participants',
+    set: function set(participants) {
+      this.rosterParticipants = participants;
+      return this;
+    },
     get: function get() {
-      var _this2 = this;
-
-      if ('participants' in this._data.relationships) {
-        return this._data.relationships.participants.data.map(function (participant) {
-          return new _participant2.default(_this2.filterInclude('participant').find(function (item) {
-            return item.id === participant.id;
-          }), _this2._included);
-        });
-      }
-
-      return null;
+      return this.rosterParticipants;
     }
   }]);
 

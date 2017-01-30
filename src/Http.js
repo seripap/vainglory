@@ -8,86 +8,90 @@ const defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/na/',
   statusUrl: 'https://api.dc01.gamelockerapp.com/status',
   title: 'semc-vainglory',
+  remap: true,
 };
 
 export default class Http {
   constructor(apiKey = null, options = defaults) {
+    const requestOptions = Object.assign(options, defaults);
     this.options = {
-      url: options.host,
+      url: requestOptions.host,
+      qs: {},
       headers: {
         'Content-Encoding': 'gzip',
         'Content-Type': 'application/json',
+        'User-Agent': 'js/vainglory',
         Accept: 'application/vnd.api+json',
         Authorization: `Bearer ${apiKey}`,
-        'X-TITLE-ID': options.title,
+        'X-TITLE-ID': requestOptions.title,
       },
+      json: true,
+      simple: false,
     };
   }
 
   serialize(obj) {
     const queries = [];
-    const loop = (obj) => {    
+    const loop = (obj, prefix = null) => {
       for (const property of Object.keys(obj)) {
         if (Object.prototype.hasOwnProperty.call(obj, property)) {
           if (isObject(obj[property])) {
-            loop(obj[property]);
+            loop(obj[property], property);
           } else {
-            queries.push(`${encodeURIComponent(property)}=${encodeURIComponent(obj[property])}`);
+            if (prefix) {
+              queries.push(`${prefix}[${encodeURIComponent(property)}]=${encodeURIComponent(obj[property])}`);
+            } else {
+              queries.push(`${encodeURIComponent(property)}=${encodeURIComponent(obj[property])}`);
+            }
           }
         }
       }
     };
-   
+
     loop(obj);
     return queries.join('&');
   }
 
-  execute(method = 'GET', endpoint = null, query = null, options = {}) {
-    return new Promise((resolve, reject) => {
-      const requestOptions = Object.assign(options, this.options);
-      const parseBody = (body, parseOptions = {}) => {
-        if (parseOptions.override) {
-          return body;
-        }
+  parseBody(body, parseOptions = {}) {
+    if (parseOptions.override) {
+      return body;
+    }
 
-        try {
-          const parsed = JSON.parse(body);
-          if ('errors' in parsed) {
-            return {
-              error: true,
-              message: parsed.errors,
-            };
-          }
+    if ('errors' in body) {
+      return { error: true, message: body.errors };
+    }
 
-          return parsed;
-        } catch (e) {
-          return {
-            error: true,
-            message: e,
-          };
-        }
-      };
-      
-      if (endpoint === null) {
-        throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
-      }
-
-      requestOptions.method = method;
-      requestOptions.url += endpoint;
-
-      if (query) {
-        requestOptions.url += `?${query}`;
-      }
-
-      request(requestOptions).then((body) => {
-        const parsedBody = parseBody(body, options);
-        if ('error' in parsedBody && parsedBody.error) {
-          return reject(new Error(parsedBody));
-        }
-
-        return resolve(parsedBody);
-      });
-    });
+    return body;
   }
 
+  async execute(method = 'GET', endpoint = null, query = null, options = {}) {
+    const requestOptions = { ...this.options, options };
+
+    if (endpoint === null) {
+      return new Error('HTTP Error: No endpoint to provide a request to.');
+    }
+
+    requestOptions.method = method;
+    requestOptions.url += endpoint;
+
+    if (query) {
+      requestOptions.url += `?${this.serialize(query)}`;
+    }
+
+    try {
+      const body = await request(requestOptions);
+      if (!body) {
+        return { error: true, message: 'NO DATA' };
+      }
+      const parsedBody = this.parseBody(body, options);
+
+      if (parsedBody.error) {
+        throw new Error(parsedBody);
+      }
+
+      return parsedBody;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
 }

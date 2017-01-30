@@ -1,38 +1,19 @@
-
+// readonly
 export default class BaseModel {
-  constructor(data, included = false) {
-    // Data can be set arbitrarily or from an HTTP response 
-    if ('data' in data) {
-      this._data = data.data;
-    } else {
-      this._data = data;
-    }
-
-    if ('included' in data) {
-      this._included = data.included;
-    } else if (included) {
-      this._included = included;
-    }
+  constructor(data) {
+    this.data = data;
+    this.relationships = null;
   }
 
   get type() {
-    return this._data.type;
+    return this.data.type;
   }
 
   get id() {
-    return this._data.id;
+    return this.data.id;
   }
 
   get raw() {
-    return this._data;
+    return this.data;
   }
-
-  filterIncluded(type) {
-    return this._included.length > 0 ? this._included.filter((item) => item.type === type) : false;
-  }
-
-}
-
-function addIncluded(included) {
-
 }

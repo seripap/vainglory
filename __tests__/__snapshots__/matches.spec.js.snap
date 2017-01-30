@@ -1,0 +1,760 @@
+exports[`Vainglory.matches .single should get a single match 1`] = `
+Match {
+  "data": Object {
+    "attributes": Object {
+      "createdAt": "2017-02-26T00:39:04Z",
+      "duration": 1503,
+      "gameMode": "casual",
+      "patchVersion": "",
+      "shardId": "na",
+      "stats": Object {
+        "endGameReason": "victory",
+        "queue": "casual",
+      },
+      "titleId": "semc-vainglory",
+    },
+    "id": "f31b614a-fbbb-11e6-9ec9-062445d3d668",
+    "relationships": Object {
+      "assets": Object {
+        "data": Array [],
+      },
+      "rosters": Object {
+        "data": Array [
+          Object {
+            "id": "fd1661df-fbcf-11e6-9d96-0242ac11000f",
+            "type": "roster",
+          },
+          Object {
+            "id": "fd1661f5-fbcf-11e6-9d96-0242ac11000f",
+            "type": "roster",
+          },
+        ],
+      },
+      "rounds": Object {
+        "data": Array [],
+      },
+    },
+    "type": "match",
+  },
+  "matchRoster": Array [
+    Roster {
+      "data": Object {
+        "attributes": Object {
+          "stats": Object {
+            "acesEarned": 1,
+            "gold": 51198,
+            "heroKills": 21,
+            "krakenCaptures": 0,
+            "side": "left/blue",
+            "turretKills": 3,
+            "turretsRemaining": 0,
+          },
+        },
+        "id": "fd1661df-fbcf-11e6-9d96-0242ac11000f",
+        "relationships": Object {
+          "participants": Object {
+            "data": Array [
+              Object {
+                "id": "fd1661e8-fbcf-11e6-9d96-0242ac11000f",
+                "type": "participant",
+              },
+              Object {
+                "id": "fd1661ed-fbcf-11e6-9d96-0242ac11000f",
+                "type": "participant",
+              },
+              Object {
+                "id": "fd1661f1-fbcf-11e6-9d96-0242ac11000f",
+                "type": "participant",
+              },
+            ],
+          },
+          "team": Object {
+            "data": null,
+          },
+        },
+        "type": "roster",
+      },
+      "relationships": Array [
+        Object {
+          "type": "participants",
+        },
+      ],
+      "rosterParticipants": Array [
+        Participant {
+          "data": Object {
+            "attributes": Object {
+              "actor": "*Kestrel*",
+              "stats": Object {
+                "assists": 7,
+                "crystalMineCaptures": 1,
+                "deaths": 7,
+                "farm": 113.125,
+                "firstAfkTime": -1,
+                "goldMineCaptures": 0,
+                "itemGrants": Object {
+                  "*1000_Item_HalcyonPotion*": 4,
+                  "*1002_Item_WeaponBlade*": 3,
+                  "*1010_Item_BlazingSalvo*": 1,
+                  "*1012_Item_Sorrowblade*": 1,
+                  "*1017_Item_LightArmor*": 1,
+                  "*1022_Item_CoatOfPlates*": 1,
+                  "*1030_Item_SprintBoots*": 1,
+                  "*1032_Item_TravelBoots*": 1,
+                  "*1043_Item_ReflexBlock*": 1,
+                  "*1047_Item_JourneyBoots*": 1,
+                  "*1049_Item_TyrantsMonocle*": 1,
+                  "*1052_Item_WeaponInfusion*": 2,
+                  "*1059_Item_BookOfEulogies*": 1,
+                  "*1062_Item_KineticShield*": 1,
+                  "*1063_Item_Aegis*": 1,
+                  "*1065_Item_HeavySteel*": 1,
+                  "*1067_Item_BreakingPoint*": 1,
+                  "*1068_Item_LuckyStrike*": 2,
+                  "*1080_Item_MinionsFoot*": 1,
+                },
+                "itemSells": Object {
+                  "*1022_Item_CoatOfPlates*": 1,
+                  "*1059_Item_BookOfEulogies*": 1,
+                },
+                "itemUses": Object {
+                  "*1000_Item_HalcyonPotion*": 4,
+                  "*1030_Item_SprintBoots*": 1,
+                  "*1032_Item_TravelBoots*": 8,
+                  "*1043_Item_ReflexBlock*": 3,
+                  "*1047_Item_JourneyBoots*": 2,
+                  "*1052_Item_WeaponInfusion*": 2,
+                  "*1063_Item_Aegis*": 7,
+                },
+                "items": Array [
+                  "Weapon3",
+                  "Critical",
+                  "BreakingPoint",
+                  "Boots3",
+                  "Crystal Matrix",
+                  "LuckyStrike",
+                ],
+                "jungleKills": 8,
+                "karmaLevel": 2,
+                "kills": 4,
+                "krakenCaptures": 0,
+                "level": 21,
+                "minionKills": 91,
+                "nonJungleMinionKills": 83,
+                "skillTier": 10,
+                "skinKey": "Kestrel_Skin_Sylvan_T1",
+                "turretCaptures": 2,
+                "wentAfk": false,
+                "winner": false,
+              },
+            },
+            "id": "fd1661e8-fbcf-11e6-9d96-0242ac11000f",
+            "relationships": Object {
+              "player": Object {
+                "data": Object {
+                  "id": "c87503ce-27ae-11e6-9208-06388a2f2ea7",
+                  "type": "player",
+                },
+              },
+            },
+            "type": "participant",
+          },
+          "participantPlayer": Player {
+            "data": Object {
+              "attributes": Object {
+                "name": "brubawil87",
+                "shardId": "",
+                "stats": Object {
+                  "level": 21,
+                  "lifetimeGold": 16307.5,
+                  "lossStreak": 1,
+                  "played": 325,
+                  "played_ranked": 95,
+                  "winStreak": 0,
+                  "wins": 165,
+                  "xp": 70317,
+                },
+                "titleId": "",
+              },
+              "id": "c87503ce-27ae-11e6-9208-06388a2f2ea7",
+              "relationships": Object {
+                "assets": Object {
+                  "data": Array [],
+                },
+              },
+              "type": "player",
+            },
+            "relationships": null,
+          },
+          "relationships": Array [
+            Object {
+              "type": "player",
+            },
+          ],
+        },
+        Participant {
+          "data": Object {
+            "attributes": Object {
+              "actor": "*Samuel*",
+              "stats": Object {
+                "assists": 5,
+                "crystalMineCaptures": 1,
+                "deaths": 11,
+                "farm": 39.125,
+                "firstAfkTime": -1,
+                "goldMineCaptures": 0,
+                "itemGrants": Object {
+                  "*1003_Item_CrystalBit*": 2,
+                  "*1009_Item_EclipsePrism*": 1,
+                  "*1025_Item_EnergyBattery*": 1,
+                  "*1030_Item_SprintBoots*": 1,
+                  "*1032_Item_TravelBoots*": 1,
+                  "*1043_Item_ReflexBlock*": 1,
+                  "*1044_Item_Frostburn*": 1,
+                  "*1054_Item_ScoutTrap*": 1,
+                  "*1055_Item_BrokenMyth*": 1,
+                  "*1061_Item_LightShield*": 1,
+                  "*1063_Item_Aegis*": 1,
+                  "*1070_Item_PiercingShard*": 1,
+                  "*1071_Item_EveOfHarvest*": 1,
+                  "*1072_Item_HeavyPrism*": 2,
+                  "*1087_Item_HalcyonChargers*": 1,
+                },
+                "itemSells": Object {},
+                "itemUses": Object {
+                  "*1030_Item_SprintBoots*": 4,
+                  "*1032_Item_TravelBoots*": 3,
+                  "*1054_Item_ScoutTrap*": 1,
+                  "*1087_Item_HalcyonChargers*": 7,
+                },
+                "items": Array [
+                  "EveOfHarvest",
+                  "Halcyon Chargers",
+                  "Crystal Matrix",
+                  "Broken Myth",
+                  "Frostburn",
+                ],
+                "jungleKills": 25,
+                "karmaLevel": 2,
+                "kills": 7,
+                "krakenCaptures": 0,
+                "level": 20,
+                "minionKills": 32,
+                "nonJungleMinionKills": 7,
+                "skillTier": -1,
+                "skinKey": "Samuel_DefaultSkin",
+                "turretCaptures": 1,
+                "wentAfk": false,
+                "winner": false,
+              },
+            },
+            "id": "fd1661ed-fbcf-11e6-9d96-0242ac11000f",
+            "relationships": Object {
+              "player": Object {
+                "data": Object {
+                  "id": "02a013f4-7009-11e4-9351-06641bcbf424",
+                  "type": "player",
+                },
+              },
+            },
+            "type": "participant",
+          },
+          "participantPlayer": Player {
+            "data": Object {
+              "attributes": Object {
+                "name": "JakeSmash",
+                "shardId": "",
+                "stats": Object {
+                  "level": 20,
+                  "lifetimeGold": 16566.5,
+                  "lossStreak": 0,
+                  "played": 522,
+                  "played_ranked": 2,
+                  "winStreak": 1,
+                  "wins": 237,
+                  "xp": 64719,
+                },
+                "titleId": "",
+              },
+              "id": "02a013f4-7009-11e4-9351-06641bcbf424",
+              "relationships": Object {
+                "assets": Object {
+                  "data": Array [],
+                },
+              },
+              "type": "player",
+            },
+            "relationships": null,
+          },
+          "relationships": Array [
+            Object {
+              "type": "player",
+            },
+          ],
+        },
+        Participant {
+          "data": Object {
+            "attributes": Object {
+              "actor": "*Fortress*",
+              "stats": Object {
+                "assists": 4,
+                "crystalMineCaptures": 1,
+                "deaths": 9,
+                "farm": 91.2,
+                "firstAfkTime": -1,
+                "goldMineCaptures": 1,
+                "itemGrants": Object {
+                  "*1015_Item_Oakheart*": 5,
+                  "*1016_Item_Dragonheart*": 3,
+                  "*1017_Item_LightArmor*": 1,
+                  "*1024_Item_MetalJacket*": 1,
+                  "*1028_Item_Chronograph*": 1,
+                  "*1030_Item_SprintBoots*": 1,
+                  "*1032_Item_TravelBoots*": 1,
+                  "*1042_Item_Shiversteel*": 1,
+                  "*1043_Item_ReflexBlock*": 1,
+                  "*1045_Item_FountainOfRenewal*": 1,
+                  "*1046_Item_Crucible*": 1,
+                  "*1052_Item_WeaponInfusion*": 4,
+                  "*1056_Item_WarTreads*": 1,
+                  "*1062_Item_KineticShield*": 1,
+                  "*1064_Item_Lifespring*": 1,
+                  "*1074_Item_StormguardBanner*": 1,
+                  "*1090_Item_Stormcrown*": 1,
+                },
+                "itemSells": Object {},
+                "itemUses": Object {
+                  "*1042_Item_Shiversteel*": 4,
+                  "*1045_Item_FountainOfRenewal*": 11,
+                  "*1046_Item_Crucible*": 7,
+                  "*1052_Item_WeaponInfusion*": 4,
+                  "*1056_Item_WarTreads*": 7,
+                },
+                "items": Array [
+                  "Stormcrown",
+                  "Fountain of Renewal",
+                  "War Treads",
+                  "Shiversteel",
+                  "Crucible",
+                  "Armor3",
+                ],
+                "jungleKills": 33,
+                "karmaLevel": 2,
+                "kills": 10,
+                "krakenCaptures": 0,
+                "level": 30,
+                "minionKills": 75,
+                "nonJungleMinionKills": 42,
+                "skillTier": 11,
+                "skinKey": "Fortress_DefaultSkin",
+                "turretCaptures": 2,
+                "wentAfk": false,
+                "winner": false,
+              },
+            },
+            "id": "fd1661f1-fbcf-11e6-9d96-0242ac11000f",
+            "relationships": Object {
+              "player": Object {
+                "data": Object {
+                  "id": "233d618a-7008-11e4-b7eb-06641bcbf424",
+                  "type": "player",
+                },
+              },
+            },
+            "type": "participant",
+          },
+          "participantPlayer": Player {
+            "data": Object {
+              "attributes": Object {
+                "name": "Mayhem7723",
+                "shardId": "",
+                "stats": Object {
+                  "level": 30,
+                  "lifetimeGold": 18325.25,
+                  "lossStreak": 0,
+                  "played": 2775,
+                  "played_ranked": 1143,
+                  "winStreak": 1,
+                  "wins": 1424,
+                  "xp": 175450,
+                },
+                "titleId": "",
+              },
+              "id": "233d618a-7008-11e4-b7eb-06641bcbf424",
+              "relationships": Object {
+                "assets": Object {
+                  "data": Array [],
+                },
+              },
+              "type": "player",
+            },
+            "relationships": null,
+          },
+          "relationships": Array [
+            Object {
+              "type": "player",
+            },
+          ],
+        },
+      ],
+    },
+    Roster {
+      "data": Object {
+        "attributes": Object {
+          "stats": Object {
+            "acesEarned": 4,
+            "gold": 47262,
+            "heroKills": 27,
+            "krakenCaptures": 2,
+            "side": "right/red",
+            "turretKills": 5,
+            "turretsRemaining": 2,
+          },
+        },
+        "id": "fd1661f5-fbcf-11e6-9d96-0242ac11000f",
+        "relationships": Object {
+          "participants": Object {
+            "data": Array [
+              Object {
+                "id": "fd1661fa-fbcf-11e6-9d96-0242ac11000f",
+                "type": "participant",
+              },
+              Object {
+                "id": "fd1661fe-fbcf-11e6-9d96-0242ac11000f",
+                "type": "participant",
+              },
+              Object {
+                "id": "fd166202-fbcf-11e6-9d96-0242ac11000f",
+                "type": "participant",
+              },
+            ],
+          },
+          "team": Object {
+            "data": null,
+          },
+        },
+        "type": "roster",
+      },
+      "relationships": Array [
+        Object {
+          "type": "participants",
+        },
+      ],
+      "rosterParticipants": Array [
+        Participant {
+          "data": Object {
+            "attributes": Object {
+              "actor": "*Hero010*",
+              "stats": Object {
+                "assists": 13,
+                "crystalMineCaptures": 0,
+                "deaths": 4,
+                "farm": 57.125,
+                "firstAfkTime": -1,
+                "goldMineCaptures": 0,
+                "itemGrants": Object {
+                  "*1000_Item_HalcyonPotion*": 15,
+                  "*1003_Item_CrystalBit*": 4,
+                  "*1015_Item_Oakheart*": 1,
+                  "*1027_Item_VoidBattery*": 2,
+                  "*1030_Item_SprintBoots*": 1,
+                  "*1032_Item_TravelBoots*": 1,
+                  "*1043_Item_ReflexBlock*": 1,
+                  "*1044_Item_Frostburn*": 1,
+                  "*1055_Item_BrokenMyth*": 1,
+                  "*1063_Item_Aegis*": 1,
+                  "*1070_Item_PiercingShard*": 1,
+                  "*1071_Item_EveOfHarvest*": 1,
+                  "*1072_Item_HeavyPrism*": 3,
+                  "*1087_Item_HalcyonChargers*": 1,
+                },
+                "itemSells": Object {},
+                "itemUses": Object {
+                  "*1000_Item_HalcyonPotion*": 15,
+                  "*1032_Item_TravelBoots*": 1,
+                  "*1043_Item_ReflexBlock*": 4,
+                  "*1063_Item_Aegis*": 7,
+                  "*1087_Item_HalcyonChargers*": 5,
+                },
+                "items": Array [
+                  "EveOfHarvest",
+                  "Halcyon Chargers",
+                  "Crystal Matrix",
+                  "Broken Myth",
+                  "Frostburn",
+                  "Crystal1",
+                ],
+                "jungleKills": 4,
+                "karmaLevel": 1,
+                "kills": 6,
+                "krakenCaptures": 2,
+                "level": 15,
+                "minionKills": 46,
+                "nonJungleMinionKills": 42,
+                "skillTier": -1,
+                "skinKey": "Skaarf_Skin_Infinity_T3",
+                "turretCaptures": 2,
+                "wentAfk": false,
+                "winner": true,
+              },
+            },
+            "id": "fd1661fa-fbcf-11e6-9d96-0242ac11000f",
+            "relationships": Object {
+              "player": Object {
+                "data": Object {
+                  "id": "51e83f46-8a3c-11e6-90a3-06d90c28bf1a",
+                  "type": "player",
+                },
+              },
+            },
+            "type": "participant",
+          },
+          "participantPlayer": Player {
+            "data": Object {
+              "attributes": Object {
+                "name": "Dannytom21",
+                "shardId": "",
+                "stats": Object {
+                  "level": 15,
+                  "lifetimeGold": 15042.5,
+                  "lossStreak": 1,
+                  "played": 102,
+                  "played_ranked": 3,
+                  "winStreak": 0,
+                  "wins": 54,
+                  "xp": 28058,
+                },
+                "titleId": "",
+              },
+              "id": "51e83f46-8a3c-11e6-90a3-06d90c28bf1a",
+              "relationships": Object {
+                "assets": Object {
+                  "data": Array [],
+                },
+              },
+              "type": "player",
+            },
+            "relationships": null,
+          },
+          "relationships": Array [
+            Object {
+              "type": "player",
+            },
+          ],
+        },
+        Participant {
+          "data": Object {
+            "attributes": Object {
+              "actor": "*Ringo*",
+              "stats": Object {
+                "assists": 8,
+                "crystalMineCaptures": 0,
+                "deaths": 11,
+                "farm": 74.025,
+                "firstAfkTime": -1,
+                "goldMineCaptures": 1,
+                "itemGrants": Object {
+                  "*1000_Item_HalcyonPotion*": 1,
+                  "*1003_Item_CrystalBit*": 4,
+                  "*1004_Item_SwiftShooter*": 1,
+                  "*1009_Item_EclipsePrism*": 1,
+                  "*1010_Item_BlazingSalvo*": 1,
+                  "*1013_Item_Shatterglass*": 1,
+                  "*1025_Item_EnergyBattery*": 2,
+                  "*1026_Item_Hourglass*": 2,
+                  "*1027_Item_VoidBattery*": 2,
+                  "*1028_Item_Chronograph*": 2,
+                  "*1029_Item_Clockwork*": 1,
+                  "*1030_Item_SprintBoots*": 1,
+                  "*1032_Item_TravelBoots*": 1,
+                  "*1069_Item_AlternatingCurrent*": 1,
+                  "*1072_Item_HeavyPrism*": 3,
+                  "*1079_Item_Contraption*": 1,
+                  "*1087_Item_HalcyonChargers*": 1,
+                  "*1088_Item_Flaregun*": 1,
+                },
+                "itemSells": Object {},
+                "itemUses": Object {
+                  "*1000_Item_HalcyonPotion*": 1,
+                  "*1030_Item_SprintBoots*": 2,
+                  "*1032_Item_TravelBoots*": 3,
+                  "*1079_Item_Contraption*": 13,
+                  "*1087_Item_HalcyonChargers*": 7,
+                },
+                "items": Array [
+                  "Crystal3",
+                  "Halcyon Chargers",
+                  "Clockwork",
+                  "LuckyStrike",
+                  "Contraption",
+                  "Heavy Prism",
+                ],
+                "jungleKills": 23,
+                "karmaLevel": 1,
+                "kills": 7,
+                "krakenCaptures": 2,
+                "level": 18,
+                "minionKills": 58,
+                "nonJungleMinionKills": 35,
+                "skillTier": 1,
+                "skinKey": "Ringo_Skin_Shogun_T2",
+                "turretCaptures": 2,
+                "wentAfk": false,
+                "winner": true,
+              },
+            },
+            "id": "fd1661fe-fbcf-11e6-9d96-0242ac11000f",
+            "relationships": Object {
+              "player": Object {
+                "data": Object {
+                  "id": "982c238e-2460-11e5-977a-06eb725f8a76",
+                  "type": "player",
+                },
+              },
+            },
+            "type": "participant",
+          },
+          "participantPlayer": Player {
+            "data": Object {
+              "attributes": Object {
+                "name": "Daesyr",
+                "shardId": "",
+                "stats": Object {
+                  "level": 18,
+                  "lifetimeGold": 15368,
+                  "lossStreak": 0,
+                  "played": 277,
+                  "played_ranked": 6,
+                  "winStreak": 1,
+                  "wins": 145,
+                  "xp": 47303,
+                },
+                "titleId": "",
+              },
+              "id": "982c238e-2460-11e5-977a-06eb725f8a76",
+              "relationships": Object {
+                "assets": Object {
+                  "data": Array [],
+                },
+              },
+              "type": "player",
+            },
+            "relationships": null,
+          },
+          "relationships": Array [
+            Object {
+              "type": "player",
+            },
+          ],
+        },
+        Participant {
+          "data": Object {
+            "attributes": Object {
+              "actor": "*Sayoc*",
+              "stats": Object {
+                "assists": 6,
+                "crystalMineCaptures": 0,
+                "deaths": 6,
+                "farm": 76.225,
+                "firstAfkTime": -1,
+                "goldMineCaptures": 1,
+                "itemGrants": Object {
+                  "*1000_Item_HalcyonPotion*": 1,
+                  "*1002_Item_WeaponBlade*": 3,
+                  "*1004_Item_SwiftShooter*": 1,
+                  "*1005_Item_SixSins*": 3,
+                  "*1012_Item_Sorrowblade*": 1,
+                  "*1014_Item_TornadoTrigger*": 1,
+                  "*1030_Item_SprintBoots*": 1,
+                  "*1032_Item_TravelBoots*": 1,
+                  "*1034_Item_SerpentMask*": 1,
+                  "*1035_Item_TensionBow*": 1,
+                  "*1047_Item_JourneyBoots*": 1,
+                  "*1049_Item_TyrantsMonocle*": 1,
+                  "*1052_Item_WeaponInfusion*": 1,
+                  "*1060_Item_BarbedNeedle*": 1,
+                  "*1065_Item_HeavySteel*": 1,
+                  "*1068_Item_LuckyStrike*": 2,
+                },
+                "itemSells": Object {},
+                "itemUses": Object {
+                  "*1000_Item_HalcyonPotion*": 1,
+                  "*1030_Item_SprintBoots*": 3,
+                  "*1047_Item_JourneyBoots*": 1,
+                  "*1052_Item_WeaponInfusion*": 1,
+                },
+                "items": Array [
+                  "Weapon3",
+                  "Boots3",
+                  "Tornado Trigger",
+                  "Tension Bow",
+                  "Critical",
+                  "Serpent Mask",
+                ],
+                "jungleKills": 26,
+                "karmaLevel": 1,
+                "kills": 14,
+                "krakenCaptures": 1,
+                "level": 9,
+                "minionKills": 50,
+                "nonJungleMinionKills": 24,
+                "skillTier": -1,
+                "skinKey": "Taka_DefaultSkin",
+                "turretCaptures": 2,
+                "wentAfk": false,
+                "winner": true,
+              },
+            },
+            "id": "fd166202-fbcf-11e6-9d96-0242ac11000f",
+            "relationships": Object {
+              "player": Object {
+                "data": Object {
+                  "id": "35496c1c-e652-11e6-9286-062cb73cdbb1",
+                  "type": "player",
+                },
+              },
+            },
+            "type": "participant",
+          },
+          "participantPlayer": Player {
+            "data": Object {
+              "attributes": Object {
+                "name": "Guest_277895810",
+                "shardId": "",
+                "stats": Object {
+                  "level": 9,
+                  "lifetimeGold": 16852,
+                  "lossStreak": 2,
+                  "played": 25,
+                  "played_ranked": 0,
+                  "winStreak": 0,
+                  "wins": 23,
+                  "xp": 4328,
+                },
+                "titleId": "",
+              },
+              "id": "35496c1c-e652-11e6-9286-062cb73cdbb1",
+              "relationships": Object {
+                "assets": Object {
+                  "data": Array [],
+                },
+              },
+              "type": "player",
+            },
+            "relationships": null,
+          },
+          "relationships": Array [
+            Object {
+              "type": "player",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  "relationships": Array [
+    Object {
+      "type": "rosters",
+    },
+  ],
+}
+`;

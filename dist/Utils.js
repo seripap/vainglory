@@ -1,8 +1,8 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
 
 var _models = require('./models/');
 
@@ -26,12 +26,19 @@ var _roster2 = _interopRequireDefault(_roster);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = {
-  models: {
-    BaseModel: _models2.default,
-    MatchModel: _match2.default,
-    ParticipantModel: _participant2.default,
-    PlayerModel: _player2.default,
-    RosterModel: _roster2.default
-  }
-};
+function parseTime(time) {
+  var normalizedTime = time.trim().toLowerCase().split(' ');
+}
+
+// export default {
+//   models: {
+//     BaseModel,
+//     MatchModel,
+//     ParticipantModel,
+//     PlayerModel,
+//     RosterModel,
+//   },
+//   time: {
+//     parseTime,
+//   },
+// }

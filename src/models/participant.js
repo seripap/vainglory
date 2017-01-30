@@ -1,24 +1,29 @@
 import BaseModel from './';
-import Player from './player';
 
 export default class Participant extends BaseModel {
-  constructor(data, included) {
-    super(data, included);
+
+  constructor(data) {
+    super(data);
+    this.relationships = [{
+      type: 'player',
+    }];
   }
 
   get actor() {
-    return this._data.attributes.actor;
-  }  
+    return this.raw.attributes.actor;
+  }
 
   get stats() {
-    return this._data.attributes.stats;
+    return this.raw.attributes.stats;
+  }
+
+  set player(player) {
+    this.participantPlayer = player;
+    return this;
   }
 
   get player() {
-    if ('player' in this._data.relationships) {
-      return new Player(this.filterIncluded('player').find((item) => item.id === this._data.relationships.player.data.id));
-    }
-
-    return null;    
+    return this.participantPlayer;
   }
+
 }

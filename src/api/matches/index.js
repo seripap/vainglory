@@ -1,46 +1,43 @@
 import isString from 'lodash/isString';
 import isArray from 'lodash/isArray';
-import MatchModel from '../../models/match';
 
 const ENDPOINT_PREFIX = 'matches';
 
-export default (http) => {
-  function single(matchId) {
-    return new Promise((resolve, reject) => {
-      if (!matchId) {
-        return reject(new Error('Expected required matchId. Usage: .single(matchId)'));
-      }
+export default (http, options, parser) => {
+  async function single(matchId) {
+    if (!matchId) {
+      return new Error('Expected required matchId. Usage: .single(matchId)');
+    }
 
-      if (!isString(matchId)) {
-        return reject(new Error('Expected a string for matchId'));
-      }
+    if (!isString(matchId)) {
+      return new Error('Expected a string for matchId');
+    }
 
-      const endpoint = `${ENDPOINT_PREFIX}/${matchId}`;
-      return http.execute('GET', endpoint).then(body => resolve(new MatchModel(body))).catch(err => reject(new Error(err)));
-    });
+    const endpoint = `${ENDPOINT_PREFIX}/${matchId}`;
+    const body = await http.execute('GET', endpoint);   
+
+    return parser('match', body);
   }
 
-  function collection(query = {}, options = {}) {
-    return new Promise((resolve, reject) => {
-      const defaults = {
-        page: {
-          offset: 0,
-          limit: 50,
-        },
-        sort: 'createdAt',
-        filters: {
-          started: '3hrs ago',
-          ended: 'Now',
-          playerNames: [],
-          teamNames: [],
-        },
-      };
+  async function collection(collectionOptions = {}) {
+    const defaults = {
+      page: {
+        offset: 0,
+        limit: 50,
+      },
+      sort: 'createdAt',
+      filter: {
+        'createdAt-start': '3hrs ago',
+        'createdAt-end': 'Now',
+        playerNames: [],
+        teamNames: [],
+      },
+    };
 
-      const query = http.serialize(Object.assign(options, defaults));
-      const endpoint = `${ENDPOINT_PREFIX}`;
+    const query = { ...defaults, collectionOptions };
+    const body = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
 
-      return http.execute('GET', endpoint, query).then(body => resolve(body)).catch(err => reject(new Error(err)));
-    });
+    return parser('matches', body);
   }
 
   return {

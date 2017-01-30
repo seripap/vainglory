@@ -5,12 +5,12 @@ import Http from './Http';
 import Utils from './Utils';
 
 class Vainglory {
-  constructor(apiKey = null) {
+  constructor(apiKey = null, options = {}) {
     if (!apiKey) {
       throw new Error('Missing API Key.');
     }
 
-    const api = new Api(new Http(apiKey));
+    const api = new Api(new Http(apiKey, options), options);
     api.bindTo(this);
   }
 

@@ -1,44 +1,48 @@
 import BaseModel from './';
-import Roster from './roster.js';
 
-export default class MatchModel extends BaseModel {
-  constructor(data, included) {
-    super(data, included);
+export default class Match extends BaseModel {
+
+  constructor(data) {
+    super(data);
+    this.relationships = [{
+      type: 'rosters',
+    }];
   }
 
   get createdAt() {
-    return this._data.attributes.createdAt;
+    return this.data.attributes.createdAt;
   }
 
   get duration() {
-    return this._data.attributes.duration;
+    return this.data.attributes.duration;
   }
 
   get gameMode() {
-    return this._data.attributes.gameMode;
+    return this.data.attributes.gameMode;
   }
 
   get patchVersion() {
-    return this._data.attributes.patchVersion;
+    return this.data.attributes.patchVersion;
   }
 
   get shardId() {
-    return this._data.attributes.shardId;
+    return this.data.attributes.shardId;
   }
 
   get stats() {
-    return this._data.attributes.stats;
+    return this.data.attributes.stats;
   }
 
   get titleId() {
-    return this._data.attributes.titleId;
+    return this.data.attributes.titleId;
+  }
+
+  set rosters(rosters) {
+    this.matchRoster = rosters;
+    return this;
   }
 
   get rosters() {
-    if ('rosters' in this._data.relationships) {
-      return this._data.relationships.rosters.data.map((roster) => new Roster(this.filterInclude('roster').find((item) => item.id === roster.id), this._included));
-    }
-
-    return null;
+    return this.matchRoster;
   }
 }

@@ -1,24 +1,25 @@
 import BaseModel from './';
 
 export default class Player extends BaseModel {
+
   constructor(data) {
     super(data);
   }
 
   get name() {
-    return this._data.attributes.name;
+    return this.data.attributes.name;
   }
 
   get shardId() {
-    return this._data.attributes.shardId;
+    return this.data.attributes.shardId;
   }
 
   get stats() {
-    return this._data.attributes.stats;
+    return this.data.attributes.stats;
   }
 
   get titleId() {
-    return this._data.attributes.titleId;
+    return this.data.attributes.titleId;
   }
 
 }

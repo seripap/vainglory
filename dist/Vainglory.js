@@ -23,6 +23,7 @@ require('babel-polyfill');
 var Vainglory = function () {
   function Vainglory() {
     var apiKey = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     _classCallCheck(this, Vainglory);
 
@@ -30,7 +31,7 @@ var Vainglory = function () {
       throw new Error('Missing API Key.');
     }
 
-    var api = new _api2.default(new _Http2.default(apiKey));
+    var api = new _api2.default(new _Http2.default(apiKey, options), options);
     api.bindTo(this);
   }
 

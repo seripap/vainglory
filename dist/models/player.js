@@ -31,22 +31,22 @@ var Player = function (_BaseModel) {
   _createClass(Player, [{
     key: 'name',
     get: function get() {
-      return this._data.attributes.name;
+      return this.data.attributes.name;
     }
   }, {
     key: 'shardId',
     get: function get() {
-      return this._data.attributes.shardId;
+      return this.data.attributes.shardId;
     }
   }, {
     key: 'stats',
     get: function get() {
-      return this._data.attributes.stats;
+      return this.data.attributes.stats;
     }
   }, {
     key: 'titleId',
     get: function get() {
-      return this._data.attributes.titleId;
+      return this.data.attributes.titleId;
     }
   }]);
 

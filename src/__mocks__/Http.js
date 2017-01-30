@@ -45,7 +45,7 @@ export default class Http {
     return queries.join('&');
   }
 
-  execute(method = 'GET', endpoint = null, query = null, options = {}) {
+  async execute(method = 'GET', endpoint = null, query = null, options = {}) {
     function parseBody(body, parseOptions = {}) {
       if (parseOptions.override) {
         return body;
@@ -69,42 +69,40 @@ export default class Http {
       }
     }
 
-    return new Promise((resolve, reject) => {
-      const requestOptions = Object.assign(options, this.options);
-      if (endpoint === null) {
-        throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
-      }
+    const requestOptions = Object.assign(options, this.options);
+    if (endpoint === null) {
+      throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
+    }
 
-      requestOptions.method = method;
-      requestOptions.url += endpoint;
+    requestOptions.method = method;
+    requestOptions.url += endpoint;
 
-      if (query) {
-        requestOptions.url += `?${query}`;
-      }
+    if (query) {
+      requestOptions.url += `?${query}`;
+    }
 
-      if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/matches?offset=0&limit=50&sort=createdAt&started=3hrs%20ago&ended=Now') {
-        return resolve(matchCollectionMock);
-      }
+    if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/matches?offset=0&limit=50&sort=createdAt&started=3hrs%20ago&ended=Now') {
+      return resolve(matchCollectionMock);
+    }
 
-      if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/matches/0123b560-d74c-11e6-b845-0671096b3e30') {
-        return resolve(matchSingleMock);
-      }
+    if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/matches/0123b560-d74c-11e6-b845-0671096b3e30') {
+      return resolve(matchSingleMock);
+    }
 
 
-      if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/players/6abb30de-7cb8-11e4-8bd3-06eb725f8a76') {
-        return resolve(playerSingleMock);
-      }
+    if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/players/6abb30de-7cb8-11e4-8bd3-06eb725f8a76') {
+      return resolve(playerSingleMock);
+    }
 
-      if (method && endpoint) {
-        return resolve(true);
-      }
+    if (method && endpoint) {
+      return resolve(true);
+    }
 
-      if (query) {
-        return resolve(true);
-      }
+    if (query) {
+      return resolve(true);
+    }
 
-      return reject(false);
-    });
+    return reject(false);
   }
 
 }
