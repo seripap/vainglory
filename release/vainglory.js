@@ -77288,6 +77288,7 @@ function extend() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // TODO
 
@@ -77309,11 +77310,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/na/',
+  statusUrl: 'https://api.dc01.gamelockerapp.com/status',
   title: 'semc-vainglory'
 };
 
 var Http = function () {
-  function Http(apiKey) {
+  function Http() {
+    var apiKey = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaults;
 
     _classCallCheck(this, Http);
@@ -77321,6 +77324,7 @@ var Http = function () {
     this.options = {
       url: options.host,
       headers: {
+        'Content-Encoding': 'gzip',
         'Content-Type': 'application/json',
         Accept: 'application/vnd.api+json',
         Authorization: 'Bearer ' + apiKey,
@@ -77438,6 +77442,47 @@ exports.default = Http;
 },{"lodash/isArray":466,"lodash/isObject":468,"request-promise":531}],617:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _models = require('./models/');
+
+var _models2 = _interopRequireDefault(_models);
+
+var _match = require('./models/match');
+
+var _match2 = _interopRequireDefault(_match);
+
+var _participant = require('./models/participant');
+
+var _participant2 = _interopRequireDefault(_participant);
+
+var _player = require('./models/player');
+
+var _player2 = _interopRequireDefault(_player);
+
+var _roster = require('./models/roster');
+
+var _roster2 = _interopRequireDefault(_roster);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  models: {
+    BaseModel: _models2.default,
+    MatchModel: _match2.default,
+    ParticipantModel: _participant2.default,
+    PlayerModel: _player2.default,
+    RosterModel: _roster2.default
+  }
+};
+
+},{"./models/":622,"./models/match":623,"./models/participant":624,"./models/player":625,"./models/roster":626}],618:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _api = require('./api');
 
 var _api2 = _interopRequireDefault(_api);
@@ -77446,36 +77491,51 @@ var _Http = require('./Http');
 
 var _Http2 = _interopRequireDefault(_Http);
 
+var _Utils = require('./Utils');
+
+var _Utils2 = _interopRequireDefault(_Utils);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 require('babel-polyfill');
 
-var Vainglory = function Vainglory() {
-  var apiKey = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+var Vainglory = function () {
+  function Vainglory() {
+    var apiKey = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-  _classCallCheck(this, Vainglory);
+    _classCallCheck(this, Vainglory);
 
-  if (!apiKey) {
-    throw new Error('Missing API Key.');
+    if (!apiKey) {
+      throw new Error('Missing API Key.');
+    }
+
+    var api = new _api2.default(new _Http2.default(apiKey));
+    api.bindTo(this);
   }
 
-  var api = new _api2.default(new _Http2.default(apiKey));
-  // Exposed methods
-  this.meta = api.meta;
-  this.matches = api.matches;
-  this.players = api.players;
-};
+  _createClass(Vainglory, [{
+    key: 'utils',
+    get: function get() {
+      return _Utils2.default;
+    }
+  }]);
+
+  return Vainglory;
+}();
 
 module.exports = Vainglory;
 
-},{"./Http":616,"./api":618,"babel-polyfill":26}],618:[function(require,module,exports){
+},{"./Http":616,"./Utils":617,"./api":619,"babel-polyfill":26}],619:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _matches = require('./matches');
 
@@ -77489,16 +77549,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Api = function Api(http) {
-  _classCallCheck(this, Api);
+var Api = function () {
+  function Api(http) {
+    _classCallCheck(this, Api);
 
-  this.matches = (0, _matches2.default)(http);
-  this.players = (0, _players2.default)(http);
-};
+    this._http = http;
+  }
+
+  _createClass(Api, [{
+    key: 'bindTo',
+    value: function bindTo(context) {
+      context.matches = (0, _matches2.default)(this._http);
+      context.players = (0, _players2.default)(this._http);
+    }
+  }]);
+
+  return Api;
+}();
 
 exports.default = Api;
 
-},{"./matches":619,"./players":620}],619:[function(require,module,exports){
+},{"./matches":620,"./players":621}],620:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77508,6 +77579,14 @@ Object.defineProperty(exports, "__esModule", {
 var _isString = require('lodash/isString');
 
 var _isString2 = _interopRequireDefault(_isString);
+
+var _isArray = require('lodash/isArray');
+
+var _isArray2 = _interopRequireDefault(_isArray);
+
+var _match = require('../../models/match');
+
+var _match2 = _interopRequireDefault(_match);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -77526,7 +77605,7 @@ exports.default = function (http) {
 
       var endpoint = ENDPOINT_PREFIX + '/' + matchId;
       return http.execute('GET', endpoint).then(function (body) {
-        return resolve(body);
+        return resolve(new _match2.default(body));
       }).catch(function (err) {
         return reject(new Error(err));
       });
@@ -77569,7 +77648,7 @@ exports.default = function (http) {
   };
 };
 
-},{"lodash/isString":470}],620:[function(require,module,exports){
+},{"../../models/match":623,"lodash/isArray":466,"lodash/isString":470}],621:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77579,6 +77658,10 @@ Object.defineProperty(exports, "__esModule", {
 var _isString = require('lodash/isString');
 
 var _isString2 = _interopRequireDefault(_isString);
+
+var _player = require('../../models/player');
+
+var _player2 = _interopRequireDefault(_player);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -77598,7 +77681,7 @@ exports.default = function (http) {
       var endpoint = ENDPOINT_PREFIX + '/' + playerId;
 
       return http.execute('GET', endpoint).then(function (body) {
-        return resolve(body);
+        return resolve(new _player2.default(body));
       }).catch(function (err) {
         return reject(new Error(err));
       });
@@ -77610,5 +77693,345 @@ exports.default = function (http) {
   };
 };
 
-},{"lodash/isString":470}]},{},[617])(617)
+},{"../../models/player":625,"lodash/isString":470}],622:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var BaseModel = function () {
+  function BaseModel(data) {
+    var included = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    _classCallCheck(this, BaseModel);
+
+    // Data can be set arbitrarily or from an HTTP response 
+    if ('data' in data) {
+      this._data = data.data;
+    } else {
+      this._data = data;
+    }
+
+    if ('included' in data) {
+      this._included = data.included;
+    } else if (included) {
+      this._included = included;
+    }
+  }
+
+  _createClass(BaseModel, [{
+    key: 'filterIncluded',
+    value: function filterIncluded(type) {
+      return this._included.length > 0 ? this._included.filter(function (item) {
+        return item.type === type;
+      }) : false;
+    }
+  }, {
+    key: 'type',
+    get: function get() {
+      return this._data.type;
+    }
+  }, {
+    key: 'id',
+    get: function get() {
+      return this._data.id;
+    }
+  }, {
+    key: 'raw',
+    get: function get() {
+      return this._data;
+    }
+  }]);
+
+  return BaseModel;
+}();
+
+exports.default = BaseModel;
+
+
+function addIncluded(included) {}
+
+},{}],623:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _ = require('./');
+
+var _2 = _interopRequireDefault(_);
+
+var _roster = require('./roster.js');
+
+var _roster2 = _interopRequireDefault(_roster);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MatchModel = function (_BaseModel) {
+  _inherits(MatchModel, _BaseModel);
+
+  function MatchModel(data, included) {
+    _classCallCheck(this, MatchModel);
+
+    return _possibleConstructorReturn(this, (MatchModel.__proto__ || Object.getPrototypeOf(MatchModel)).call(this, data, included));
+  }
+
+  _createClass(MatchModel, [{
+    key: 'createdAt',
+    get: function get() {
+      return this._data.attributes.createdAt;
+    }
+  }, {
+    key: 'duration',
+    get: function get() {
+      return this._data.attributes.duration;
+    }
+  }, {
+    key: 'gameMode',
+    get: function get() {
+      return this._data.attributes.gameMode;
+    }
+  }, {
+    key: 'patchVersion',
+    get: function get() {
+      return this._data.attributes.patchVersion;
+    }
+  }, {
+    key: 'shardId',
+    get: function get() {
+      return this._data.attributes.shardId;
+    }
+  }, {
+    key: 'stats',
+    get: function get() {
+      return this._data.attributes.stats;
+    }
+  }, {
+    key: 'titleId',
+    get: function get() {
+      return this._data.attributes.titleId;
+    }
+  }, {
+    key: 'rosters',
+    get: function get() {
+      var _this2 = this;
+
+      if ('rosters' in this._data.relationships) {
+        return this._data.relationships.rosters.data.map(function (roster) {
+          return new _roster2.default(_this2.filterInclude('roster').find(function (item) {
+            return item.id === roster.id;
+          }), _this2._included);
+        });
+      }
+
+      return null;
+    }
+  }]);
+
+  return MatchModel;
+}(_2.default);
+
+exports.default = MatchModel;
+
+},{"./":622,"./roster.js":626}],624:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _ = require('./');
+
+var _2 = _interopRequireDefault(_);
+
+var _player = require('./player');
+
+var _player2 = _interopRequireDefault(_player);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Participant = function (_BaseModel) {
+  _inherits(Participant, _BaseModel);
+
+  function Participant(data, included) {
+    _classCallCheck(this, Participant);
+
+    return _possibleConstructorReturn(this, (Participant.__proto__ || Object.getPrototypeOf(Participant)).call(this, data, included));
+  }
+
+  _createClass(Participant, [{
+    key: 'actor',
+    get: function get() {
+      return this._data.attributes.actor;
+    }
+  }, {
+    key: 'stats',
+    get: function get() {
+      return this._data.attributes.stats;
+    }
+  }, {
+    key: 'player',
+    get: function get() {
+      var _this2 = this;
+
+      if ('player' in this._data.relationships) {
+        return new _player2.default(this.filterIncluded('player').find(function (item) {
+          return item.id === _this2._data.relationships.player.data.id;
+        }));
+      }
+
+      return null;
+    }
+  }]);
+
+  return Participant;
+}(_2.default);
+
+exports.default = Participant;
+
+},{"./":622,"./player":625}],625:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _ = require('./');
+
+var _2 = _interopRequireDefault(_);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Player = function (_BaseModel) {
+  _inherits(Player, _BaseModel);
+
+  function Player(data) {
+    _classCallCheck(this, Player);
+
+    return _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, data));
+  }
+
+  _createClass(Player, [{
+    key: 'name',
+    get: function get() {
+      return this._data.attributes.name;
+    }
+  }, {
+    key: 'shardId',
+    get: function get() {
+      return this._data.attributes.shardId;
+    }
+  }, {
+    key: 'stats',
+    get: function get() {
+      return this._data.attributes.stats;
+    }
+  }, {
+    key: 'titleId',
+    get: function get() {
+      return this._data.attributes.titleId;
+    }
+  }]);
+
+  return Player;
+}(_2.default);
+
+exports.default = Player;
+
+},{"./":622}],626:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _ = require('./');
+
+var _2 = _interopRequireDefault(_);
+
+var _participant = require('./participant');
+
+var _participant2 = _interopRequireDefault(_participant);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Roster = function (_BaseModel) {
+  _inherits(Roster, _BaseModel);
+
+  function Roster(data, included) {
+    _classCallCheck(this, Roster);
+
+    return _possibleConstructorReturn(this, (Roster.__proto__ || Object.getPrototypeOf(Roster)).call(this, data, included));
+  }
+
+  _createClass(Roster, [{
+    key: 'stats',
+    get: function get() {
+      return this._data.stats;
+    }
+  }, {
+    key: 'participants',
+    get: function get() {
+      var _this2 = this;
+
+      if ('participants' in this._data.relationships) {
+        return this._data.relationships.participants.data.map(function (participant) {
+          return new _participant2.default(_this2.filterInclude('participant').find(function (item) {
+            return item.id === participant.id;
+          }), _this2._included);
+        });
+      }
+
+      return null;
+    }
+  }]);
+
+  return Roster;
+}(_2.default);
+
+exports.default = Roster;
+
+},{"./":622,"./participant":624}]},{},[618])(618)
 });
