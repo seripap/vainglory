@@ -67,7 +67,8 @@ All methods are named references from the [Official API Reference](http://develo
 
 ### Players
 
-* [`single`](#playersSingle)
+* [`getById`](#playersId)
+* [`getByName`](#playersName)
 
 ---------------------------------------
 ## Base Model
@@ -141,8 +142,8 @@ vainglory.matches.single(matchId).then((match) => {
 
 `vainglory.players` 
 
-<a name="playersSingle" />
-#### single(playerId)
+<a name="playersId" />
+#### getById(playerId)
 
 Retreives a player by playerId. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
 
@@ -153,7 +154,27 @@ __Example__
 ```javascript
 const playerId = '6abb30de-7cb8-11e4-8bd3-06eb725f8a76';
 
-vainglory.players.single(playerId).then((player) => {
+vainglory.players.getById(playerId).then((player) => {
+  console.log(player.id);
+  console.log(player.stats);
+}).catch((errorMsg) => {
+  console.error(errorMsg);
+});
+```
+
+<a name="playersName" />
+#### getByName(playerName)
+
+Retreives a player by playerName. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
+
+__Arguments__
+- `playerName` [*String*] - The name of player to retrieve.
+
+__Example__
+```javascript
+const playerName = 'famous';
+
+vainglory.players.getByName(playerName).then((player) => {
   console.log(player.id);
   console.log(player.stats);
 }).catch((errorMsg) => {

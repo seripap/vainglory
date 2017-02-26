@@ -34,7 +34,7 @@ export default (http, options, parser) => {
       },
     };
 
-    const query = { ...defaults, collectionOptions };
+    const query = { ...defaults, ...collectionOptions };
     const body = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
 
     return parser('matches', body);

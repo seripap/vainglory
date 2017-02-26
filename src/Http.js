@@ -2,7 +2,7 @@
 
 import request from 'request-promise';
 import isArray from 'lodash/isArray';
-import isObject from 'lodash/isObject';
+import isPlainObject from 'lodash/isPlainObject';
 
 const defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/na/',
@@ -15,6 +15,7 @@ const ERRORS = {
   rated: 'You have hit the rate limit.  Free for non-commercial use for up to 10 requests per minute! To increase your rate limit, please contact api@superevilmegacorp.com',
   auth: 'Unauthorized, invalid API key provided.',
   unknown: 'Unknown error, please try your request again.',
+  empty: 'Data not found',
 };
 
 export default class Http {
@@ -41,13 +42,19 @@ export default class Http {
     const loop = (obj, prefix = null) => {
       for (const property of Object.keys(obj)) {
         if (Object.prototype.hasOwnProperty.call(obj, property)) {
-          if (isObject(obj[property])) {
+          if (isPlainObject(obj[property])) {
             loop(obj[property], property);
+          } else if (isArray(obj[property])) {
+            if (prefix) {
+              queries.push(`${prefix}[${encodeURIComponent(property)}]=${obj[property].join(',')}`);
+            } else {
+              queries.push(`${encodeURIComponent(property)}=${obj[property].join(',')}`);
+            }
           } else {
             if (prefix) {
-              queries.push(`${prefix}[${encodeURIComponent(property)}]=${encodeURIComponent(obj[property])}`);
+              queries.push(`${prefix}[${encodeURIComponent(property)}]=${obj[property]}`);
             } else {
-              queries.push(`${encodeURIComponent(property)}=${encodeURIComponent(obj[property])}`);
+              queries.push(`${encodeURIComponent(property)}=${obj[property]}`);
             }
           }
         }
@@ -76,6 +83,8 @@ export default class Http {
       switch (err.title) {
         case 'Unauthorized':
           return ERRORS.auth;
+        case 'Not Found':
+          return ERRORS.empty;
         default:
           return ERRORS.unknown;
       }
