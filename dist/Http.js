@@ -17,9 +17,9 @@ var _isArray = require('lodash/isArray');
 
 var _isArray2 = _interopRequireDefault(_isArray);
 
-var _isObject = require('lodash/isObject');
+var _isPlainObject = require('lodash/isPlainObject');
 
-var _isObject2 = _interopRequireDefault(_isObject);
+var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,7 +37,8 @@ var defaults = {
 var ERRORS = {
   rated: 'You have hit the rate limit.  Free for non-commercial use for up to 10 requests per minute! To increase your rate limit, please contact api@superevilmegacorp.com',
   auth: 'Unauthorized, invalid API key provided.',
-  unknown: 'Unknown error, please try your request again.'
+  unknown: 'Unknown error, please try your request again.',
+  empty: 'Data not found'
 };
 
 var Http = function () {
@@ -79,13 +80,19 @@ var Http = function () {
             var property = _step.value;
 
             if (Object.prototype.hasOwnProperty.call(obj, property)) {
-              if ((0, _isObject2.default)(obj[property])) {
+              if ((0, _isPlainObject2.default)(obj[property])) {
                 loop(obj[property], property);
+              } else if ((0, _isArray2.default)(obj[property])) {
+                if (prefix) {
+                  queries.push(prefix + '[' + encodeURIComponent(property) + ']=' + obj[property].join(','));
+                } else {
+                  queries.push(encodeURIComponent(property) + '=' + obj[property].join(','));
+                }
               } else {
                 if (prefix) {
-                  queries.push(prefix + '[' + encodeURIComponent(property) + ']=' + encodeURIComponent(obj[property]));
+                  queries.push(prefix + '[' + encodeURIComponent(property) + ']=' + obj[property]);
                 } else {
-                  queries.push(encodeURIComponent(property) + '=' + encodeURIComponent(obj[property]));
+                  queries.push(encodeURIComponent(property) + '=' + obj[property]);
                 }
               }
             }
@@ -132,6 +139,8 @@ var Http = function () {
         switch (err.title) {
           case 'Unauthorized':
             return ERRORS.auth;
+          case 'Not Found':
+            return ERRORS.empty;
           default:
             return ERRORS.unknown;
         }

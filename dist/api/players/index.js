@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _isString = require('lodash/isString');
 
 var _isString2 = _interopRequireDefault(_isString);
@@ -15,38 +17,42 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var ENDPOINT_PREFIX = 'players';
 
 exports.default = function (http, options, parser) {
-  var single = function () {
-    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(playerId) {
-      var endpoint, body;
+  var getByName = function () {
+    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(playerName) {
+      var endpoint, defaults, query, body;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              if (playerId) {
-                _context.next = 2;
+              console.log('Heads up! This endpoint currently does not work, it is here because it is listed in the API docs.');
+
+              if (playerName) {
+                _context.next = 3;
                 break;
               }
 
-              return _context.abrupt('return', new Error('Expected required playerId. Usage: .single(playerId)'));
+              return _context.abrupt('return', new Error('Expected required playerName. Usage: .getByName(playerName)'));
 
-            case 2:
-              if ((0, _isString2.default)(playerId)) {
-                _context.next = 4;
+            case 3:
+              if ((0, _isString2.default)(playerName)) {
+                _context.next = 5;
                 break;
               }
 
-              return _context.abrupt('return', new Error('Expected a string for playerId'));
+              return _context.abrupt('return', new Error('Expected a string for playerName'));
 
-            case 4:
-              endpoint = ENDPOINT_PREFIX + '/' + playerId;
-              _context.next = 7;
-              return http.execute('GET', endpoint);
+            case 5:
+              endpoint = '' + ENDPOINT_PREFIX;
+              defaults = { filter: { playerNames: '' } };
+              query = _extends({}, defaults, { filter: { playerNames: playerName } });
+              _context.next = 10;
+              return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
-            case 7:
+            case 10:
               body = _context.sent;
               return _context.abrupt('return', parser('player', body));
 
-            case 9:
+            case 12:
             case 'end':
               return _context.stop();
           }
@@ -54,12 +60,54 @@ exports.default = function (http, options, parser) {
       }, _callee, this);
     }));
 
-    return function single(_x) {
+    return function getByName(_x) {
       return _ref.apply(this, arguments);
     };
   }();
 
-  return {
-    single: single
-  };
+  var getById = function () {
+    var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(playerId) {
+      var endpoint, body;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (playerId) {
+                _context2.next = 2;
+                break;
+              }
+
+              return _context2.abrupt('return', new Error('Expected required playerId. Usage: .single(playerId)'));
+
+            case 2:
+              if ((0, _isString2.default)(playerId)) {
+                _context2.next = 4;
+                break;
+              }
+
+              return _context2.abrupt('return', new Error('Expected a string for playerId'));
+
+            case 4:
+              endpoint = ENDPOINT_PREFIX + '/' + playerId;
+              _context2.next = 7;
+              return http.execute('GET', endpoint);
+
+            case 7:
+              body = _context2.sent;
+              return _context2.abrupt('return', parser('player', body));
+
+            case 9:
+            case 'end':
+              return _context2.stop();
+          }
+        }
+      }, _callee2, this);
+    }));
+
+    return function getById(_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  return { getByName: getByName, getById: getById };
 };

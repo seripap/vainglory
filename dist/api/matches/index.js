@@ -86,7 +86,7 @@ exports.default = function (http, options, parser) {
                   teamNames: []
                 }
               };
-              query = _extends({}, defaults, { collectionOptions: collectionOptions });
+              query = _extends({}, defaults, collectionOptions);
               _context2.next = 4;
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
