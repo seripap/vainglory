@@ -4,7 +4,6 @@ const ENDPOINT_PREFIX = 'players';
 
 export default (http, options, parser) => {
   async function getByName(playerName) {
-    console.log('Heads up! This endpoint currently does not work, it is here because it is listed in the API docs.');
     if (!playerName) {
       return new Error('Expected required playerName. Usage: .getByName(playerName)');
     }
@@ -14,8 +13,8 @@ export default (http, options, parser) => {
     }
 
     const endpoint = `${ENDPOINT_PREFIX}`;
-    const defaults = { filter: { playerNames: '' } };
-    const query = { ...defaults, filter: { playerNames: playerName } };
+    const defaults = { filter: { playerName: '' } };
+    const query = { ...defaults, filter: { playerName: playerName } };
     const body = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
 
     return parser('player', body);
