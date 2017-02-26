@@ -8,6 +8,10 @@ var _isArray = require('lodash/isArray');
 
 var _isArray2 = _interopRequireDefault(_isArray);
 
+var _util = require('util');
+
+var _util2 = _interopRequireDefault(_util);
+
 var _player = require('../models/player');
 
 var _player2 = _interopRequireDefault(_player);
@@ -37,8 +41,6 @@ var map = {
   participant: _participant2.default,
   roster: _roster2.default
 };
-//Models
-
 
 function getModel(entityType) {
   var model = map[entityType];
@@ -50,6 +52,11 @@ function getModel(entityType) {
 }
 
 exports.default = function (entity, data) {
+
+  if (data instanceof Error) {
+    return data;
+  }
+
   var parentData = data.data;
   var includedData = data.included;
   var BaseModel = getModel(entity);
@@ -84,15 +91,11 @@ exports.default = function (entity, data) {
 
   // Filters models so they are formatted correctly.
   function filterRelations(relation) {
-    var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
     var mappedData = includedData.find(function (inc) {
       return inc.id === relation.id;
     });
     var RelationModel = getModel(relation.type);
     var modeledData = new RelationModel(mappedData);
-
-    if (debug) {}
 
     return checkForRelations(modeledData, modeledData.data);
   }

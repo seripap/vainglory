@@ -34,6 +34,12 @@ var defaults = {
   remap: true
 };
 
+var ERRORS = {
+  rated: 'You have hit the rate limit.  Free for non-commercial use for up to 10 requests per minute! To increase your rate limit, please contact api@superevilmegacorp.com',
+  auth: 'Unauthorized, invalid API key provided.',
+  unknown: 'Unknown error, please try your request again.'
+};
+
 var Http = function () {
   function Http() {
     var apiKey = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -113,10 +119,23 @@ var Http = function () {
       }
 
       if ('errors' in body) {
-        return { error: true, message: body.errors };
+        var messages = this.parseErrors(body.errors);
+        return { error: true, messages: messages };
       }
 
       return body;
+    }
+  }, {
+    key: 'parseErrors',
+    value: function parseErrors(errors) {
+      return errors.map(function (err) {
+        switch (err.title) {
+          case 'Unauthorized':
+            return ERRORS.auth;
+          default:
+            return ERRORS.unknown;
+        }
+      });
     }
   }, {
     key: 'execute',
@@ -161,7 +180,7 @@ var Http = function () {
                   break;
                 }
 
-                return _context.abrupt('return', { error: true, message: 'NO DATA' });
+                return _context.abrupt('return', { error: true, messages: ['NO DATA'] });
 
               case 12:
                 parsedBody = this.parseBody(body, options);
@@ -171,7 +190,7 @@ var Http = function () {
                   break;
                 }
 
-                return _context.abrupt('return', new Error(parsedBody));
+                return _context.abrupt('return', new Error(parsedBody.messages));
 
               case 15:
                 return _context.abrupt('return', parsedBody);
@@ -179,11 +198,9 @@ var Http = function () {
               case 18:
                 _context.prev = 18;
                 _context.t0 = _context['catch'](6);
-
-                console.log('error', _context.t0);
                 return _context.abrupt('return', new Error(_context.t0));
 
-              case 22:
+              case 21:
               case 'end':
                 return _context.stop();
             }

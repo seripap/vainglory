@@ -1,6 +1,3 @@
-require('babel-core/register');
-require('babel-polyfill');
-
 import Api from './api';
 import Http from './Http';
 import Utils from './Utils';
@@ -13,10 +10,6 @@ class Vainglory {
 
     const api = new Api(new Http(apiKey, options), options);
     api.bindTo(this);
-  }
-
-  get utils() {
-    return Utils;
   }
 
 }

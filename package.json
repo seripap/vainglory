@@ -2,7 +2,7 @@
   "name": "vainglory",
   "version": "0.6.1",
   "description": "A Javascript API Client for Vainglory.",
-  "main": "dist/Vainglory.js",
+  "main": "dist/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint index.js src/**",
     "test:dev": "jest --watch",
