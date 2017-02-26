@@ -102,7 +102,7 @@ const options = {
   sort: 'createdAt',
   filter: {
     'createdAt-start': '3hrs ago', // TODO: Parse times (soon!)
-    'createdAt-end: 'Now', // TODO: Parse times (soon!)
+    'createdAt-end': 'Now', // TODO: Parse times (soon!)
     playerNames: [],
     teamNames: [],
   }
