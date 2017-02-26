@@ -26,7 +26,6 @@ Base options can be modified by passing an object during initalization.
 __Properties__
 - `host` [*String*] - HTTP Url to call
 - `title` [*String*] - X-TITLE-ID modifier
-- `remapped` [*Boolean*] - Returns `clean` values for actors and items, sanitized from the API call. For example, if the results returned `*1000_Item_HalcyonPotion*`, the client will return `Halcyon Potion`
 
 
 ```javascript
@@ -77,7 +76,10 @@ All single results are wrapped with a model for easier data digesting. You can r
 
 - `.type` - Returns the type of data requested
 - `.id` - Returns associated ID
-- `.raw` - Returns a raw object representation of the data retrieved
+
+## Remapped items vs server names
+
+For fields in `participant` such as `actor` or `itemGrants`, server will return `*1000_Item_HalcyonPotion*`. The client will return `Halcyon Potion` automatically based on field mappings. If you would like the original response, instead of calling `.stats` directly, use `_.stats` or `._actor` instead of `.actor`.
 
 ---------------------------------------
 ## Matches

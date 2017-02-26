@@ -1,4 +1,6 @@
 import BaseModel from './';
+import actors from './resources/actors.json';
+import items from './resources/items.json';
 
 export default class Participant extends BaseModel {
 
@@ -9,12 +11,33 @@ export default class Participant extends BaseModel {
     }];
   }
 
-  get actor() {
+  replaceItem(key, stats) {
+    for (const property of Object.keys(stats[key])) {
+      const normalizedName = items.find((item) => item.serverName === property);
+      stats[key][normalizedName.name] = stats[key][property];
+      delete stats[key][property];
+    }
+
+    return stats[key];
+  }
+
+  get _actor() {
     return this.raw.attributes.actor;
   }
 
-  get stats() {
+  get actor() {
+    return actors.find(actor => actor.serverName === this.raw.attributes.actor).name;
+  }
+
+  get _stats() {
     return this.raw.attributes.stats;
+  }
+
+  get stats() {
+    const stats = this.raw.attributes.stats;
+    stats.itemGrants = this.replaceItem('itemGrants', stats);
+    stats.itemUses = this.replaceItem('itemUses', stats);
+    return stats;
   }
 
   set player(player) {

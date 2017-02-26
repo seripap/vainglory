@@ -1,6 +1,5 @@
 import Api from './api';
 import Http from './Http';
-import Utils from './Utils';
 
 class Vainglory {
   constructor(apiKey = null, options = {}) {
