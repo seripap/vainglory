@@ -171,7 +171,7 @@ var Http = function () {
                   break;
                 }
 
-                throw new Error(parsedBody);
+                return _context.abrupt('return', new Error(parsedBody));
 
               case 15:
                 return _context.abrupt('return', parsedBody);
@@ -179,9 +179,11 @@ var Http = function () {
               case 18:
                 _context.prev = 18;
                 _context.t0 = _context['catch'](6);
-                throw new Error(_context.t0);
 
-              case 21:
+                console.log('error', _context.t0);
+                return _context.abrupt('return', new Error(_context.t0));
+
+              case 22:
               case 'end':
                 return _context.stop();
             }

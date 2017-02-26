@@ -1,3 +1,4 @@
+require('babel-core/register');
 require('babel-polyfill');
 
 import Api from './api';

@@ -1,5 +1,6 @@
 import isArray from 'lodash/isArray';
-//Models
+import util from 'util';
+
 import Player from '../models/player';
 import Matches from '../models/matches';
 import Match from '../models/match';
@@ -24,6 +25,11 @@ function getModel(entityType) {
 }
 
 export default (entity, data) => {
+
+  if (data instanceof Error) {
+    return data;
+  }
+
   const parentData = data.data;
   const includedData = data.included;
   const BaseModel = getModel(entity);
@@ -55,14 +61,10 @@ export default (entity, data) => {
   }
 
   // Filters models so they are formatted correctly.
-  function filterRelations(relation, debug = false) {
+  function filterRelations(relation) {
     const mappedData = includedData.find(inc => inc.id === relation.id);
     const RelationModel = getModel(relation.type);
     const modeledData = new RelationModel(mappedData);
-
-    if (debug) {
-
-    }
 
     return checkForRelations(modeledData, modeledData.data);
   }

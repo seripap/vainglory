@@ -11,6 +11,12 @@ const defaults = {
   remap: true,
 };
 
+const ERRORS = {
+  rated: 'You have hit the rate limit.  Free for non-commercial use for up to 10 requests per minute! To increase your rate limit, please contact api@superevilmegacorp.com',
+  auth: 'Unauthorized, invalid API key provided.',
+  unknown: 'Unknown error, please try your request again.',
+};
+
 export default class Http {
   constructor(apiKey = null, options = defaults) {
     const requestOptions = Object.assign(options, defaults);
@@ -58,10 +64,22 @@ export default class Http {
     }
 
     if ('errors' in body) {
-      return { error: true, message: body.errors };
+      const messages = this.parseErrors(body.errors);
+      return { error: true, messages };
     }
 
     return body;
+  }
+
+  parseErrors(errors) {
+    return errors.map((err) => {
+      switch (err.title) {
+        case 'Unauthorized':
+          return ERRORS.auth;
+        default:
+          return ERRORS.unknown;
+      }
+    });
   }
 
   async execute(method = 'GET', endpoint = null, query = null, options = {}) {
@@ -81,17 +99,17 @@ export default class Http {
     try {
       const body = await request(requestOptions);
       if (!body) {
-        return { error: true, message: 'NO DATA' };
+        return { error: true, messages: ['NO DATA'] };
       }
       const parsedBody = this.parseBody(body, options);
 
       if (parsedBody.error) {
-        throw new Error(parsedBody);
+        return new Error(parsedBody.messages);
       }
 
       return parsedBody;
     } catch (e) {
-      throw new Error(e);
+      return new Error(e);
     }
   }
 }

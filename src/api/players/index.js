@@ -1,5 +1,4 @@
 import isString from 'lodash/isString';
-import PlayerModel from '../../models/player';
 
 const ENDPOINT_PREFIX = 'players';
 
