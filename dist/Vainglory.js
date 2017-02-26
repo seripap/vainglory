@@ -8,10 +8,6 @@ var _Http = require('./Http');
 
 var _Http2 = _interopRequireDefault(_Http);
 
-var _Utils = require('./Utils');
-
-var _Utils2 = _interopRequireDefault(_Utils);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }

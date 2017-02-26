@@ -31,7 +31,7 @@ var defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/na/',
   statusUrl: 'https://api.dc01.gamelockerapp.com/status',
   title: 'semc-vainglory',
-  remap: true
+  remapped: true
 };
 
 var ERRORS = {

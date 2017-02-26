@@ -1,6 +1,6 @@
 import BaseModel from './';
-import actors from './resources/actors.json';
-import items from './resources/items.json';
+import actors from './resources/actors';
+import items from './resources/items';
 
 export default class Participant extends BaseModel {
 

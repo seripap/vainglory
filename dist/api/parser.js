@@ -51,7 +51,7 @@ function getModel(entityType) {
   return model;
 }
 
-exports.default = function (entity, data) {
+exports.default = function (entity, data, remapped) {
 
   if (data instanceof Error) {
     return data;
