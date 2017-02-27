@@ -103,7 +103,6 @@ export default class Http {
 
     if (query) {
       requestOptions.url += `?${this.serialize(query)}`;
-      console.log(requestOptions.url);
     }
 
     try {
