@@ -33,9 +33,9 @@ import Vainglory from 'vainglory';
 
 /* defaults */
 const options = {
-  host: 'https://api.dc01.gamelockerapp.com/shards/na/',
+  host: 'https://api.dc01.gamelockerapp.com/shards/',
+  region: 'na', // valid: na, sg, eu
   title: 'semc-vainglory',
-  remapped: true
 };
 
 const vainglory = new Vainglory('api-key', options);

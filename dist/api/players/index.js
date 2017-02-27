@@ -24,35 +24,33 @@ exports.default = function (http, options, parser) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log('Heads up! This endpoint currently does not work, it is here because it is listed in the API docs.');
-
               if (playerName) {
-                _context.next = 3;
+                _context.next = 2;
                 break;
               }
 
               return _context.abrupt('return', new Error('Expected required playerName. Usage: .getByName(playerName)'));
 
-            case 3:
+            case 2:
               if ((0, _isString2.default)(playerName)) {
-                _context.next = 5;
+                _context.next = 4;
                 break;
               }
 
               return _context.abrupt('return', new Error('Expected a string for playerName'));
 
-            case 5:
+            case 4:
               endpoint = '' + ENDPOINT_PREFIX;
-              defaults = { filter: { playerNames: '' } };
-              query = _extends({}, defaults, { filter: { playerNames: playerName } });
-              _context.next = 10;
+              defaults = { filter: { playerName: '' } };
+              query = _extends({}, defaults, { filter: { playerName: playerName } });
+              _context.next = 9;
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
-            case 10:
+            case 9:
               body = _context.sent;
               return _context.abrupt('return', parser('player', body));
 
-            case 12:
+            case 11:
             case 'end':
               return _context.stop();
           }

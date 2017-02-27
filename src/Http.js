@@ -5,10 +5,10 @@ import isArray from 'lodash/isArray';
 import isPlainObject from 'lodash/isPlainObject';
 
 const defaults = {
-  host: 'https://api.dc01.gamelockerapp.com/shards/na/',
+  host: 'https://api.dc01.gamelockerapp.com/shards/',
+  region: 'na',
   statusUrl: 'https://api.dc01.gamelockerapp.com/status',
   title: 'semc-vainglory',
-  remapped: true,
 };
 
 const ERRORS = {
@@ -20,9 +20,9 @@ const ERRORS = {
 
 export default class Http {
   constructor(apiKey = null, options = defaults) {
-    const requestOptions = Object.assign(options, defaults);
+    const requestOptions = { ...defaults, ...options };
     this.options = {
-      url: requestOptions.host,
+      url: `${requestOptions.host}${requestOptions.region}/`,
       qs: {},
       headers: {
         'Content-Encoding': 'gzip',
@@ -103,6 +103,7 @@ export default class Http {
 
     if (query) {
       requestOptions.url += `?${this.serialize(query)}`;
+      console.log(requestOptions.url);
     }
 
     try {

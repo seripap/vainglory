@@ -14,24 +14,19 @@ export default (http, options, parser) => {
     }
 
     const endpoint = `${ENDPOINT_PREFIX}/${matchId}`;
-    const body = await http.execute('GET', endpoint);   
+    const body = await http.execute('GET', endpoint);
 
     return parser('match', body);
   }
 
   async function collection(collectionOptions = {}) {
+    const now = new Date();
+    const minus3Hours = new Date(new Date() * 1 - 1000 * 3600 * 3);
+
     const defaults = {
-      page: {
-        offset: 0,
-        limit: 50,
-      },
+      page: { offset: 0, limit: 50 },
       sort: 'createdAt',
-      filter: {
-        'createdAt-start': '3hrs ago',
-        'createdAt-end': 'Now',
-        playerNames: [],
-        teamNames: [],
-      },
+      filter: { 'createdAt-start': minus3Hours.toISOString(), 'createdAt-end': now.toISOString(), playerNames: [], teamNames: [] },
     };
 
     const query = { ...defaults, ...collectionOptions };
@@ -40,8 +35,5 @@ export default (http, options, parser) => {
     return parser('matches', body);
   }
 
-  return {
-    single,
-    collection,
-  };
+  return { single, collection };
 };
