@@ -1,6 +1,6 @@
 {
   "name": "vainglory",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "A Javascript API Client for Vainglory.",
   "main": "dist/index.js",
   "scripts": {
