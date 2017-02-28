@@ -81,6 +81,16 @@ Returns API meta information.
 vainglory.status.then((info) => console.log(info));
 ```
 
+Example Response
+
+```
+{ 
+  id: 'gamelocker', // From server
+  releasedAt: '2017-02-24T20:44:05Z', // From server
+  version: 'gamelockerd-v4.0.2', // From server
+  clientVersion: '0.8.1' // From VaingloryJS
+}
+```
 ---------------------------------------
 ## Matches
 
