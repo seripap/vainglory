@@ -45,19 +45,25 @@ exports.default = function (http) {
 
             case 4:
               endpoint = ENDPOINT_PREFIX + '/' + matchId;
-              _context.next = 7;
+              _context.prev = 5;
+              _context.next = 8;
               return http.execute('GET', endpoint);
 
-            case 7:
+            case 8:
               body = _context.sent;
               return _context.abrupt('return', (0, _parser2.default)('match', body));
 
-            case 9:
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context['catch'](5);
+              return _context.abrupt('return', _context.t0);
+
+            case 15:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, this);
+      }, _callee, this, [[5, 12]]);
     }));
 
     return function single(_x) {
@@ -81,19 +87,25 @@ exports.default = function (http) {
                 filter: { 'createdAt-start': minus3Hours.toISOString(), 'createdAt-end': now.toISOString(), playerNames: [], teamNames: [] }
               };
               query = _extends({}, defaults, collectionOptions);
-              _context2.next = 6;
+              _context2.prev = 4;
+              _context2.next = 7;
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
-            case 6:
+            case 7:
               body = _context2.sent;
               return _context2.abrupt('return', (0, _parser2.default)('matches', body));
 
-            case 8:
+            case 11:
+              _context2.prev = 11;
+              _context2.t0 = _context2['catch'](4);
+              return _context2.abrupt('return', _context2.t0);
+
+            case 14:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, this);
+      }, _callee2, this, [[4, 11]]);
     }));
 
     return function collection() {

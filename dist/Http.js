@@ -9,9 +9,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _requestPromise = require('request-promise');
+var _nodeFetch = require('node-fetch');
 
-var _requestPromise2 = _interopRequireDefault(_requestPromise);
+var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
 
 var _isArray = require('lodash/isArray');
 
@@ -29,6 +29,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/',
+  suffix: '/shards/',
   region: 'na',
   statusUrl: 'https://api.dc01.gamelockerapp.com/status',
   title: 'semc-vainglory'
@@ -44,6 +45,7 @@ var Http = function () {
     var requestOptions = _extends({}, defaults, options);
     this.options = {
       url: '' + requestOptions.host + requestOptions.region.toLowerCase() + '/',
+      status: requestOptions.statusUrl,
       headers: {
         'Content-Encoding': 'gzip',
         'Content-Type': 'application/json',
@@ -51,9 +53,7 @@ var Http = function () {
         Accept: 'application/vnd.api+json',
         Authorization: 'Bearer ' + apiKey,
         'X-TITLE-ID': requestOptions.title
-      },
-      json: true,
-      simple: false
+      }
     };
   }
 
@@ -118,35 +118,42 @@ var Http = function () {
       }
 
       if (body && 'errors' in body) {
-        var messages = this.parseErrors(body.errors);
-        return { error: true, messages: messages };
+        if (body.errors.title) {
+          return { error: true, messages: body.errors.title };
+        }
+        return { error: true, messages: body.errors };
       }
 
       return body;
     }
   }, {
     key: 'parseErrors',
-    value: function parseErrors(errors) {
-      return errors.map(function (err) {
-        switch (err.title) {
-          case 'Forbidden':
-          case 'Unauthorized':
-            return _Errors.UNAUTHORIZED;
-          case 'Not Found':
-            return _Errors.NOT_FOUND;
-          case 'Internal Server Error':
-            return _Errors.INTERNAL;
-          case 'Too Many Requests':
-            return _Errors.RATE_LIMIT;
-          case 'Service Unavailable':
-            return _Errors.OFFLINE;
-          case 'Not Acceptable':
-            return _Errors.NOT_ACCEPTABLE;
-          case 'Method Not Allowed':
-          case 'Bad Request':
-          default:
-            return _Errors.UNKNOWN;
-        }
+    value: function parseErrors(status) {
+      var err = { error: true };
+      switch (status) {
+        case 401:
+          return _extends({}, err, { messages: _Errors.UNAUTHORIZED });
+        case 404:
+          return _extends({}, err, { messages: _Errors.NOT_FOUND });
+        case 500:
+          return _extends({}, err, { messages: _Errors.INTERNAL });
+        case 429:
+          return _extends({}, err, { messages: _Errors.RATE_LIMIT });
+        case 503:
+          return _extends({}, err, { messages: _Errors.OFFLINE });
+        case 406:
+          return _extends({}, err, { messages: _Errors.NOT_ACCEPTABLE });
+        default:
+          return _extends({}, err, { messages: _Errors.UNKNOWN });
+      }
+    }
+  }, {
+    key: 'status',
+    value: function status() {
+      return (0, _nodeFetch2.default)(this.options.status).then(function (res) {
+        return res.json();
+      }).catch(function (e) {
+        return e;
       });
     }
   }, {
@@ -166,7 +173,6 @@ var Http = function () {
         return new Error('HTTP Error: No endpoint to provide a request to.');
       }
 
-      requestOptions.method = method;
       requestOptions.url += endpoint;
 
       if (query) {
@@ -174,23 +180,32 @@ var Http = function () {
       }
 
       return new Promise(function (resolve, reject) {
-        (0, _requestPromise2.default)(requestOptions).then(function (err, res, body) {
-          console.log(err);
-          console.log(res);
-          console.log(body);
+        (0, _nodeFetch2.default)(requestOptions.url, {
+          method: requestOptions.method,
+          headers: requestOptions.headers
+        }).then(function (res) {
+          if (res.status !== 200) {
+            return reject(_this.parseErrors(res.status));
+          }
+          return res.json();
+        }).then(function (body) {
           if (!body) {
-            reject(_Errors.NO_BODY);
+            return reject(_Errors.NO_BODY);
           }
 
           var parsedBody = _this.parseBody(body, options);
 
           if (parsedBody && parsedBody.error) {
-            reject(new Error(parsedBody.messages));
+            reject(parsedBody.messages);
           }
 
-          resolve(parsedBody);
+          return resolve(parsedBody);
         }).catch(function (err) {
-          console.log(err);
+          return reject({
+            error: true,
+            message: _Errors.NETWORK_ERROR,
+            details: err
+          });
         });
       });
     }

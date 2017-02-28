@@ -53,7 +53,6 @@ function getModel(entityType) {
 
 exports.default = function (entity, data, remapped) {
 
-  console.log(data);
   if (data instanceof Error) {
     return data;
   }
