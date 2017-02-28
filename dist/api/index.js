@@ -31,6 +31,23 @@ var Api = function () {
     value: function bindTo(context) {
       context.matches = (0, _matches2.default)(this.http);
       context.players = (0, _players2.default)(this.http);
+      context.status = this.status();
+    }
+  }, {
+    key: 'status',
+    value: function status() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        _this.http.status().then(function (res) {
+          if (res && res.data) {
+            return resolve({ id: res.data.id, releasedAt: res.data.attributes.releasedAt, version: res.data.attributes.version });
+          }
+          return resolve(res);
+        }).catch(function (err) {
+          reject(err);
+        });
+      });
     }
   }]);
 

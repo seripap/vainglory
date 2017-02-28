@@ -11,3 +11,4 @@ var NO_BODY = exports.NO_BODY = 'No body returned from response.';
 var NOT_FOUND = exports.NOT_FOUND = 'The specified object could not be found.';
 var OFFLINE = exports.OFFLINE = 'API is currently offline, try again later.';
 var NOT_ACCEPTABLE = exports.NOT_ACCEPTABLE = 'You requested a format that is\'t JSON';
+var NETWORK_ERROR = exports.NETWORK_ERROR = 'Network error, check host name.';

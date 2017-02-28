@@ -46,19 +46,25 @@ exports.default = function (http) {
             case 4:
               defaults = { filter: { playerName: '' } };
               query = _extends({}, defaults, { filter: { playerName: playerName } });
-              _context.next = 8;
+              _context.prev = 6;
+              _context.next = 9;
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
-            case 8:
+            case 9:
               body = _context.sent;
               return _context.abrupt('return', (0, _parser2.default)('player', body));
 
-            case 10:
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context['catch'](6);
+              return _context.abrupt('return', _context.t0);
+
+            case 16:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, this);
+      }, _callee, this, [[6, 13]]);
     }));
 
     return function getByName(_x) {
@@ -90,19 +96,25 @@ exports.default = function (http) {
 
             case 4:
               endpoint = ENDPOINT_PREFIX + '/' + playerId;
-              _context2.next = 7;
+              _context2.prev = 5;
+              _context2.next = 8;
               return http.execute('GET', endpoint);
 
-            case 7:
+            case 8:
               body = _context2.sent;
               return _context2.abrupt('return', (0, _parser2.default)('player', body));
 
-            case 9:
+            case 12:
+              _context2.prev = 12;
+              _context2.t0 = _context2['catch'](5);
+              return _context2.abrupt('return', _context2.t0);
+
+            case 15:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, this);
+      }, _callee2, this, [[5, 12]]);
     }));
 
     return function getById(_x2) {
