@@ -10,16 +10,20 @@ var _isString = require('lodash/isString');
 
 var _isString2 = _interopRequireDefault(_isString);
 
+var _parser = require('../parser');
+
+var _parser2 = _interopRequireDefault(_parser);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var ENDPOINT_PREFIX = 'players';
 
-exports.default = function (http, options, parser) {
+exports.default = function (http) {
   var getByName = function () {
     var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(playerName) {
-      var endpoint, defaults, query, body;
+      var defaults, query, body;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -40,17 +44,16 @@ exports.default = function (http, options, parser) {
               return _context.abrupt('return', new Error('Expected a string for playerName'));
 
             case 4:
-              endpoint = '' + ENDPOINT_PREFIX;
               defaults = { filter: { playerName: '' } };
               query = _extends({}, defaults, { filter: { playerName: playerName } });
-              _context.next = 9;
+              _context.next = 8;
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
-            case 9:
+            case 8:
               body = _context.sent;
-              return _context.abrupt('return', parser('player', body));
+              return _context.abrupt('return', (0, _parser2.default)('player', body));
 
-            case 11:
+            case 10:
             case 'end':
               return _context.stop();
           }
@@ -92,7 +95,7 @@ exports.default = function (http, options, parser) {
 
             case 7:
               body = _context2.sent;
-              return _context2.abrupt('return', parser('player', body));
+              return _context2.abrupt('return', (0, _parser2.default)('player', body));
 
             case 9:
             case 'end':

@@ -1,17 +1,30 @@
 import matches from './matches';
 import players from './players';
-import parser from './parser';
 
 export default class Api {
-  constructor(http, options) {
+  constructor(http) {
     this.http = http;
-    this.options = options;
-
-    this.parser = parser;
   }
 
   bindTo(context) {
-    context.matches = matches(this.http, this.options, this.parser);
-    context.players = players(this.http, this.options, this.parser);
+    context.matches = matches(this.http);
+    context.players = players(this.http);
+    context.status = this.status();
+  }
+
+  status() {
+    return new Promise((resolve, reject) => {
+      this.http
+        .status()
+        .then(res => {
+          if (res && res.data) {
+            return resolve({ id: res.data.id, releasedAt: res.data.attributes.releasedAt, version: res.data.attributes.version });
+          }
+          return resolve(res);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
 }

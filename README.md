@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.org/seripap/vainglory)
 
-This is a Javascript API client for [Vainglory](http://vainglorygame.com). This client is still in active development, please excuse the tests, they still need to be mocked.
+This is a Javascript API client for [Vainglory](http://vainglorygame.com). This client is still in active development, please excuse the tests, they still need to be mocked. 
 
 ## Installation
 
@@ -26,7 +26,7 @@ Base options can be modified by passing an object during initalization.
 __Properties__
 - `host` [*String*] - HTTP Url to call
 - `title` [*String*] - X-TITLE-ID modifier
-
+- `region` [*String*] - Use: `na` (North America), `sg` (SEA), `eu` (Europe)
 
 ```javascript
 import Vainglory from 'vainglory';
@@ -34,7 +34,7 @@ import Vainglory from 'vainglory';
 /* defaults */
 const options = {
   host: 'https://api.dc01.gamelockerapp.com/shards/',
-  region: 'na', // valid: na, sg, eu
+  region: 'na',
   title: 'semc-vainglory',
 };
 
@@ -59,8 +59,9 @@ $ yarn test
 
 All methods are named references from the [Official API Reference](http://developer.vainglorygame.com/docs). All methods will return a promise.
 
-### Matches
+* [`status`](#apiStatus))
 
+### Matches
 * [`collection`](#matchesCollection)
 * [`single`](#matchesSingle)
 
@@ -70,16 +71,15 @@ All methods are named references from the [Official API Reference](http://develo
 * [`getByName`](#playersName)
 
 ---------------------------------------
-## Base Model
+## Status
 
-All single results are wrapped with a model for easier data digesting. You can request any data that comes back from the request.
+`vainglory.status`
 
-- `.type` - Returns the type of data requested
-- `.id` - Returns associated ID
+Returns API meta information.
 
-## Remapped items vs server names
-
-For fields in `participant` such as `actor` or `itemGrants`, server will return `*1000_Item_HalcyonPotion*`. The client will return `Halcyon Potion` automatically based on field mappings. If you would like the original response, instead of calling `.stats` directly, use `_.stats` or `._actor` instead of `.actor`.
+```javascript
+vainglory.status.then((info) => console.log(info));
+```
 
 ---------------------------------------
 ## Matches
@@ -87,52 +87,62 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 `vainglory.matches` 
 
 <a name="matchesCollection" />
-#### collection({...options})
+#### .collection({...options})
 
 Retrieves all matches. [Reference](http://developer.vainglorygame.com/docs/#get-a-collection-of-matches)
 
 __Arguments__
 - `options` [*Object*] - Query paramaters
 
-__Example__
 ```javascript
+const now = new Date();
+const minus3Hours = new Date(new Date() * 1 - 1000 * 3600 * 3);
+
 /* defaults */
 const options = {
   page: {
     offset: 0,
     limit: 50,
   },
-  sort: 'createdAt',
+  sort: 'createdAt', // -createdAt for reverse
   filter: {
-    'createdAt-start': '3hrs ago', // TODO: Parse times (soon!)
-    'createdAt-end': 'Now', // TODO: Parse times (soon!)
-    playerNames: [],
-    teamNames: [],
-  }
-}
+    'createdAt-start': minus3Hours.toISOString(), // ISO Date
+    'createdAt-end': now.toISOString(), // ISO Date
+    playerNames: [], // Array
+    teamNames: [], // Array
+  },
+};
+```
+
+__Returns__
+- [Matches](#matchesModel)
+
+__Example__
+```javascript
 vainglory.matches.collection(options).then((matches) => {
-    // matches is an object representation of that dataset;
-    // matches.match[n -> limit].rosters , ..etc, etc
+  console.log(matches)
 }).catch((errorMsg) => {
   console.error(errorMsg);
 });
 ```
 
 <a name="matchesSingle" />
-#### single(matchId)
+#### .single(matchId)
 
 Retreives a single match by ID. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-match)
 
 __Arguments__
 - `matchId` [*String*] - The ID of match to retrieve
 
+__Returns__
+- [Match](#matchModel)
+
 __Example__
 ```javascript
 const matchId = '0123b560-d74c-11e6-b845-0671096b3e30';
 
 vainglory.matches.single(matchId).then((match) => {
-  console.log(match.id);
-  console.log(match.stats);
+  console.log(match);
 }).catch((errorMsg) => {
   console.error(errorMsg);
 });
@@ -152,13 +162,15 @@ Retreives a player by playerId. [Reference](http://developer.vainglorygame.com/d
 __Arguments__
 - `playerId` [*String*] - The ID of player to retrieve
 
+__Returns__
+- [Player](#playerModel)
+
 __Example__
 ```javascript
 const playerId = '6abb30de-7cb8-11e4-8bd3-06eb725f8a76';
 
 vainglory.players.getById(playerId).then((player) => {
-  console.log(player.id);
-  console.log(player.stats);
+  console.log(player);
 }).catch((errorMsg) => {
   console.error(errorMsg);
 });
@@ -172,6 +184,9 @@ Retreives a player by playerName. [Reference](http://developer.vainglorygame.com
 __Arguments__
 - `playerName` [*String*] - The name of player to retrieve.
 
+__Returns__
+- [Player](#playerModel)
+
 __Example__
 ```javascript
 const playerName = 'famous';
@@ -183,3 +198,62 @@ vainglory.players.getByName(playerName).then((player) => {
   console.error(errorMsg);
 });
 ```
+
+---------------------------------------
+## Models
+
+All results are wrapped with a model for easier data digesting. You can request any data that comes back from the request.
+
+- `.type` - Returns the type of data requested
+- `.id` - Returns associated ID
+- `.raw` - Returns raw data from server
+
+#### Remapped items vs server names
+
+For fields in `participant` such as `actor` or `itemGrants`, server will return `*1000_Item_HalcyonPotion*`. The client will return `Halcyon Potion` automatically based on field mappings. If you would like the original response, instead of calling `.stats` directly, use `._stats` or `._actor` instead of `.actor`.
+
+<a name="matchesModel" />
+### Matches
+
+- [`.match`](#matchModel) - Array of Match
+
+<a name="matchModel" />
+### Match
+
+[Ref](https://developer.vainglorygame.com/docs#matches)
+
+- `.createdAt`
+- `.duration`
+- `.gameMode`
+- `.patchVersion`
+- `.shardId`
+- `.stats`
+- `.titleId`
+- `.rosters` - Array of [Roster](#rosterModel)
+
+<a name="rosterModel" />
+### Roster
+
+[Ref](https://developer.vainglorygame.com/docs#rosters)
+
+- `.stats`
+- `.participants` - Array of [Participant](#participantModel)
+
+<a name="participantModel" />
+### Participant
+
+[Ref](https://developer.vainglorygame.com/docs#participants)
+
+- `._actor`
+- `.actor`
+- `._stats`
+- `.stats`
+- `.player` - [Player](#playerModel)
+
+<a name="playerModel" />
+### Player
+
+- `.name`
+- `.shardId`
+- `.stats`
+- `.titleId`

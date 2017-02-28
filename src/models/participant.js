@@ -14,8 +14,10 @@ export default class Participant extends BaseModel {
   replaceItem(key, stats) {
     for (const property of Object.keys(stats[key])) {
       const normalizedName = items.find((item) => item.serverName === property);
-      stats[key][normalizedName.name] = stats[key][property];
-      delete stats[key][property];
+      if (normalizedName) {
+        stats[key][normalizedName.name] = stats[key][property];
+        delete stats[key][property];
+      }
     }
 
     return stats[key];
@@ -26,7 +28,8 @@ export default class Participant extends BaseModel {
   }
 
   get actor() {
-    return actors.find(actor => actor.serverName === this.raw.attributes.actor).name;
+    const normalizedActor = actors.find(actor => actor.serverName === this.raw.attributes.actor);
+    return normalizedActor ? normalizedActor.name : this.raw.attributes.actor;
   }
 
   get _stats() {

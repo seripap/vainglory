@@ -7,7 +7,7 @@ class Vainglory {
       throw new Error('Missing API Key.');
     }
 
-    const api = new Api(new Http(apiKey, options), options);
+    const api = new Api(new Http(apiKey, options));
     api.bindTo(this);
   }
 

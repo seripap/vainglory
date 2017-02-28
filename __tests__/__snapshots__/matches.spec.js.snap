@@ -1,1 +1,1 @@
-exports[`Vainglory.matches .single should get a single match 1`] = `[Error: Unauthorized, invalid API key provided.]`;
+exports[`Vainglory.matches .single should get a single match 1`] = `[Error: Unauthorized Access. invalid API key provided.]`;

@@ -10,9 +10,9 @@ var _isString = require('lodash/isString');
 
 var _isString2 = _interopRequireDefault(_isString);
 
-var _isArray = require('lodash/isArray');
+var _parser = require('../parser');
 
-var _isArray2 = _interopRequireDefault(_isArray);
+var _parser2 = _interopRequireDefault(_parser);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20,7 +20,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var ENDPOINT_PREFIX = 'matches';
 
-exports.default = function (http, options, parser) {
+exports.default = function (http) {
   var single = function () {
     var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(matchId) {
       var endpoint, body;
@@ -50,7 +50,7 @@ exports.default = function (http, options, parser) {
 
             case 7:
               body = _context.sent;
-              return _context.abrupt('return', parser('match', body));
+              return _context.abrupt('return', (0, _parser2.default)('match', body));
 
             case 9:
             case 'end':
@@ -68,33 +68,27 @@ exports.default = function (http, options, parser) {
   var collection = function () {
     var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
       var collectionOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var defaults, query, body;
+      var now, minus3Hours, defaults, query, body;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
+              now = new Date();
+              minus3Hours = new Date(new Date() * 1 - 1000 * 3600 * 3);
               defaults = {
-                page: {
-                  offset: 0,
-                  limit: 50
-                },
+                page: { offset: 0, limit: 50 },
                 sort: 'createdAt',
-                filter: {
-                  'createdAt-start': '3hrs ago',
-                  'createdAt-end': 'Now',
-                  playerNames: [],
-                  teamNames: []
-                }
+                filter: { 'createdAt-start': minus3Hours.toISOString(), 'createdAt-end': now.toISOString(), playerNames: [], teamNames: [] }
               };
               query = _extends({}, defaults, collectionOptions);
-              _context2.next = 4;
+              _context2.next = 6;
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
-            case 4:
-              body = _context2.sent;
-              return _context2.abrupt('return', parser('matches', body));
-
             case 6:
+              body = _context2.sent;
+              return _context2.abrupt('return', (0, _parser2.default)('matches', body));
+
+            case 8:
             case 'end':
               return _context2.stop();
           }
@@ -107,8 +101,5 @@ exports.default = function (http, options, parser) {
     };
   }();
 
-  return {
-    single: single,
-    collection: collection
-  };
+  return { single: single, collection: collection };
 };

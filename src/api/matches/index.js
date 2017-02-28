@@ -1,9 +1,9 @@
 import isString from 'lodash/isString';
-import isArray from 'lodash/isArray';
+import parser from '../parser';
 
 const ENDPOINT_PREFIX = 'matches';
 
-export default (http, options, parser) => {
+export default (http) => {
   async function single(matchId) {
     if (!matchId) {
       return new Error('Expected required matchId. Usage: .single(matchId)');
@@ -14,9 +14,13 @@ export default (http, options, parser) => {
     }
 
     const endpoint = `${ENDPOINT_PREFIX}/${matchId}`;
-    const body = await http.execute('GET', endpoint);
+    try {
+      const body = await http.execute('GET', endpoint);
+      return parser('match', body);
+    } catch (e) {
+      return e;
+    }
 
-    return parser('match', body);
   }
 
   async function collection(collectionOptions = {}) {
@@ -30,9 +34,14 @@ export default (http, options, parser) => {
     };
 
     const query = { ...defaults, ...collectionOptions };
-    const body = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
 
-    return parser('matches', body);
+    try {
+      const body = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
+
+      return parser('matches', body);
+    } catch (e) {
+      return e;
+    }
   }
 
   return { single, collection };

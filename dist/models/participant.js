@@ -55,8 +55,10 @@ var Participant = function (_BaseModel) {
           var normalizedName = _items2.default.find(function (item) {
             return item.serverName === property;
           });
-          stats[key][normalizedName.name] = stats[key][property];
-          delete stats[key][property];
+          if (normalizedName) {
+            stats[key][normalizedName.name] = stats[key][property];
+            delete stats[key][property];
+          }
         };
 
         for (var _iterator = Object.keys(stats[key])[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
@@ -89,9 +91,10 @@ var Participant = function (_BaseModel) {
     get: function get() {
       var _this2 = this;
 
-      return _actors2.default.find(function (actor) {
+      var normalizedActor = _actors2.default.find(function (actor) {
         return actor.serverName === _this2.raw.attributes.actor;
-      }).name;
+      });
+      return normalizedActor ? normalizedActor.name : this.raw.attributes.actor;
     }
   }, {
     key: '_stats',

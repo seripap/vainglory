@@ -22,7 +22,7 @@ var Vainglory = function Vainglory() {
     throw new Error('Missing API Key.');
   }
 
-  var api = new _api2.default(new _Http2.default(apiKey, options), options);
+  var api = new _api2.default(new _Http2.default(apiKey, options));
   api.bindTo(this);
 };
 

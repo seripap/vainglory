@@ -1,8 +1,9 @@
 import isString from 'lodash/isString';
+import parser from '../parser';
 
 const ENDPOINT_PREFIX = 'players';
 
-export default (http, options, parser) => {
+export default (http) => {
   async function getByName(playerName) {
     if (!playerName) {
       return new Error('Expected required playerName. Usage: .getByName(playerName)');
@@ -12,12 +13,16 @@ export default (http, options, parser) => {
       return new Error('Expected a string for playerName');
     }
 
-    const endpoint = `${ENDPOINT_PREFIX}`;
     const defaults = { filter: { playerName: '' } };
-    const query = { ...defaults, filter: { playerName: playerName } };
-    const body = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
+    const query = { ...defaults, filter: { playerName } };
 
-    return parser('player', body);
+    try { 
+      const body = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
+
+      return parser('player', body);
+    } catch (e) {
+      return e;
+    }
   }
 
   async function getById(playerId) {
@@ -31,9 +36,14 @@ export default (http, options, parser) => {
 
     const endpoint = `${ENDPOINT_PREFIX}/${playerId}`;
 
-    const body = await http.execute('GET', endpoint);
-    return parser('player', body);
+    try {
+      const body = await http.execute('GET', endpoint);
+      return parser('player', body);
+    } catch (e) {
+      return e;
+    }
+
   }
 
   return { getByName, getById };
-}
+};
