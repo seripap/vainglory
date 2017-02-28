@@ -1,3 +1,4 @@
+import pkg from '../../package.json';
 import matches from './matches';
 import players from './players';
 
@@ -18,7 +19,11 @@ export default class Api {
         .status()
         .then(res => {
           if (res && res.data) {
-            return resolve({ id: res.data.id, releasedAt: res.data.attributes.releasedAt, version: res.data.attributes.version });
+            return resolve({ 
+              id: res.data.id, 
+              releasedAt: res.data.attributes.releasedAt, 
+              version: res.data.attributes.version,
+              clientVersion: pkg.version });
           }
           return resolve(res);
         })

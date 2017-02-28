@@ -7,6 +7,10 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _package = require('../../package.json');
+
+var _package2 = _interopRequireDefault(_package);
+
 var _matches = require('./matches');
 
 var _matches2 = _interopRequireDefault(_matches);
@@ -41,7 +45,11 @@ var Api = function () {
       return new Promise(function (resolve, reject) {
         _this.http.status().then(function (res) {
           if (res && res.data) {
-            return resolve({ id: res.data.id, releasedAt: res.data.attributes.releasedAt, version: res.data.attributes.version });
+            return resolve({
+              id: res.data.id,
+              releasedAt: res.data.attributes.releasedAt,
+              version: res.data.attributes.version,
+              clientVersion: _package2.default.version });
           }
           return resolve(res);
         }).catch(function (err) {
