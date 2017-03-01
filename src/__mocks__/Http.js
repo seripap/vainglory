@@ -1,108 +1,155 @@
-
-// Mock data
-import matchSingleMock from './matchSingle.json';
-import matchCollectionMock from './matchCollection.json';
-
-import playerSingleMock from './playerSingle.json';
-
-import request from 'request-promise';
+import fetch from 'node-fetch';
 import isArray from 'lodash/isArray';
-import isObject from 'lodash/isObject';
+import isPlainObject from 'lodash/isPlainObject';
+import { RATE_LIMIT, UNAUTHORIZED, UNKNOWN, NOT_FOUND, INTERNAL, NO_BODY, OFFLINE, NOT_ACCEPTABLE, NETWORK_ERROR } from '../Errors';
+
+// MOCK DATA
+import matchCollection from './matchCollection.json';
+import matchSingle from './matchSingle.json';
+import playerByName from './playerByName.json';
+import playerById from './playerById.json';
 
 const defaults = {
-  host: 'https://api.dc01.gamelockerapp.com/shards/na/',
+  host: 'https://FAKE-HOST-FOR-TESTING.com/',
+  suffix: '/shards/',
+  region: 'na',
+  statusUrl: 'https://FAKE-HOST-FOR-TESTING.com/',
   title: 'semc-vainglory',
 };
 
 export default class Http {
-  constructor(apiKey, options = defaults) {
+  constructor(apiKey = null, options = defaults) {
+    const requestOptions = { ...defaults, ...options };
     this.options = {
-      url: options.host,
+      url: `${requestOptions.host}${requestOptions.region.toLowerCase()}/`,
+      status: requestOptions.statusUrl,
       headers: {
+        'Content-Encoding': 'gzip',
         'Content-Type': 'application/json',
+        'User-Agent': 'js/vainglory',
         Accept: 'application/vnd.api+json',
         Authorization: `Bearer ${apiKey}`,
-        'X-TITLE-ID': options.title,
+        'X-TITLE-ID': requestOptions.title,
       },
     };
   }
 
   serialize(obj) {
     const queries = [];
-    const loop = (obj) => {    
+    const loop = (obj, prefix = null) => {
       for (const property of Object.keys(obj)) {
         if (Object.prototype.hasOwnProperty.call(obj, property)) {
-          if (isObject(obj[property])) {
-            loop(obj[property]);
+          if (isPlainObject(obj[property])) {
+            loop(obj[property], property);
+          } else if (isArray(obj[property])) {
+            if (prefix) {
+              queries.push(`${prefix}[${encodeURIComponent(property)}]=${obj[property].join(',')}`);
+            } else {
+              queries.push(`${encodeURIComponent(property)}=${obj[property].join(',')}`);
+            }
           } else {
-            queries.push(`${encodeURIComponent(property)}=${encodeURIComponent(obj[property])}`);
+            if (prefix) {
+              queries.push(`${prefix}[${encodeURIComponent(property)}]=${obj[property]}`);
+            } else {
+              queries.push(`${encodeURIComponent(property)}=${obj[property]}`);
+            }
           }
         }
       }
     };
-   
+
     loop(obj);
     return queries.join('&');
   }
 
-  async execute(method = 'GET', endpoint = null, query = null, options = {}) {
-    function parseBody(body, parseOptions = {}) {
-      if (parseOptions.override) {
-        return body;
-      }
-
-      try {
-        const parsed = JSON.parse(body);
-        if ('errors' in parsed) {
-          return {
-            error: true,
-            message: parsed.errors,
-          };
-        }
-
-        return parsed;
-      } catch (e) {
-        return {
-          error: true,
-          message: e,
-        };
-      }
+  parseBody(body, parseOptions = {}) {
+    if (parseOptions.override) {
+      return body;
     }
 
-    const requestOptions = Object.assign(options, this.options);
+    if (body && 'errors' in body) {
+      if (body.errors.title) {
+        return { error: true, messages: body.errors.title };
+      }
+      return { error: true, messages: body.errors };
+    }
+
+    return body;
+  }
+
+  parseErrors(status) {
+    const err = { error: true };
+    switch (status) {
+      case 401:
+        return { ...err, messages: UNAUTHORIZED };
+      case 404:
+        return  { ...err, messages: NOT_FOUND };
+      case 500:
+        return  { ...err, messages: INTERNAL };
+      case 429:
+        return  { ...err, messages: RATE_LIMIT };
+      case 503:
+        return  { ...err, messages: OFFLINE };
+      case 406:
+        return  { ...err, messages: NOT_ACCEPTABLE };
+      default:
+        return  { ...err, messages: UNKNOWN };
+    }
+  }
+
+  status() {
+    return fetch(this.options.status);
+  }
+
+  execute(method = 'GET', endpoint = null, query = null, options = {}) {
+    const requestOptions = { ...this.options, options };
+
     if (endpoint === null) {
-      throw reject(new Error('HTTP Error: No endpoint to provide a request to.'));
+      return new Error('HTTP Error: No endpoint to provide a request to.');
     }
 
-    requestOptions.method = method;
     requestOptions.url += endpoint;
 
     if (query) {
-      requestOptions.url += `?${query}`;
+      requestOptions.url += `?${this.serialize(query)}`;
     }
 
-    if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/matches?offset=0&limit=50&sort=createdAt&started=3hrs%20ago&ended=Now') {
-      return resolve(matchCollectionMock);
-    }
+    return new Promise((resolve, reject) => {
 
-    if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/matches/0123b560-d74c-11e6-b845-0671096b3e30') {
-      return resolve(matchSingleMock);
-    }
+      if (requestOptions.url === 'https://FAKE-HOST-FOR-TESTING.com/na/matches?page[offset]=0&page[limit]=5&sort=createdAt&filter[createdAt-start]=fake-time&filter[createdAt-end]=fake-time') {
+        const parsedBody = this.parseBody(matchCollection, true);
+        return resolve({
+          error: false,
+          parsedBody,
+        });
+      }
+
+      if (requestOptions.url === 'https://FAKE-HOST-FOR-TESTING.com/na/matches/f31b614a-fbbb-11e6-9ec9-062445d3d668') {
+        const parsedBody = this.parseBody(matchSingle, true);
+        return resolve({
+          error: false,
+          parsedBody,
+        });
+      }
+
+      if (requestOptions.url === 'https://FAKE-HOST-FOR-TESTING.com/na/players?filter[playerName]=famous') {
+        const parsedBody = this.parseBody(playerByName, true);
+        return resolve({
+          error: false,
+          parsedBody,
+        });
+      }
+      if (requestOptions.url === 'https://FAKE-HOST-FOR-TESTING.com/na/players/d4844ad0-7017-11e4-8e49-062d0b175276') {
+        const parsedBody = this.parseBody(playerById, true);
+        return resolve({
+          error: false,
+          parsedBody,
+        });
+      }
+
+  console.log(requestOptions.url);
 
 
-    if (requestOptions.url === 'https://api.dc01.gamelockerapp.com/shards/na/players/6abb30de-7cb8-11e4-8bd3-06eb725f8a76') {
-      return resolve(playerSingleMock);
-    }
-
-    if (method && endpoint) {
-      return resolve(true);
-    }
-
-    if (query) {
-      return resolve(true);
-    }
-
-    return reject(false);
+    });
   }
-
 }

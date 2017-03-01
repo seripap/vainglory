@@ -65,7 +65,7 @@ $ yarn test
 
 All methods are named references from the [Official API Reference](http://developer.vainglorygame.com/docs). All methods will return a promise.
 
-* [`status`](#apiStatus))
+* [`status`](#apiStatus)
 
 ### Matches
 * [`collection`](#matchesCollection)
@@ -76,7 +76,18 @@ All methods are named references from the [Official API Reference](http://develo
 * [`getById`](#playersId)
 * [`getByName`](#playersName)
 
+### Errors
+
+All responses have a `.errors` property that will be either `null` or `true`. If `true`, `.message` will be defined with the error message.
+
+__Example__
+
+```
+{ error: true, message: 'Expected a string for playerName' }
+```
+
 ---------------------------------------
+<a name="apiStatus" />
 ## Status
 
 `vainglory.status`
@@ -84,7 +95,7 @@ All methods are named references from the [Official API Reference](http://develo
 Returns API meta information.
 
 ```javascript
-vainglory.status.then((info) => console.log(info));
+vainglory.status().then((info) => console.log(info));
 ```
 
 Example Response
@@ -136,9 +147,9 @@ __Returns__
 __Example__
 ```javascript
 vainglory.matches.collection(options).then((matches) => {
-  console.log(matches)
-}).catch((errorMsg) => {
-  console.error(errorMsg);
+  console.log(matches);
+}).catch((errors) => {
+  console.log(errors);
 });
 ```
 
@@ -158,9 +169,10 @@ __Example__
 const matchId = '0123b560-d74c-11e6-b845-0671096b3e30';
 
 vainglory.matches.single(matchId).then((match) => {
+  if (match.errors) return;
   console.log(match);
-}).catch((errorMsg) => {
-  console.error(errorMsg);
+}).catch((errors) => {
+  console.log(errors);
 });
 ```
 
@@ -186,9 +198,10 @@ __Example__
 const playerId = '6abb30de-7cb8-11e4-8bd3-06eb725f8a76';
 
 vainglory.players.getById(playerId).then((player) => {
+  if (player.errors) return;
   console.log(player);
-}).catch((errorMsg) => {
-  console.error(errorMsg);
+}).catch((errors) => {
+  console.log(errors);
 });
 ```
 
@@ -208,10 +221,11 @@ __Example__
 const playerName = 'famous';
 
 vainglory.players.getByName(playerName).then((player) => {
+  if (player.errors) return;
   console.log(player.id);
   console.log(player.stats);
-}).catch((errorMsg) => {
-  console.error(errorMsg);
+}).catch((errors) => {
+  console.log(errors);
 });
 ```
 

@@ -29,7 +29,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/',
-  suffix: '/shards/',
   region: 'na',
   statusUrl: 'https://api.dc01.gamelockerapp.com/status',
   title: 'semc-vainglory'
@@ -109,27 +108,9 @@ var Http = function () {
       return queries.join('&');
     }
   }, {
-    key: 'parseBody',
-    value: function parseBody(body) {
-      var parseOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-      if (parseOptions.override) {
-        return body;
-      }
-
-      if (body && 'errors' in body) {
-        if (body.errors.title) {
-          return { error: true, messages: body.errors.title };
-        }
-        return { error: true, messages: body.errors };
-      }
-
-      return body;
-    }
-  }, {
     key: 'parseErrors',
     value: function parseErrors(status) {
-      var err = { error: true };
+      var err = { errors: true };
       switch (status) {
         case 401:
           return _extends({}, err, { messages: _Errors.UNAUTHORIZED });
@@ -150,11 +131,7 @@ var Http = function () {
   }, {
     key: 'status',
     value: function status() {
-      return (0, _nodeFetch2.default)(this.options.status).then(function (res) {
-        return res.json();
-      }).catch(function (e) {
-        return e;
-      });
+      return (0, _nodeFetch2.default)(this.options.status);
     }
   }, {
     key: 'execute',
@@ -185,25 +162,27 @@ var Http = function () {
           headers: requestOptions.headers
         }).then(function (res) {
           if (res.status !== 200) {
-            return reject(_this.parseErrors(res.status));
+            return _this.parseErrors(res.status);
           }
           return res.json();
         }).then(function (body) {
+          // Empty responses
           if (!body) {
             return reject(_Errors.NO_BODY);
           }
-
-          var parsedBody = _this.parseBody(body, options);
-
-          if (parsedBody && parsedBody.error) {
-            reject(parsedBody.messages);
+          // Status code not 200
+          if (body.errors) {
+            return reject(body);
           }
 
-          return resolve(parsedBody);
+          return resolve({
+            errors: null,
+            body: body
+          });
         }).catch(function (err) {
           return reject({
-            error: true,
-            message: _Errors.NETWORK_ERROR,
+            errors: true,
+            messages: _Errors.NETWORK_ERROR,
             details: err
           });
         });

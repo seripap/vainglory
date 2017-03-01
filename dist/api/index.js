@@ -31,31 +31,33 @@ var Api = function () {
   }
 
   _createClass(Api, [{
-    key: 'bindTo',
-    value: function bindTo(context) {
-      context.matches = (0, _matches2.default)(this.http);
-      context.players = (0, _players2.default)(this.http);
-      context.status = this.status();
-    }
-  }, {
     key: 'status',
     value: function status() {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
         _this.http.status().then(function (res) {
-          if (res && res.data) {
+          return res.json();
+        }).then(function (body) {
+          if (body && body.data) {
             return resolve({
-              id: res.data.id,
-              releasedAt: res.data.attributes.releasedAt,
-              version: res.data.attributes.version,
+              id: body.data.id,
+              releasedAt: body.data.attributes.releasedAt,
+              version: body.data.attributes.version,
               clientVersion: _package2.default.version });
           }
-          return resolve(res);
+          return resolve(body);
         }).catch(function (err) {
           reject(err);
         });
       });
+    }
+  }, {
+    key: 'bindTo',
+    value: function bindTo(context) {
+      context.matches = (0, _matches2.default)(this.http);
+      context.players = (0, _players2.default)(this.http);
+      context.status = this.status.bind(this);
     }
   }]);
 

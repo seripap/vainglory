@@ -5,7 +5,6 @@ import { RATE_LIMIT, UNAUTHORIZED, UNKNOWN, NOT_FOUND, INTERNAL, NO_BODY, OFFLIN
 
 const defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/',
-  suffix: '/shards/',
   region: 'na',
   statusUrl: 'https://api.dc01.gamelockerapp.com/status',
   title: 'semc-vainglory',
@@ -56,23 +55,8 @@ export default class Http {
     return queries.join('&');
   }
 
-  parseBody(body, parseOptions = {}) {
-    if (parseOptions.override) {
-      return body;
-    }
-
-    if (body && 'errors' in body) {
-      if (body.errors.title) {
-        return { error: true, messages: body.errors.title };
-      }
-      return { error: true, messages: body.errors };
-    }
-
-    return body;
-  }
-
   parseErrors(status) {
-    const err = { error: true };
+    const err = { errors: true };
     switch (status) {
       case 401:
         return { ...err, messages: UNAUTHORIZED };
@@ -92,7 +76,7 @@ export default class Http {
   }
 
   status() {
-    return fetch(this.options.status).then(res => res.json()).catch(e => e);
+    return fetch(this.options.status);
   }
 
   execute(method = 'GET', endpoint = null, query = null, options = {}) {
@@ -114,25 +98,27 @@ export default class Http {
         headers: requestOptions.headers,
       }).then((res) => {
         if (res.status !== 200) {
-          return reject(this.parseErrors(res.status));
+          return this.parseErrors(res.status);
         }
         return res.json();
       }).then((body) => {
+        // Empty responses
         if (!body) {
           return reject(NO_BODY);
         }
-
-        const parsedBody = this.parseBody(body, options);
-
-        if (parsedBody && parsedBody.error) {
-          reject (parsedBody.messages);
+        // Status code not 200
+        if (body.errors) {
+          return reject(body);
         }
 
-        return resolve(parsedBody);
+        return resolve({
+          errors: null,
+          body,
+        });
       }).catch((err) => {
         return reject({
-          error: true,
-          message: NETWORK_ERROR,
+          errors: true,
+          messages: NETWORK_ERROR,
           details: err,
         });
       });

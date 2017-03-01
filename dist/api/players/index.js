@@ -14,6 +14,8 @@ var _parser = require('../parser');
 
 var _parser2 = _interopRequireDefault(_parser);
 
+var _Errors = require('../../Errors');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -23,7 +25,7 @@ var ENDPOINT_PREFIX = 'players';
 exports.default = function (http) {
   var getByName = function () {
     var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(playerName) {
-      var defaults, query, body;
+      var defaults, query, response;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -33,7 +35,7 @@ exports.default = function (http) {
                 break;
               }
 
-              return _context.abrupt('return', new Error('Expected required playerName. Usage: .getByName(playerName)'));
+              return _context.abrupt('return', (0, _Errors.normalizeError)('Expected required playerName. Usage: .getByName(playerName)'));
 
             case 2:
               if ((0, _isString2.default)(playerName)) {
@@ -41,7 +43,7 @@ exports.default = function (http) {
                 break;
               }
 
-              return _context.abrupt('return', new Error('Expected a string for playerName'));
+              return _context.abrupt('return', (0, _Errors.normalizeError)('Expected a string for playerName'));
 
             case 4:
               defaults = { filter: { playerName: '' } };
@@ -51,20 +53,29 @@ exports.default = function (http) {
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
             case 9:
-              body = _context.sent;
-              return _context.abrupt('return', (0, _parser2.default)('player', body));
+              response = _context.sent;
 
-            case 13:
-              _context.prev = 13;
+              if (!response.errors) {
+                _context.next = 12;
+                break;
+              }
+
+              return _context.abrupt('return', (0, _Errors.normalizeError)(response.messages));
+
+            case 12:
+              return _context.abrupt('return', _extends({ errors: response.errors }, (0, _parser2.default)('player', response.body)));
+
+            case 15:
+              _context.prev = 15;
               _context.t0 = _context['catch'](6);
-              return _context.abrupt('return', _context.t0);
+              return _context.abrupt('return', (0, _Errors.normalizeError)(null, _context.t0));
 
-            case 16:
+            case 18:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, this, [[6, 13]]);
+      }, _callee, this, [[6, 15]]);
     }));
 
     return function getByName(_x) {
@@ -74,7 +85,7 @@ exports.default = function (http) {
 
   var getById = function () {
     var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(playerId) {
-      var endpoint, body;
+      var endpoint, response;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -84,7 +95,7 @@ exports.default = function (http) {
                 break;
               }
 
-              return _context2.abrupt('return', new Error('Expected required playerId. Usage: .single(playerId)'));
+              return _context2.abrupt('return', (0, _Errors.normalizeError)('Expected required playerId. Usage: .single(playerId)'));
 
             case 2:
               if ((0, _isString2.default)(playerId)) {
@@ -92,7 +103,7 @@ exports.default = function (http) {
                 break;
               }
 
-              return _context2.abrupt('return', new Error('Expected a string for playerId'));
+              return _context2.abrupt('return', (0, _Errors.normalizeError)('Expected a string for playerId'));
 
             case 4:
               endpoint = ENDPOINT_PREFIX + '/' + playerId;
@@ -101,20 +112,29 @@ exports.default = function (http) {
               return http.execute('GET', endpoint);
 
             case 8:
-              body = _context2.sent;
-              return _context2.abrupt('return', (0, _parser2.default)('player', body));
+              response = _context2.sent;
 
-            case 12:
-              _context2.prev = 12;
+              if (!response.errors) {
+                _context2.next = 11;
+                break;
+              }
+
+              return _context2.abrupt('return', (0, _Errors.normalizeError)(response.messages));
+
+            case 11:
+              return _context2.abrupt('return', _extends({ errors: response.errors }, (0, _parser2.default)('player', response.body)));
+
+            case 14:
+              _context2.prev = 14;
               _context2.t0 = _context2['catch'](5);
-              return _context2.abrupt('return', _context2.t0);
+              return _context2.abrupt('return', (0, _Errors.normalizeError)(null, _context2.t0));
 
-            case 15:
+            case 17:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, this, [[5, 12]]);
+      }, _callee2, this, [[5, 14]]);
     }));
 
     return function getById(_x2) {

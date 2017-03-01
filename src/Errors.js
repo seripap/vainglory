@@ -7,3 +7,11 @@ export const NOT_FOUND = 'The specified object could not be found.';
 export const OFFLINE = 'API is currently offline, try again later.';
 export const NOT_ACCEPTABLE = 'You requested a format that is\'t JSON';
 export const NETWORK_ERROR = 'Network error, check host name.';
+
+export function normalizeError(messages = 'Unknown Client error', attachments = {}) {
+  return {
+    errors: true,
+    messages,
+    ...attachments,
+  }
+}

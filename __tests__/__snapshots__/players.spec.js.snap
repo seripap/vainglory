@@ -1,0 +1,61 @@
+exports[`Vainglory.single .getById should get a single player by Id 1`] = `
+Player {
+  "data": Object {
+    "attributes": Object {
+      "createdAt": "2017-02-26T01:02:40Z",
+      "name": "famous",
+      "shardId": "na",
+      "stats": Object {
+        "level": 28,
+        "lifetimeGold": 13421.875,
+        "lossStreak": 0,
+        "played": 639,
+        "played_ranked": 240,
+        "winStreak": 1,
+        "wins": 343,
+        "xp": 134610,
+      },
+      "titleId": "semc-vainglory",
+    },
+    "id": "d4844ad0-7017-11e4-8e49-062d0b175276",
+    "relationships": Object {
+      "assets": Object {
+        "data": Array [],
+      },
+    },
+    "type": "player",
+  },
+  "relationships": null,
+}
+`;
+
+exports[`Vainglory.single .getByName should get a single player by name 1`] = `
+Player {
+  "data": Object {
+    "attributes": Object {
+      "createdAt": "2017-02-26T01:02:40Z",
+      "name": "famous",
+      "shardId": "na",
+      "stats": Object {
+        "level": 28,
+        "lifetimeGold": 13421.875,
+        "lossStreak": 0,
+        "played": 639,
+        "played_ranked": 240,
+        "winStreak": 1,
+        "wins": 343,
+        "xp": 134610,
+      },
+      "titleId": "semc-vainglory",
+    },
+    "id": "d4844ad0-7017-11e4-8e49-062d0b175276",
+    "relationships": Object {
+      "assets": Object {
+        "data": Array [],
+      },
+    },
+    "type": "player",
+  },
+  "relationships": null,
+}
+`;

@@ -1,24 +1,30 @@
 import isString from 'lodash/isString';
 import parser from '../parser';
+import { normalizeError } from '../../Errors';
 
 const ENDPOINT_PREFIX = 'matches';
 
 export default (http) => {
   async function single(matchId) {
     if (!matchId) {
-      return new Error('Expected required matchId. Usage: .single(matchId)');
+      return normalizeError('Expected required matchId. Usage: .single(matchId)')
     }
 
     if (!isString(matchId)) {
-      return new Error('Expected a string for matchId');
+      return normalizeError('Expected a string for matchId');
     }
 
     const endpoint = `${ENDPOINT_PREFIX}/${matchId}`;
     try {
-      const body = await http.execute('GET', endpoint);
-      return parser('match', body);
+      const response = await http.execute('GET', endpoint);
+
+      if (response.errors) {
+        return normalizeError(response.messages);
+      }
+
+      return {errors: response.errors, ...parser('match', response.body)};
     } catch (e) {
-      return e;
+      return normalizeError(null, e);
     }
 
   }
@@ -36,11 +42,16 @@ export default (http) => {
     const query = { ...defaults, ...collectionOptions };
 
     try {
-      const body = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
+      const response = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
+      
+      if (response.errors) {
+        return normalizeError(response.messages);
+      }
 
-      return parser('matches', body);
+      return parser('matches', response.body);
+      return { errors: response.errors, ...parser('match', response.body)};
     } catch (e) {
-      return e;
+      return normalizeError(null, e);
     }
   }
 

@@ -7,29 +7,31 @@ export default class Api {
     this.http = http;
   }
 
-  bindTo(context) {
-    context.matches = matches(this.http);
-    context.players = players(this.http);
-    context.status = this.status();
-  }
-
   status() {
     return new Promise((resolve, reject) => {
       this.http
         .status()
-        .then(res => {
-          if (res && res.data) {
+        .then(res => res.json())
+        .then(body => {
+          if (body && body.data) {
             return resolve({ 
-              id: res.data.id, 
-              releasedAt: res.data.attributes.releasedAt, 
-              version: res.data.attributes.version,
+              id: body.data.id, 
+              releasedAt: body.data.attributes.releasedAt, 
+              version: body.data.attributes.version,
               clientVersion: pkg.version });
           }
-          return resolve(res);
+          return resolve(body);
         })
         .catch(err => {
           reject(err);
         });
     });
   }
+
+  bindTo(context) {
+    context.matches = matches(this.http);
+    context.players = players(this.http);
+    context.status = this.status.bind(this);
+  }
+
 }

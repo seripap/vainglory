@@ -53,7 +53,7 @@ function getModel(entityType) {
 
 exports.default = function (entity, data, remapped) {
 
-  if (data instanceof Error) {
+  if (data === null) {
     return data;
   }
 
