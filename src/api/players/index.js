@@ -24,7 +24,7 @@ export default (http) => {
         return normalizeError(response.messages);
       }
 
-      return { errors: response.errors, ...parser('player', response.body) }
+      return parser('player', response.body);
     } catch (e) {
       return normalizeError(null, e);
     }
@@ -48,7 +48,7 @@ export default (http) => {
         return normalizeError(response.messages);
       }
 
-      return { errors: response.errors, ...parser('player', response.body) }
+      return parser('player', response.body);
     } catch (e) {
       return normalizeError(null, e);
     }
