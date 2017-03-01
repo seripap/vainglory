@@ -74,7 +74,7 @@ describe('Vainglory data models', () => {
     });
 
     it('roster have an array of Roster', () => {
-      const randomSample = Math.round(Math.random() * matchModel.rosters.length) - 1;
+      const randomSample = Math.floor(Math.random() * matchModel.rosters.length)
       expect(matchModel.rosters[randomSample]).toBeInstanceOf(Roster);
     });
   });
@@ -90,7 +90,7 @@ describe('Vainglory data models', () => {
     });
 
     it('should have an array of Match', () => {
-      const randomSample = Math.round(Math.random() * matchesModel.match.length) - 1;
+      const randomSample = Math.floor(Math.random() * matchesModel.match.length);
       expect(matchesModel.match[randomSample]).toBeInstanceOf(Match);
     });
   });

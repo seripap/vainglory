@@ -33,9 +33,7 @@
     "babel-preset-latest": "^6.16.0",
     "jest": "^17.0.3",
     "lodash": "^4.17.2",
-    "moment": "^2.17.1",
-    "node-fetch": "^1.6.3",
-    "request": "^2.79.0"
+    "node-fetch": "^1.6.3"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -45,8 +43,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.19.0",
     "babel-preset-latest": "^6.22.0",
     "babel-preset-stage-2": "^6.22.0",
-    "jest": "^17.0.3",
-    "uglifyjs": "^2.4.10"
+    "jest": "^17.0.3"
   },
   "jest": {
     "testEnvironment": "node"
