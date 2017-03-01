@@ -13,11 +13,11 @@ describe('Http class', () => {
     };
 
     const Http = new HTTP('aaa.bbb.ccc', newOptions);
-
-    expect(Http.options.url).toBe(`${newOptions.host}${newOptions.region}/`);
+    expect(Http.options.url).toBe(`${newOptions.host}`);
     expect(Http.options.headers['X-TITLE-ID']).toBe(newOptions.title);
-
   });
+
+  // TODO: Region tests
 
   it('should serialize urls correctly', () => {
     const Http = new HTTP('aaa.bbb.ccc');
