@@ -66,6 +66,8 @@ $ yarn test
 All methods are named references from the [Official API Reference](http://developer.vainglorygame.com/docs). All methods will return a promise.
 
 * [`status`](#apiStatus)
+* [`region`](#apiRegion)
+* [`setRegion`](#apiSetRegion)
 
 ### Matches
 * [`collection`](#matchesCollection)
@@ -108,6 +110,33 @@ Example Response
   clientVersion: '0.8.1' // From VaingloryJS
 }
 ```
+
+<a name="apiRegion" />
+## region
+
+`vainglory.region`
+
+Temporarily changes the region for the current reqest.
+
+```javascript
+vainglory.region('sg').matches... // will return data from `sg` region
+vainglory.matches... // will be data from the region that was set when vainglory was initialized (in the beginning, defaults to na)
+vainglory.players... // will be data from the region that was set when vainglory was initialized (in the beginning, defaults to na)
+```
+
+<a name="apiSetRegion" />
+## setRegion
+
+`vainglory.setRegion`
+
+Sets the region for the class.
+
+```javascript
+vainglory.setRegion('sg'); // Overwrites parent 
+vainglory.matches... // will return data from `sg` region
+vainglory.players... // will return data from `sg` region
+```
+
 ---------------------------------------
 ## Matches
 

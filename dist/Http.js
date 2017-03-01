@@ -42,8 +42,9 @@ var Http = function () {
     _classCallCheck(this, Http);
 
     var requestOptions = _extends({}, defaults, options);
-    this.options = {
-      url: '' + requestOptions.host + requestOptions.region.toLowerCase() + '/',
+    this._tempRegion = null;
+    this._region = requestOptions.region.toLowerCase(), this.options = {
+      url: '' + requestOptions.host,
       status: requestOptions.statusUrl,
       headers: {
         'Content-Encoding': 'gzip',
@@ -57,6 +58,11 @@ var Http = function () {
   }
 
   _createClass(Http, [{
+    key: 'getRequestedRegion',
+    value: function getRequestedRegion() {
+      return this.tempRegion ? this.tempRegion : this.region;
+    }
+  }, {
     key: 'serialize',
     value: function serialize(obj) {
       var queries = [];
@@ -111,21 +117,22 @@ var Http = function () {
     key: 'parseErrors',
     value: function parseErrors(status) {
       var err = { errors: true };
+      var region = this.getRequestedRegion();
       switch (status) {
         case 401:
-          return _extends({}, err, { messages: _Errors.UNAUTHORIZED });
+          return _extends({}, err, { messages: _Errors.UNAUTHORIZED, region: region });
         case 404:
-          return _extends({}, err, { messages: _Errors.NOT_FOUND });
+          return _extends({}, err, { messages: _Errors.NOT_FOUND, region: region });
         case 500:
-          return _extends({}, err, { messages: _Errors.INTERNAL });
+          return _extends({}, err, { messages: _Errors.INTERNAL, region: region });
         case 429:
-          return _extends({}, err, { messages: _Errors.RATE_LIMIT });
+          return _extends({}, err, { messages: _Errors.RATE_LIMIT, region: region });
         case 503:
-          return _extends({}, err, { messages: _Errors.OFFLINE });
+          return _extends({}, err, { messages: _Errors.OFFLINE, region: region });
         case 406:
-          return _extends({}, err, { messages: _Errors.NOT_ACCEPTABLE });
+          return _extends({}, err, { messages: _Errors.NOT_ACCEPTABLE, region: region });
         default:
-          return _extends({}, err, { messages: _Errors.UNKNOWN });
+          return _extends({}, err, { messages: _Errors.UNKNOWN, region: region });
       }
     }
   }, {
@@ -145,11 +152,13 @@ var Http = function () {
       var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
       var requestOptions = _extends({}, this.options, { options: options });
-
       if (endpoint === null) {
         return new Error('HTTP Error: No endpoint to provide a request to.');
       }
 
+      var region = this.getRequestedRegion();
+
+      requestOptions.url += region + '/';
       requestOptions.url += endpoint;
 
       if (query) {
@@ -157,6 +166,7 @@ var Http = function () {
       }
 
       return new Promise(function (resolve, reject) {
+        _this.tempRegion = null;
         (0, _nodeFetch2.default)(requestOptions.url, {
           method: requestOptions.method,
           headers: requestOptions.headers
@@ -168,25 +178,45 @@ var Http = function () {
         }).then(function (body) {
           // Empty responses
           if (!body) {
-            return reject(_Errors.NO_BODY);
+            return reject({ errors: true, messages: _Errors.NO_BODY, region: region });
           }
           // Status code not 200
           if (body.errors) {
-            return reject(body);
+            return reject(_extends({}, body, { region: region }));
           }
 
           return resolve({
             errors: null,
-            body: body
+            body: body,
+            region: region
           });
         }).catch(function (err) {
           return reject({
             errors: true,
             messages: _Errors.NETWORK_ERROR,
+            region: region,
             details: err
           });
         });
       });
+    }
+  }, {
+    key: 'tempRegion',
+    set: function set(newTempRegion) {
+      this._tempRegion = newTempRegion;
+      return this;
+    },
+    get: function get() {
+      return this._tempRegion;
+    }
+  }, {
+    key: 'region',
+    set: function set(newRegion) {
+      this._region = newRegion;
+      return this;
+    },
+    get: function get() {
+      return this._region;
     }
   }]);
 

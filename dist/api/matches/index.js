@@ -62,7 +62,7 @@ exports.default = function (http) {
               return _context.abrupt('return', (0, _Errors.normalizeError)(response.messages));
 
             case 11:
-              return _context.abrupt('return', _extends({ errors: response.errors }, (0, _parser2.default)('match', response.body)));
+              return _context.abrupt('return', (0, _parser2.default)('match', response.body));
 
             case 14:
               _context.prev = 14;
@@ -115,17 +115,17 @@ exports.default = function (http) {
             case 10:
               return _context2.abrupt('return', (0, _parser2.default)('matches', response.body));
 
-            case 14:
-              _context2.prev = 14;
+            case 13:
+              _context2.prev = 13;
               _context2.t0 = _context2['catch'](4);
               return _context2.abrupt('return', (0, _Errors.normalizeError)(null, _context2.t0));
 
-            case 17:
+            case 16:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, this, [[4, 14]]);
+      }, _callee2, this, [[4, 13]]);
     }));
 
     return function collection() {

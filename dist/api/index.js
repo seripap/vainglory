@@ -53,10 +53,26 @@ var Api = function () {
       });
     }
   }, {
+    key: 'setRegion',
+    value: function setRegion(context, region) {
+      this.http.region = region;
+      return context;
+    }
+  }, {
+    key: 'region',
+    value: function region(context, _region) {
+      this.http.tempRegion = _region;
+      return context;
+    }
+  }, {
     key: 'bindTo',
     value: function bindTo(context) {
       context.matches = (0, _matches2.default)(this.http);
       context.players = (0, _players2.default)(this.http);
+      // Overwrites region
+      context.setRegion = this.setRegion.bind(this, context);
+      // Temporarily sets region for current call
+      context.region = this.region.bind(this, context);
       context.status = this.status.bind(this);
     }
   }]);

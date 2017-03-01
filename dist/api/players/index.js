@@ -63,7 +63,7 @@ exports.default = function (http) {
               return _context.abrupt('return', (0, _Errors.normalizeError)(response.messages));
 
             case 12:
-              return _context.abrupt('return', _extends({ errors: response.errors }, (0, _parser2.default)('player', response.body)));
+              return _context.abrupt('return', (0, _parser2.default)('player', response.body));
 
             case 15:
               _context.prev = 15;
@@ -122,7 +122,7 @@ exports.default = function (http) {
               return _context2.abrupt('return', (0, _Errors.normalizeError)(response.messages));
 
             case 11:
-              return _context2.abrupt('return', _extends({ errors: response.errors }, (0, _parser2.default)('player', response.body)));
+              return _context2.abrupt('return', (0, _parser2.default)('player', response.body));
 
             case 14:
               _context2.prev = 14;

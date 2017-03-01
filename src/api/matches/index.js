@@ -22,7 +22,7 @@ export default (http) => {
         return normalizeError(response.messages);
       }
 
-      return parser('match', response.body);
+      return parser('match', response.body)
     } catch (e) {
       return normalizeError(null, e);
     }

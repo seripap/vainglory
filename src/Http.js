@@ -13,8 +13,10 @@ const defaults = {
 export default class Http {
   constructor(apiKey = null, options = defaults) {
     const requestOptions = { ...defaults, ...options };
+    this._tempRegion = null;
+    this._region = requestOptions.region.toLowerCase(),
     this.options = {
-      url: `${requestOptions.host}${requestOptions.region.toLowerCase()}/`,
+      url: `${requestOptions.host}`,
       status: requestOptions.statusUrl,
       headers: {
         'Content-Encoding': 'gzip',
@@ -25,6 +27,28 @@ export default class Http {
         'X-TITLE-ID': requestOptions.title,
       },
     };
+  }
+
+  getRequestedRegion() {
+    return this.tempRegion ? this.tempRegion : this.region;
+  }
+
+  set tempRegion(newTempRegion) {
+    this._tempRegion = newTempRegion;
+    return this;
+  }
+
+  get tempRegion() {
+    return this._tempRegion;
+  }
+
+  set region(newRegion) {
+    this._region = newRegion;
+    return this;
+  }
+
+  get region() {
+    return this._region;
   }
 
   serialize(obj) {
@@ -57,21 +81,22 @@ export default class Http {
 
   parseErrors(status) {
     const err = { errors: true };
+    const region = this.getRequestedRegion();
     switch (status) {
       case 401:
-        return { ...err, messages: UNAUTHORIZED };
+        return { ...err, messages: UNAUTHORIZED, region };
       case 404:
-        return  { ...err, messages: NOT_FOUND };
+        return  { ...err, messages: NOT_FOUND, region };
       case 500:
-        return  { ...err, messages: INTERNAL };
+        return  { ...err, messages: INTERNAL, region };
       case 429:
-        return  { ...err, messages: RATE_LIMIT };
+        return  { ...err, messages: RATE_LIMIT, region };
       case 503:
-        return  { ...err, messages: OFFLINE };
+        return  { ...err, messages: OFFLINE, region };
       case 406:
-        return  { ...err, messages: NOT_ACCEPTABLE };
+        return  { ...err, messages: NOT_ACCEPTABLE, region };
       default:
-        return  { ...err, messages: UNKNOWN };
+        return  { ...err, messages: UNKNOWN, region };
     }
   }
 
@@ -81,11 +106,13 @@ export default class Http {
 
   execute(method = 'GET', endpoint = null, query = null, options = {}) {
     const requestOptions = { ...this.options, options };
-
     if (endpoint === null) {
       return new Error('HTTP Error: No endpoint to provide a request to.');
     }
 
+    const region = this.getRequestedRegion();
+
+    requestOptions.url += `${region}/`;
     requestOptions.url += endpoint;
 
     if (query) {
@@ -93,6 +120,7 @@ export default class Http {
     }
 
     return new Promise((resolve, reject) => {
+      this.tempRegion = null;
       fetch(requestOptions.url, {
         method: requestOptions.method,
         headers: requestOptions.headers,
@@ -104,21 +132,23 @@ export default class Http {
       }).then((body) => {
         // Empty responses
         if (!body) {
-          return reject(NO_BODY);
+          return reject({ errors: true, messages: NO_BODY, region });
         }
         // Status code not 200
         if (body.errors) {
-          return reject(body);
+          return reject({...body, region});
         }
 
         return resolve({
           errors: null,
           body,
+          region,
         });
       }).catch((err) => {
         return reject({
           errors: true,
           messages: NETWORK_ERROR,
+          region,
           details: err,
         });
       });
