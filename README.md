@@ -80,7 +80,7 @@ All methods are named references from the [Official API Reference](http://develo
 
 ### Errors
 
-All responses have a `.errors` property that will be either `null` or `true`. If `true`, `.message` will be defined with the error message.
+All responses have a `.errors` property that will be either `null` or `true`. If `true`, `.messages` will be defined with the specific error message.
 
 __Example__
 
@@ -116,12 +116,12 @@ Example Response
 
 `vainglory.region`
 
-Temporarily changes the region for the current reqest.
+Temporarily changes the region for the current request.
 
 ```javascript
 vainglory.region('sg').matches... // will return data from `sg` region
-vainglory.matches... // will be data from the region that was set when vainglory was initialized (in the beginning, defaults to na)
-vainglory.players... // will be data from the region that was set when vainglory was initialized (in the beginning, defaults to na)
+vainglory.matches... // will be data from the region that was set when vainglory was initialized (defaults to na)
+vainglory.players... // will be data from the region that was set when vainglory was initialized (defaults to na)
 ```
 
 <a name="apiSetRegion" />
