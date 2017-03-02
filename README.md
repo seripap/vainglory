@@ -80,12 +80,27 @@ All methods are named references from the [Official API Reference](http://develo
 
 ### Errors
 
-All responses have a `.errors` property that will be either `null` or `true`. If `true`, `.messages` will be defined with the specific error message.
+All responses have a `.errors` property that will be either `null` or `true`. If `true`, `.messages` will be defined with the specific error message. You can dive deeper into `.debug` to debug the request.
 
 __Example__
 
 ```
-{ error: true, message: 'Expected a string for playerName' }
+{ errors: true,
+  messages: 'The specified object could not be found.',
+  region: 'na',
+  debug:
+   { url: 'https://api.dc01.gamelockerapp.com/shards/na/matches?page[offset]=0&page[limit]=50&sort=createdAt&filter[createdAt-start]=2017-03-02T00:28:32.721Z&filter[createdAt-end]=2017-03-02T03:28:32.721Z&filter[playerNames]=&filter[teamNames]=',
+     status: 'https://api.dc01.gamelockerapp.com/status',
+     headers:
+      { 'Content-Encoding': 'gzip',
+        'Content-Type': 'application/json',
+        'User-Agent': 'js/vainglory',
+        Accept: 'application/vnd.api+json',
+        Authorization: 'Bearer aaa.bbb.ccc',
+        'X-TITLE-ID': 'semc-vainglory' 
+      } 
+    } 
+  }
 ```
 
 ---------------------------------------
