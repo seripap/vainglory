@@ -79,24 +79,24 @@ export default class Http {
     return queries.join('&');
   }
 
-  parseErrors(status) {
+  parseErrors(status, requestOptions) {
     const err = { errors: true };
     const region = this.getRequestedRegion();
     switch (status) {
       case 401:
-        return { ...err, messages: UNAUTHORIZED, region };
+        return { ...err, messages: UNAUTHORIZED, region, debug: requestOptions };
       case 404:
-        return  { ...err, messages: NOT_FOUND, region };
+        return  { ...err, messages: NOT_FOUND, region, debug: requestOptions };
       case 500:
-        return  { ...err, messages: INTERNAL, region };
+        return  { ...err, messages: INTERNAL, region, debug: requestOptions };
       case 429:
-        return  { ...err, messages: RATE_LIMIT, region };
+        return  { ...err, messages: RATE_LIMIT, region, debug: requestOptions };
       case 503:
-        return  { ...err, messages: OFFLINE, region };
+        return  { ...err, messages: OFFLINE, region, debug: requestOptions };
       case 406:
-        return  { ...err, messages: NOT_ACCEPTABLE, region };
+        return  { ...err, messages: NOT_ACCEPTABLE, region, debug: requestOptions };
       default:
-        return  { ...err, messages: UNKNOWN, region };
+        return  { ...err, messages: UNKNOWN, region, debug: requestOptions };
     }
   }
 
@@ -104,8 +104,8 @@ export default class Http {
     return fetch(this.options.status);
   }
 
-  execute(method = 'GET', endpoint = null, query = null, options = {}) {
-    const requestOptions = { ...this.options, options };
+  execute(method = 'GET', endpoint = null, query = null) {
+    const requestOptions = { ...this.options };
     if (endpoint === null) {
       return new Error('HTTP Error: No endpoint to provide a request to.');
     }
@@ -126,23 +126,24 @@ export default class Http {
         headers: requestOptions.headers,
       }).then((res) => {
         if (res.status !== 200) {
-          return this.parseErrors(res.status);
+          return this.parseErrors(res.status, requestOptions);
         }
         return res.json();
       }).then((body) => {
         // Empty responses
         if (!body) {
-          return reject({ errors: true, messages: NO_BODY, region });
+          return reject({ errors: true, messages: NO_BODY, region, debug: requestOptions });
         }
         // Status code not 200
         if (body.errors) {
-          return reject({...body, region});
+          return reject({...body, region, debug: requestOptions});
         }
 
         return resolve({
           errors: null,
           body,
           region,
+          debug: requestOptions,
         });
       }).catch((err) => {
         return reject({
@@ -150,6 +151,7 @@ export default class Http {
           messages: NETWORK_ERROR,
           region,
           details: err,
+          debug: requestOptions,
         });
       });
     });
