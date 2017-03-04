@@ -115,24 +115,24 @@ var Http = function () {
     }
   }, {
     key: 'parseErrors',
-    value: function parseErrors(status) {
+    value: function parseErrors(status, requestOptions) {
       var err = { errors: true };
       var region = this.getRequestedRegion();
       switch (status) {
         case 401:
-          return _extends({}, err, { messages: _Errors.UNAUTHORIZED, region: region });
+          return _extends({}, err, { messages: _Errors.UNAUTHORIZED, region: region, debug: requestOptions });
         case 404:
-          return _extends({}, err, { messages: _Errors.NOT_FOUND, region: region });
+          return _extends({}, err, { messages: _Errors.NOT_FOUND, region: region, debug: requestOptions });
         case 500:
-          return _extends({}, err, { messages: _Errors.INTERNAL, region: region });
+          return _extends({}, err, { messages: _Errors.INTERNAL, region: region, debug: requestOptions });
         case 429:
-          return _extends({}, err, { messages: _Errors.RATE_LIMIT, region: region });
+          return _extends({}, err, { messages: _Errors.RATE_LIMIT, region: region, debug: requestOptions });
         case 503:
-          return _extends({}, err, { messages: _Errors.OFFLINE, region: region });
+          return _extends({}, err, { messages: _Errors.OFFLINE, region: region, debug: requestOptions });
         case 406:
-          return _extends({}, err, { messages: _Errors.NOT_ACCEPTABLE, region: region });
+          return _extends({}, err, { messages: _Errors.NOT_ACCEPTABLE, region: region, debug: requestOptions });
         default:
-          return _extends({}, err, { messages: _Errors.UNKNOWN, region: region });
+          return _extends({}, err, { messages: _Errors.UNKNOWN, region: region, debug: requestOptions });
       }
     }
   }, {
@@ -144,14 +144,13 @@ var Http = function () {
     key: 'execute',
     value: function execute() {
       var method = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'GET';
-      var endpoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
       var _this = this;
 
+      var endpoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var query = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
-      var requestOptions = _extends({}, this.options, { options: options });
+      var requestOptions = _extends({}, this.options);
       if (endpoint === null) {
         return new Error('HTTP Error: No endpoint to provide a request to.');
       }
@@ -172,30 +171,32 @@ var Http = function () {
           headers: requestOptions.headers
         }).then(function (res) {
           if (res.status !== 200) {
-            return _this.parseErrors(res.status);
+            return _this.parseErrors(res.status, requestOptions);
           }
           return res.json();
         }).then(function (body) {
           // Empty responses
           if (!body) {
-            return reject({ errors: true, messages: _Errors.NO_BODY, region: region });
+            return reject({ errors: true, messages: _Errors.NO_BODY, region: region, debug: requestOptions });
           }
           // Status code not 200
           if (body.errors) {
-            return reject(_extends({}, body, { region: region }));
+            return reject(_extends({}, body, { region: region, debug: requestOptions }));
           }
 
           return resolve({
             errors: null,
             body: body,
-            region: region
+            region: region,
+            debug: requestOptions
           });
         }).catch(function (err) {
           return reject({
             errors: true,
             messages: _Errors.NETWORK_ERROR,
             region: region,
-            details: err
+            details: err,
+            debug: requestOptions
           });
         });
       });

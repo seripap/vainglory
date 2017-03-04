@@ -25,6 +25,7 @@ import Vainglory from 'vainglory';
 const vainglory = new Vainglory('api-key');
 ```
 
+<a name="options" />
 ## Options
 
 Base options can be modified by passing an object during initalization.
@@ -59,6 +60,7 @@ $ yarn run example
 $ yarn test
 ```
 
+<a name="documentation" />
 ## Documentation
 
 ### Reference
@@ -78,6 +80,7 @@ All methods are named references from the [Official API Reference](http://develo
 * [`getById`](#playersId)
 * [`getByName`](#playersName)
 
+<a name="errors" />
 ### Errors
 
 All responses have a `.errors` property that will be either `null` or `true`. If `true`, `.messages` will be defined with the specific error message. You can dive deeper into `.debug` to debug the request.
@@ -191,6 +194,9 @@ __Returns__
 __Example__
 ```javascript
 vainglory.matches.collection(options).then((matches) => {
+  if (matches.errors) {
+    return console.log(matches);
+  }
   console.log(matches);
 }).catch((errors) => {
   console.log(errors);
