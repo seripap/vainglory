@@ -33,7 +33,7 @@ Base options can be modified by passing an object during initalization.
 __Properties__
 - `host` [*String*] - HTTP Url to call
 - `title` [*String*] - X-TITLE-ID modifier
-- `region` [*String*] - Use: `na` (North America), `sg` (SEA), `eu` (Europe)
+- `region` [*String*] - Region of which game data to request (`na`, `eu`, `sa`, `ea`, `sg`) [Reference](https://developer.vainglorygame.com/docs#regions)
 
 ```javascript
 import Vainglory from 'vainglory';
@@ -83,7 +83,7 @@ All methods are named references from the [Official API Reference](http://develo
 <a name="errors" />
 ### Errors
 
-All responses have a `.errors` property that will be either `null` or `true`. If `true`, `.messages` will be defined with the specific error message. You can dive deeper into `.debug` to debug the request.
+You can check on the property `.errors` to determine if a response has errored and the [subsequent message that follows](https://developer.vainglorygame.com/docs#errors). `.debug` will provide request and header information.
 
 __Example__
 
@@ -134,12 +134,12 @@ Example Response
 
 `vainglory.region`
 
-Temporarily changes the region for the current request.
+Changes the region for the current request.
 
 ```javascript
 vainglory.region('sg').matches... // will return data from `sg` region
-vainglory.matches... // will be data from the region that was set when vainglory was initialized (defaults to na)
-vainglory.players... // will be data from the region that was set when vainglory was initialized (defaults to na)
+vainglory.matches... // data from the region that was initialized (defaults to na)
+vainglory.players... // data from the region that was initialized (defaults to na)
 ```
 
 <a name="apiSetRegion" />
@@ -147,7 +147,7 @@ vainglory.players... // will be data from the region that was set when vainglory
 
 `vainglory.setRegion`
 
-Sets the region for the class.
+Sets the region for the instance.
 
 ```javascript
 vainglory.setRegion('sg'); // Overwrites parent 
