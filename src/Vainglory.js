@@ -1,5 +1,6 @@
 import Api from './api';
 import Http from './Http';
+import Utils from './Utils';
 
 class Vainglory {
   constructor(apiKey = null, options = {}) {
@@ -9,6 +10,7 @@ class Vainglory {
 
     const api = new Api(new Http(apiKey, options));
     api.bindTo(this);
+    this.models = Utils.models;
   }
 
 }

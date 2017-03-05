@@ -70,6 +70,7 @@ All methods are named references from the [Official API Reference](http://develo
 * [`status`](#apiStatus)
 * [`region`](#apiRegion)
 * [`setRegion`](#apiSetRegion)
+* [`models`](#apiModels)
 
 ### Matches
 * [`collection`](#matchesCollection)
@@ -153,6 +154,21 @@ Sets the region for the instance.
 vainglory.setRegion('sg'); // Overwrites parent 
 vainglory.matches... // will return data from `sg` region
 vainglory.players... // will return data from `sg` region
+```
+
+<a name="apiModels" />
+## models
+
+`vainglory.models`
+
+Exposed data models. See mock data in tests to see how data should be referenced.
+
+```javascript
+const match = new vainglory.models.match({data: ...match});
+const matches = new vainglory.models.matches({data: ...matches});
+const player = new vainglory.models.player({data: ...player});
+const participant = new vainglory.models.participant({data: ...participant});
+const roster = new vainglory.models.roster({data: ...roster});
 ```
 
 ---------------------------------------
