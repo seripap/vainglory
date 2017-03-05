@@ -34,6 +34,9 @@ exports.default = [{
   "name": "Glaive",
   "serverName": "*Glaive*"
 }, {
+  "name": "Grumpjaw",
+  "serverName": "*Grumpjaw*"
+}, {
   "name": "Gwen",
   "serverName": "*Gwen*"
 }, {

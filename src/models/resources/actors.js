@@ -39,7 +39,7 @@ export default [
     "name": "Glaive",
     "serverName": "*Glaive*"
   },
-    {
+  {
     "name": "Grumpjaw",
     "serverName": "*Grumpjaw*"
   },
