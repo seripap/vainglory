@@ -345,7 +345,7 @@ export default [
   },
   {
     "serverName": "Crystal Matrix",
-    "name": "Alternating Current"
+    "name": "Aegis"
   },
   {
     "serverName": "Crystal1",
