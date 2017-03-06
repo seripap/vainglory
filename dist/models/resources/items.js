@@ -263,7 +263,7 @@ exports.default = [{
   "name": "Crucible"
 }, {
   "serverName": "Crystal Matrix",
-  "name": "Alternating Current"
+  "name": "Aegis"
 }, {
   "serverName": "Crystal1",
   "name": "Crystal Bit"
