@@ -40,6 +40,7 @@ export default class Participant extends BaseModel {
     const stats = this.raw.attributes.stats;
     stats.itemGrants = this.replaceItem('itemGrants', stats);
     stats.itemUses = this.replaceItem('itemUses', stats);
+    stats.items = this.replaceItem('items', stats);
     return stats;
   }
 

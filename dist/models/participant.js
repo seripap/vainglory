@@ -107,6 +107,7 @@ var Participant = function (_BaseModel) {
       var stats = this.raw.attributes.stats;
       stats.itemGrants = this.replaceItem('itemGrants', stats);
       stats.itemUses = this.replaceItem('itemUses', stats);
+      stats.items = this.replaceItem('items', stats);
       return stats;
     }
   }, {
