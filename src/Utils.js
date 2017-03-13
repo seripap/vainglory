@@ -5,6 +5,10 @@ import Participant from './models/participant';
 import Player from './models/player';
 import Roster from './models/roster';
 
+export function encodePlayerNames(playerNames) {
+  return playerNames.map(player => encodeURIComponent(player))
+}
+
 export default {
   models: {
     Base,

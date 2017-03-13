@@ -132,7 +132,7 @@ export default class Http {
         });
       }
 
-      if (requestOptions.url === 'https://FAKE-HOST-FOR-TESTING.com/na/players?filter[playerName]=famous') {
+      if (requestOptions.url === 'https://FAKE-HOST-FOR-TESTING.com/na/players?filter[playerNames]=famous') {
         const parsedBody = this.parseBody(playerByName, true);
         return resolve({
           error: false,

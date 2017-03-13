@@ -251,7 +251,7 @@ vainglory.matches.single(matchId).then((match) => {
 <a name="playersId" />
 #### getById(playerId)
 
-Retreives a player by playerId. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
+Retreives a **single** player by playerId. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
 
 __Arguments__
 - `playerId` [*String*] - The ID of player to retrieve
@@ -272,21 +272,21 @@ vainglory.players.getById(playerId).then((player) => {
 ```
 
 <a name="playersName" />
-#### getByName(playerName)
+#### getByName(playerNames)
 
-Retreives a player by playerName. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
+Retreives players by playerName. [Reference](http://developer.vainglorygame.com/docs/#get-a-single-player)
 
 __Arguments__
-- `playerName` [*String*] - The name of player to retrieve.
+- `playerNames` [*Array*] - The name of players to retrieve. Max length of 6.
 
 __Returns__
-- [Player](#playerModel)
+- [Players](#playersModel)
 
 __Example__
 ```javascript
-const playerName = 'famous';
+const playerNames = ['famous'];
 
-vainglory.players.getByName(playerName).then((player) => {
+vainglory.players.getByName(playerNames).then((player) => {
   if (player.errors) return;
   console.log(player.id);
   console.log(player.stats);
@@ -345,6 +345,11 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 - `._stats`
 - `.stats`
 - `.player` - [Player](#playerModel)
+
+<a name="playersModel" />
+### Players
+
+- `.player`
 
 <a name="playerModel" />
 ### Player

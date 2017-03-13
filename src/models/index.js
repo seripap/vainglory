@@ -4,6 +4,11 @@ export default class BaseModel {
     this.data = data;
     this.relationships = null;
   }
+  
+  set id(id) {
+    this.data.id = id;
+    return this;
+  }
 
   get type() {
     return this.data.type;

@@ -1,21 +1,28 @@
 import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
 import parser from '../parser';
 import { normalizeError } from '../../Errors';
+import { encodePlayerNames } from '../../Utils';
 
 const ENDPOINT_PREFIX = 'players';
 
+
 export default (http) => {
-  async function getByName(playerName) {
-    if (!playerName) {
-      return normalizeError('Expected required playerName. Usage: .getByName(playerName)');
+  async function getByName(playerNames) {
+    if (!playerNames) {
+      return normalizeError('Expected required playerNames. Usage: .getByName([playerNames])');
     }
 
-    if (!isString(playerName)) {
-      return normalizeError('Expected a string for playerName');
+    if (!isArray(playerNames)) {
+      return normalizeError('Expected an array for playerNames');
     }
 
-    const defaults = { filter: { playerName: '' } };
-    const query = { ...defaults, filter: { playerName } };
+    const defaults = { filter: { playerName: [] } };
+    const query = { ...defaults, filter: { playerNames } };
+
+    if (query.filter.playerNames) {
+      query.filter.playerNames = encodePlayerNames(query.filter.playerNames);
+    }
 
     try { 
       const response = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
@@ -24,7 +31,7 @@ export default (http) => {
         return normalizeError(response.messages);
       }
 
-      return parser('player', response.body);
+      return parser('players', response.body);
     } catch (e) {
       return normalizeError(null, e);
     }

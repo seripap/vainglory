@@ -5,7 +5,7 @@ Object {
 }
 `;
 
-exports[`Vainglory.single .getByName should get a single player by name 1`] = `
+exports[`Vainglory.single .getByName should get players by name 1`] = `
 Object {
   "errors": true,
   "messages": null,

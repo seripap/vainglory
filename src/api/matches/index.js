@@ -1,6 +1,7 @@
 import isString from 'lodash/isString';
 import parser from '../parser';
 import { normalizeError } from '../../Errors';
+import { encodePlayerNames } from '../../Utils';
 
 const ENDPOINT_PREFIX = 'matches';
 
@@ -40,6 +41,10 @@ export default (http) => {
     };
 
     const query = { ...defaults, ...collectionOptions };
+
+    if (query.filter.playerNames && query.filter.playerNames.length > 0) {
+      query.filter.playerNames = encodePlayerNames(query.filter.playerNames);
+    }
 
     try {
       const response = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);

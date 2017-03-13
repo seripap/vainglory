@@ -13,9 +13,9 @@ describe('Vainglory.single', () => {
     })
   });
 
-  it('.getByName should get a single player by name', async () => {
-    const playerName = 'famous';
-    const player = await vainglory.players.getByName(playerName);
+  it('.getByName should get players by name', async () => {
+    const playerNames = ['famous'];
+    const player = await vainglory.players.getByName(playerNames);
 
     expect(player).toMatchSnapshot();
   });
