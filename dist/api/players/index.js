@@ -10,11 +10,17 @@ var _isString = require('lodash/isString');
 
 var _isString2 = _interopRequireDefault(_isString);
 
+var _isArray = require('lodash/isArray');
+
+var _isArray2 = _interopRequireDefault(_isArray);
+
 var _parser = require('../parser');
 
 var _parser2 = _interopRequireDefault(_parser);
 
 var _Errors = require('../../Errors');
+
+var _Utils = require('../../Utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,58 +30,69 @@ var ENDPOINT_PREFIX = 'players';
 
 exports.default = function (http) {
   var getByName = function () {
-    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(playerName) {
-      var defaults, query, response;
+    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(playerNames) {
+      var defaults, query, response, errors, messages, model;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              if (playerName) {
+              if (playerNames) {
                 _context.next = 2;
                 break;
               }
 
-              return _context.abrupt('return', (0, _Errors.normalizeError)('Expected required playerName. Usage: .getByName(playerName)'));
+              return _context.abrupt('return', (0, _Errors.normalizeError)('Expected required playerNames. Usage: .getByName([playerNames])'));
 
             case 2:
-              if ((0, _isString2.default)(playerName)) {
+              if ((0, _isArray2.default)(playerNames)) {
                 _context.next = 4;
                 break;
               }
 
-              return _context.abrupt('return', (0, _Errors.normalizeError)('Expected a string for playerName'));
+              return _context.abrupt('return', (0, _Errors.normalizeError)('Expected an array for playerNames'));
 
             case 4:
-              defaults = { filter: { playerName: '' } };
-              query = _extends({}, defaults, { filter: { playerName: playerName } });
-              _context.prev = 6;
-              _context.next = 9;
+              defaults = { filter: { playerName: [] } };
+              query = _extends({}, defaults, { filter: { playerNames: playerNames } });
+
+
+              if (query.filter.playerNames) {
+                query.filter.playerNames = (0, _Utils.encodePlayerNames)(query.filter.playerNames);
+              }
+
+              _context.prev = 7;
+              _context.next = 10;
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
-            case 9:
+            case 10:
               response = _context.sent;
+              errors = response.errors, messages = response.messages;
 
-              if (!response.errors) {
-                _context.next = 12;
+              if (!errors) {
+                _context.next = 14;
                 break;
               }
 
-              return _context.abrupt('return', (0, _Errors.normalizeError)(response.messages));
+              return _context.abrupt('return', (0, _Errors.normalizeError)(messages));
 
-            case 12:
-              return _context.abrupt('return', (0, _parser2.default)('player', response.body));
+            case 14:
+              model = (0, _parser2.default)('players', response.body);
 
-            case 15:
-              _context.prev = 15;
-              _context.t0 = _context['catch'](6);
+              model.extend('rateLimit', response.rateLimit);
+
+              return _context.abrupt('return', model);
+
+            case 19:
+              _context.prev = 19;
+              _context.t0 = _context['catch'](7);
               return _context.abrupt('return', (0, _Errors.normalizeError)(null, _context.t0));
 
-            case 18:
+            case 22:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, this, [[6, 15]]);
+      }, _callee, this, [[7, 19]]);
     }));
 
     return function getByName(_x) {
@@ -85,7 +102,7 @@ exports.default = function (http) {
 
   var getById = function () {
     var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(playerId) {
-      var endpoint, response;
+      var endpoint, response, errors, messages, model;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -113,28 +130,33 @@ exports.default = function (http) {
 
             case 8:
               response = _context2.sent;
+              errors = response.errors, messages = response.messages;
 
-              if (!response.errors) {
-                _context2.next = 11;
+              if (!errors) {
+                _context2.next = 12;
                 break;
               }
 
-              return _context2.abrupt('return', (0, _Errors.normalizeError)(response.messages));
+              return _context2.abrupt('return', (0, _Errors.normalizeError)(messages));
 
-            case 11:
-              return _context2.abrupt('return', (0, _parser2.default)('player', response.body));
+            case 12:
+              model = (0, _parser2.default)('player', response.body);
 
-            case 14:
-              _context2.prev = 14;
+              model.extend('rateLimit', response.rateLimit);
+
+              return _context2.abrupt('return', model);
+
+            case 17:
+              _context2.prev = 17;
               _context2.t0 = _context2['catch'](5);
               return _context2.abrupt('return', (0, _Errors.normalizeError)(null, _context2.t0));
 
-            case 17:
+            case 20:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, this, [[5, 14]]);
+      }, _callee2, this, [[5, 17]]);
     }));
 
     return function getById(_x2) {

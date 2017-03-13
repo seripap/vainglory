@@ -16,6 +16,8 @@ var _parser2 = _interopRequireDefault(_parser);
 
 var _Errors = require('../../Errors');
 
+var _Utils = require('../../Utils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -25,7 +27,7 @@ var ENDPOINT_PREFIX = 'matches';
 exports.default = function (http) {
   var single = function () {
     var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(matchId) {
-      var endpoint, response;
+      var endpoint, response, errors, messages, model;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -53,28 +55,33 @@ exports.default = function (http) {
 
             case 8:
               response = _context.sent;
+              errors = response.errors, messages = response.messages;
 
-              if (!response.errors) {
-                _context.next = 11;
+              if (!errors) {
+                _context.next = 12;
                 break;
               }
 
-              return _context.abrupt('return', (0, _Errors.normalizeError)(response.messages));
+              return _context.abrupt('return', (0, _Errors.normalizeError)(messages));
 
-            case 11:
-              return _context.abrupt('return', (0, _parser2.default)('match', response.body));
+            case 12:
+              model = (0, _parser2.default)('match', response.body);
 
-            case 14:
-              _context.prev = 14;
+              model.extend('rateLimit', response.rateLimit);
+
+              return _context.abrupt('return', model);
+
+            case 17:
+              _context.prev = 17;
               _context.t0 = _context['catch'](5);
               return _context.abrupt('return', (0, _Errors.normalizeError)(null, _context.t0));
 
-            case 17:
+            case 20:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, this, [[5, 14]]);
+      }, _callee, this, [[5, 17]]);
     }));
 
     return function single(_x) {
@@ -85,7 +92,7 @@ exports.default = function (http) {
   var collection = function () {
     var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
       var collectionOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var now, minus3Hours, defaults, query, response;
+      var now, minus3Hours, defaults, query, response, errors, messages, model;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -98,34 +105,45 @@ exports.default = function (http) {
                 filter: { 'createdAt-start': minus3Hours.toISOString(), 'createdAt-end': now.toISOString(), playerNames: [], teamNames: [] }
               };
               query = _extends({}, defaults, collectionOptions);
-              _context2.prev = 4;
-              _context2.next = 7;
+
+
+              if (query.filter.playerNames && query.filter.playerNames.length > 0) {
+                query.filter.playerNames = (0, _Utils.encodePlayerNames)(query.filter.playerNames);
+              }
+
+              _context2.prev = 5;
+              _context2.next = 8;
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
-            case 7:
+            case 8:
               response = _context2.sent;
+              errors = response.errors, messages = response.messages;
 
-              if (!response.errors) {
-                _context2.next = 10;
+              if (!errors) {
+                _context2.next = 12;
                 break;
               }
 
-              return _context2.abrupt('return', (0, _Errors.normalizeError)(response.messages));
+              return _context2.abrupt('return', (0, _Errors.normalizeError)(messages));
 
-            case 10:
-              return _context2.abrupt('return', (0, _parser2.default)('matches', response.body));
+            case 12:
+              model = (0, _parser2.default)('matches', response.body);
 
-            case 13:
-              _context2.prev = 13;
-              _context2.t0 = _context2['catch'](4);
+              model.extend('rateLimit', response.rateLimit);
+
+              return _context2.abrupt('return', model);
+
+            case 17:
+              _context2.prev = 17;
+              _context2.t0 = _context2['catch'](5);
               return _context2.abrupt('return', (0, _Errors.normalizeError)(null, _context2.t0));
 
-            case 16:
+            case 20:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, this, [[4, 13]]);
+      }, _callee2, this, [[5, 17]]);
     }));
 
     return function collection() {

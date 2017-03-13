@@ -18,14 +18,24 @@ var BaseModel = function () {
   }
 
   _createClass(BaseModel, [{
-    key: "type",
-    get: function get() {
-      return this.data.type;
+    key: "extend",
+    value: function extend(key, properties) {
+      this[key] = properties;
+      return this;
     }
   }, {
     key: "id",
+    set: function set(id) {
+      this.data.id = id;
+      return this;
+    },
     get: function get() {
       return this.data.id;
+    }
+  }, {
+    key: "type",
+    get: function get() {
+      return this.data.type;
     }
   }, {
     key: "raw",

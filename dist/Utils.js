@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.encodePlayerNames = encodePlayerNames;
 
 var _models = require('./models');
 
@@ -29,6 +30,12 @@ var _roster = require('./models/roster');
 var _roster2 = _interopRequireDefault(_roster);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function encodePlayerNames(playerNames) {
+  return playerNames.map(function (player) {
+    return encodeURIComponent(player);
+  });
+}
 
 exports.default = {
   models: {

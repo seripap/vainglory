@@ -115,30 +115,40 @@ var Http = function () {
     }
   }, {
     key: 'parseErrors',
-    value: function parseErrors(status, requestOptions) {
+    value: function parseErrors(status, requestOptions, rateLimit) {
       var err = { errors: true };
       var region = this.getRequestedRegion();
       switch (status) {
         case 401:
-          return _extends({}, err, { messages: _Errors.UNAUTHORIZED, region: region, debug: requestOptions });
+          return _extends({}, err, { messages: _Errors.UNAUTHORIZED, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 404:
-          return _extends({}, err, { messages: _Errors.NOT_FOUND, region: region, debug: requestOptions });
+          return _extends({}, err, { messages: _Errors.NOT_FOUND, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 500:
-          return _extends({}, err, { messages: _Errors.INTERNAL, region: region, debug: requestOptions });
+          return _extends({}, err, { messages: _Errors.INTERNAL, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 429:
-          return _extends({}, err, { messages: _Errors.RATE_LIMIT, region: region, debug: requestOptions });
+          return _extends({}, err, { messages: _Errors.RATE_LIMIT, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 503:
-          return _extends({}, err, { messages: _Errors.OFFLINE, region: region, debug: requestOptions });
+          return _extends({}, err, { messages: _Errors.OFFLINE, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 406:
-          return _extends({}, err, { messages: _Errors.NOT_ACCEPTABLE, region: region, debug: requestOptions });
+          return _extends({}, err, { messages: _Errors.NOT_ACCEPTABLE, region: region, debug: requestOptions, rateLimit: rateLimit });
         default:
-          return _extends({}, err, { messages: _Errors.UNKNOWN, region: region, debug: requestOptions });
+          return _extends({}, err, { messages: _Errors.UNKNOWN, region: region, debug: requestOptions, rateLimit: rateLimit });
       }
     }
   }, {
     key: 'status',
     value: function status() {
       return (0, _nodeFetch2.default)(this.options.status);
+    }
+  }, {
+    key: 'parseRateLimit',
+    value: function parseRateLimit(headers) {
+      return {
+        limit: headers.get('x-ratelimit-limit'),
+        remaining: headers.get('x-ratelimit-remaining'),
+        reset: headers.get('x-ratelimit-reset'),
+        requestId: headers.get('x-request-id')
+      };
     }
   }, {
     key: 'execute',
@@ -165,30 +175,34 @@ var Http = function () {
       }
 
       return new Promise(function (resolve, reject) {
+        var rateLimit = null;
         _this.tempRegion = null;
+
         (0, _nodeFetch2.default)(requestOptions.url, {
           method: requestOptions.method,
           headers: requestOptions.headers
         }).then(function (res) {
+          rateLimit = _this.parseRateLimit(res.headers);
           if (res.status !== 200) {
-            return _this.parseErrors(res.status, requestOptions);
+            return _this.parseErrors(res.status, requestOptions, rateLimit);
           }
           return res.json();
         }).then(function (body) {
           // Empty responses
           if (!body) {
-            return reject({ errors: true, messages: _Errors.NO_BODY, region: region, debug: requestOptions });
+            return reject({ errors: true, messages: _Errors.NO_BODY, region: region, debug: requestOptions, rateLimit: rateLimit });
           }
           // Status code not 200
           if (body.errors) {
-            return reject(_extends({}, body, { region: region, debug: requestOptions }));
+            return reject(_extends({}, body, { region: region, debug: requestOptions, rateLimit: rateLimit }));
           }
 
           return resolve({
             errors: null,
             body: body,
             region: region,
-            debug: requestOptions
+            debug: requestOptions,
+            rateLimit: rateLimit
           });
         }).catch(function (err) {
           return reject({
@@ -196,7 +210,8 @@ var Http = function () {
             messages: _Errors.NETWORK_ERROR,
             region: region,
             details: err,
-            debug: requestOptions
+            debug: requestOptions,
+            rateLimit: rateLimit
           });
         });
       });
