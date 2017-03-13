@@ -71,6 +71,7 @@ export default (entity, data) => {
     return checkForRelations(modeledData, modeledData.data);
   }
 
+
   return checkForRelations(dataModel, parentData);
 
 };

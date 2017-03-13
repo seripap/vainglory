@@ -32,9 +32,10 @@ export default (http) => {
         return normalizeError(messages);
       }
 
-      const { body, rateLimit } = response;
+      const model = parser('players', response.body);
+      model.extend('rateLimit', response.rateLimit);
 
-      return { ...parser('players', body), rateLimit } ;
+      return model;
     } catch (e) {
       return normalizeError(null, e);
     }
@@ -59,9 +60,10 @@ export default (http) => {
         return normalizeError(messages);
       }
 
-      const { body, rateLimit } = response;
+      const model = parser('player', response.body);
+      model.extend('rateLimit', response.rateLimit);
 
-      return { ...parser('player', body), rateLimit };
+      return model;
     } catch (e) {
       return normalizeError(null, e);
     }

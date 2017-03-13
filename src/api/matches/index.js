@@ -24,9 +24,10 @@ export default (http) => {
         return normalizeError(messages);
       }
 
-      const { body, rateLimit } = response;
+      const model = parser('match', response.body);
+      model.extend('rateLimit', response.rateLimit);
 
-      return { ...parser('match', body), rateLimit };
+      return model;
     } catch (e) {
       return normalizeError(null, e);
     }
@@ -56,10 +57,10 @@ export default (http) => {
       if (errors) {
         return normalizeError(messages);
       }
+      const model = parser('matches', response.body);
+      model.extend('rateLimit', response.rateLimit);
 
-      const { body, rateLimit } = response;
-
-      return { ...parser('matches', body), rateLimit };
+      return model;
     } catch (e) {
       return normalizeError(null, e);
     }
