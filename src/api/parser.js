@@ -26,7 +26,7 @@ function getModel(entityType) {
   return model;
 }
 
-export default (entity, data, remapped) => {
+export default (entity, data) => {
 
   if (data === null) {
     return data;

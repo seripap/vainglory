@@ -26,12 +26,15 @@ export default (http) => {
 
     try { 
       const response = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
+      const { errors, messages } = response;
 
-      if (response.errors) {
-        return normalizeError(response.messages);
+      if (errors) {
+        return normalizeError(messages);
       }
 
-      return parser('players', response.body);
+      const { body, rateLimit } = response;
+
+      return { ...parser('players', body), rateLimit } ;
     } catch (e) {
       return normalizeError(null, e);
     }
@@ -50,12 +53,15 @@ export default (http) => {
 
     try {
       const response = await http.execute('GET', endpoint);
-      
-      if (response.errors) {
-        return normalizeError(response.messages);
+      const { errors, messages } = response;
+
+      if (errors) {
+        return normalizeError(messages);
       }
 
-      return parser('player', response.body);
+      const { body, rateLimit } = response;
+
+      return { ...parser('player', body), rateLimit };
     } catch (e) {
       return normalizeError(null, e);
     }

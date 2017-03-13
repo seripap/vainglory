@@ -67,6 +67,9 @@ $ yarn test
 
 All methods are named references from the [Official API Reference](http://developer.vainglorygame.com/docs). All methods will return a promise.
 
+* [Errors](#errors)
+* [Rate Limits](#rateLimits)
+
 * [`status`](#apiStatus)
 * [`region`](#apiRegion)
 * [`setRegion`](#apiSetRegion)
@@ -104,7 +107,26 @@ __Example__
         'X-TITLE-ID': 'semc-vainglory' 
       } 
     } 
-  }
+  },
+  rateLimit:
+    { limit: '10',
+      remaining: '9',
+      reset: '6000000000',
+      requestId: 'some-arbitrary-id' } 
+    }
+```
+
+<a name="rateLimits">
+### Rate Limits
+Rate limit information is attached to every request. All models will return `.rateLimit`, see the [Reference](https://developer.vainglorygame.com/docs#rate-limits) for more information or if you need to increase your rate limit.
+
+```
+  rateLimit:
+    { limit: '10',
+      remaining: '9',
+      reset: '6000000000',
+      requestId: 'some-arbitrary-id' } 
+    }
 ```
 
 ---------------------------------------

@@ -18,12 +18,15 @@ export default (http) => {
     const endpoint = `${ENDPOINT_PREFIX}/${matchId}`;
     try {
       const response = await http.execute('GET', endpoint);
+      const { errors, messages } = response;
 
-      if (response.errors) {
-        return normalizeError(response.messages);
+      if (errors) {
+        return normalizeError(messages);
       }
 
-      return parser('match', response.body)
+      const { body, rateLimit } = response;
+
+      return { ...parser('match', body), rateLimit };
     } catch (e) {
       return normalizeError(null, e);
     }
@@ -48,12 +51,15 @@ export default (http) => {
 
     try {
       const response = await http.execute('GET', `${ENDPOINT_PREFIX}`, query);
-      
-      if (response.errors) {
-        return normalizeError(response.messages);
+      const { errors, messages } = response;
+
+      if (errors) {
+        return normalizeError(messages);
       }
 
-      return parser('matches', response.body);
+      const { body, rateLimit } = response;
+
+      return { ...parser('matches', body), rateLimit };
     } catch (e) {
       return normalizeError(null, e);
     }
