@@ -52,12 +52,24 @@ export default [
     "serverName": "*Hero009*"
   },
   {
+    "name": "Krul",
+    "serverName": "*Krul*"
+  },
+  {
     "name": "Skaarf",
     "serverName": "*Hero010*"
   },
   {
+    "name": "Skaarf",
+    "serverName": "*Skaarf*"
+  },
+  {
     "name": "Rona",
     "serverName": "*Hero016*"
+  },
+  {
+    "name": "Rona",
+    "serverName": "*Rona*"
   },
   {
     "name": "Idris",
@@ -114,6 +126,10 @@ export default [
   {
     "name": "Taka",
     "serverName": "*Sayoc*"
+  },
+  {
+    "name": "Taka",
+    "serverName": "*Taka*"
   },
   {
     "name": "Skye",
