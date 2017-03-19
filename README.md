@@ -1,12 +1,10 @@
-# Vainglory.js(BETA) - A Javascript API Client for Vainglory
+# Vainglory.js(BETA)
 
 [![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.org/seripap/vainglory) [![npm](https://img.shields.io/npm/v/vainglory.svg)](https://www.npmjs.com/package/vainglory)
 
 **CURRENTLY IN ACTIVE DEVELOPMENT**
 
-This is a Javascript API client for [Vainglory](http://vainglorygame.com).
-
-There will be a lot of updates prior to [v1.0.0](https://github.com/seripap/vainglory/issues/1). If you are using this package, always update to the [latest version](https://github.com/seripap/vainglory/releases) to ensure API alignment and data accuracy.
+This is a Javascript API client wrapper for [Vainglory](http://vainglorygame.com). If you are using this package, always update to the [latest version](https://github.com/seripap/vainglory/releases) to ensure API alignment since the official API is still in Alpha.
 
 If you run into problems or find bugs, [file an issue](https://github.com/seripap/vainglory/issues).
 
