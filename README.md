@@ -67,9 +67,9 @@ $ yarn test
 
 All methods are named references from the [Official API Reference](http://developer.vainglorygame.com/docs). All methods will return a promise.
 
-* [Errors](#errors)
-* [Rate Limits](#rateLimits)
-
+* [`Errors`](#errors)
+* [`RateLimits`](#rateLimits)
+* [`Telemetry`](#telemtry)
 * [`status`](#apiStatus)
 * [`region`](#apiRegion)
 * [`setRegion`](#apiSetRegion)
@@ -129,6 +129,19 @@ Rate limit information is attached to every request. All models will return `.ra
     }
 ```
 
+<a name="telemetry">
+### Telemetry
+Telemetry data can be retrieved from the `match` model under assets. Assets is an array of [asset](#assetModel). This client does not handle resolving telemetry URLs (`yet`) so you will have to make the request.
+
+__Example__
+
+```javascript
+const matchId = 'f5373c40-0aa9-11e7-bcff-0667892d829e';
+vainglory.matches.single(matchId).then((match) => {
+  console.log(match.assets) // array of asset
+}).catch((err) => console.error(err));
+```
+
 ---------------------------------------
 <a name="apiStatus" />
 ## Status
@@ -141,7 +154,7 @@ Returns API meta information.
 vainglory.status().then((info) => console.log(info));
 ```
 
-Example Response
+__Example Response__
 
 ```
 { 
@@ -220,8 +233,8 @@ const options = {
   filter: {
     'createdAt-start': minus3Hours.toISOString(), // ISO Date
     'createdAt-end': now.toISOString(), // ISO Date
-    playerNames: [], // Array
-    teamNames: [], // Array
+    playerNames: [],
+    teamNames: [],
   },
 };
 ```
@@ -340,6 +353,7 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 
 [Ref](https://developer.vainglorygame.com/docs#matches)
 
+- `.assets` - Array of [Asset](#assetModel)
 - `.createdAt`
 - `.duration`
 - `.gameMode`
@@ -348,6 +362,18 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 - `.stats`
 - `.titleId`
 - `.rosters` - Array of [Roster](#rosterModel)
+
+<a name="assetModel" />
+### Asset
+
+[Ref](https://developer.vainglorygame.com/docs#telemetry)
+
+- `.URL`
+- `.contentType`
+- `.createdAt`
+- `.description`
+- `.filename`
+- `.name`
 
 <a name="rosterModel" />
 ### Roster
@@ -371,7 +397,7 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 <a name="playersModel" />
 ### Players
 
-- `.player`
+- `.player` - Array of [Player](#playerModel)
 
 <a name="playerModel" />
 ### Player

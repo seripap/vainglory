@@ -1,6 +1,7 @@
 import isArray from 'lodash/isArray';
 import util from 'util';
 
+import Asset from '../models/asset';
 import Players from '../models/players';
 import Player from '../models/player';
 import Matches from '../models/matches';
@@ -9,6 +10,7 @@ import Participant from '../models/participant';
 import Roster from '../models/roster';
 
 const map = {
+  asset: Asset,
   players: Players,
   player: Player,
   matches: Matches,

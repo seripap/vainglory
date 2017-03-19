@@ -1,4 +1,5 @@
 import BaseModel from '../src/models';
+import Asset from '../src/models/asset';
 import Match from '../src/models/match';
 import Matches from '../src/models/matches';
 import Participant from '../src/models/participant';

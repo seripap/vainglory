@@ -1,5 +1,6 @@
 exports[`Vainglory data models Match should initalize 1`] = `
 Match {
+  "assets": Array [],
   "data": Object {
     "attributes": Object {
       "createdAt": "2017-02-26T00:39:04Z",
@@ -755,6 +756,9 @@ Match {
     Object {
       "type": "rosters",
     },
+    Object {
+      "type": "assets",
+    },
   ],
 }
 `;
@@ -945,6 +949,7 @@ Matches {
   ],
   "match": Array [
     Match {
+      "assets": Array [],
       "data": Object {
         "attributes": Object {
           "createdAt": "2017-02-28T23:50:27Z",
@@ -1637,9 +1642,13 @@ Matches {
         Object {
           "type": "rosters",
         },
+        Object {
+          "type": "assets",
+        },
       ],
     },
     Match {
+      "assets": Array [],
       "data": Object {
         "attributes": Object {
           "createdAt": "2017-02-28T23:50:26Z",
@@ -2353,9 +2362,13 @@ Matches {
         Object {
           "type": "rosters",
         },
+        Object {
+          "type": "assets",
+        },
       ],
     },
     Match {
+      "assets": Array [],
       "data": Object {
         "attributes": Object {
           "createdAt": "2017-02-28T23:50:29Z",
@@ -3071,9 +3084,13 @@ Matches {
         Object {
           "type": "rosters",
         },
+        Object {
+          "type": "assets",
+        },
       ],
     },
     Match {
+      "assets": Array [],
       "data": Object {
         "attributes": Object {
           "createdAt": "2017-02-28T23:50:28Z",
@@ -3793,9 +3810,13 @@ Matches {
         Object {
           "type": "rosters",
         },
+        Object {
+          "type": "assets",
+        },
       ],
     },
     Match {
+      "assets": Array [],
       "data": Object {
         "attributes": Object {
           "createdAt": "2017-02-28T23:50:33Z",
@@ -4098,6 +4119,9 @@ Matches {
       "relationships": Array [
         Object {
           "type": "rosters",
+        },
+        Object {
+          "type": "assets",
         },
       ],
     },

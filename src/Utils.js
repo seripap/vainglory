@@ -1,4 +1,5 @@
 import Base from './models';
+import Asset from './models/asset';
 import Match from './models/match';
 import Matches from './models/matches';
 import Participant from './models/participant';
@@ -11,6 +12,7 @@ export function encodePlayerNames(playerNames) {
 
 export default {
   models: {
+    Asset,
     Base,
     Match,
     Matches,

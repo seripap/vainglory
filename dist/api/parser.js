@@ -12,6 +12,10 @@ var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
 
+var _asset = require('../models/asset');
+
+var _asset2 = _interopRequireDefault(_asset);
+
 var _players = require('../models/players');
 
 var _players2 = _interopRequireDefault(_players);
@@ -39,6 +43,7 @@ var _roster2 = _interopRequireDefault(_roster);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var map = {
+  asset: _asset2.default,
   players: _players2.default,
   player: _player2.default,
   matches: _matches2.default,

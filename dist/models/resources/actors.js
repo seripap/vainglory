@@ -43,11 +43,20 @@ exports.default = [{
   "name": "Krul",
   "serverName": "*Hero009*"
 }, {
+  "name": "Krul",
+  "serverName": "*Krul*"
+}, {
   "name": "Skaarf",
   "serverName": "*Hero010*"
 }, {
+  "name": "Skaarf",
+  "serverName": "*Skaarf*"
+}, {
   "name": "Rona",
   "serverName": "*Hero016*"
+}, {
+  "name": "Rona",
+  "serverName": "*Rona*"
 }, {
   "name": "Idris",
   "serverName": "*Idris*"
@@ -90,6 +99,9 @@ exports.default = [{
 }, {
   "name": "Taka",
   "serverName": "*Sayoc*"
+}, {
+  "name": "Taka",
+  "serverName": "*Taka*"
 }, {
   "name": "Skye",
   "serverName": "*Skye*"

@@ -6,6 +6,8 @@ export default class Match extends BaseModel {
     super(data);
     this.relationships = [{
       type: 'rosters',
+    }, {
+      type: 'assets',
     }];
   }
 

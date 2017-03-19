@@ -9,6 +9,10 @@ var _models = require('./models');
 
 var _models2 = _interopRequireDefault(_models);
 
+var _asset = require('./models/asset');
+
+var _asset2 = _interopRequireDefault(_asset);
+
 var _match = require('./models/match');
 
 var _match2 = _interopRequireDefault(_match);
@@ -39,6 +43,7 @@ function encodePlayerNames(playerNames) {
 
 exports.default = {
   models: {
+    Asset: _asset2.default,
     Base: _models2.default,
     Match: _match2.default,
     Matches: _matches2.default,

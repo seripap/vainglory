@@ -1,5 +1,6 @@
 import Vainglory from '../src/Vainglory';
 import Match from '../src/models/match';
+import Asset from '../src/models/asset';
 import Matches from '../src/models/matches';
 import Participant from '../src/models/participant';
 import Player from '../src/models/player';
@@ -26,6 +27,7 @@ describe('Vainglory class setup', () => {
     const apiKey = '1234567890';
     const vainglory = new Vainglory('aaa.bbb.ccc');
 
+    expect(new vainglory.models.Asset).toBeInstanceOf(Asset);
     expect(new vainglory.models.Match).toBeInstanceOf(Match);
     expect(new vainglory.models.Matches).toBeInstanceOf(Matches);
     expect(new vainglory.models.Participant).toBeInstanceOf(Participant);
