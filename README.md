@@ -336,7 +336,7 @@ vainglory.players.getByName(playerNames).then((player) => {
 ---------------------------------------
 ## Models
 
-All results are wrapped with a model for easier data digesting. You can request any data that comes back from the request.
+All results are wrapped with its respective data model.
 
 - `.type` - Returns the type of data requested
 - `.id` - Returns associated ID
