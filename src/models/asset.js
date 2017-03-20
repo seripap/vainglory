@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 import BaseModel from './';
 
 export default class Asset extends BaseModel {
@@ -28,6 +29,17 @@ export default class Asset extends BaseModel {
 
   get name() {
     return this.data.attributes.name;
+  }
+
+  async resolve() {
+    try {
+      const response = await fetch(this.URL);
+      const body = await response.json();
+      return body;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   }
 
 }

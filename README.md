@@ -126,7 +126,7 @@ Rate limit information is attached to every request. All models will return `.ra
 
 ### Telemetry
 
-Telemetry data can be retrieved from the `match` model under assets. Assets is an array of [asset](#assetModel). This client does not handle resolving telemetry URLs (`yet`) so you will have to make the request.
+Telemetry data can be retrieved from the `match` model under assets. Assets is an array of [asset](#assetModel).
 
 __Example__
 
@@ -134,6 +134,19 @@ __Example__
 const matchId = 'f5373c40-0aa9-11e7-bcff-0667892d829e';
 vainglory.matches.single(matchId).then((match) => {
   console.log(match.assets) // array of asset
+  // If you'd like to resolve telemetry data
+}).catch((err) => console.error(err));
+```
+
+### .resolve()
+
+If you would like to resolve telemetry data, you can call `.resolve()` directly on the asset. Note that this currently returns the raw data that is associated with `.URL`.
+
+```javascript
+const matchId = 'f5373c40-0aa9-11e7-bcff-0667892d829e';
+vainglory.matches.single(matchId).then(async (match) => {
+  const telemetry = await match.assets[0].resolve();
+  console.log(telemetry);
 }).catch((err) => console.error(err));
 ```
 
@@ -380,6 +393,7 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 - `.description`
 - `.filename`
 - `.name`
+- `.resolve()` - Returns promise; resolves `.URL` data
 
 <a name="rosterModel" />
 
