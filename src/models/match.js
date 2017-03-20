@@ -1,4 +1,5 @@
 import BaseModel from './';
+import gameModeType from './resources/gameModes';
 
 export default class Match extends BaseModel {
 
@@ -19,8 +20,13 @@ export default class Match extends BaseModel {
     return this.data.attributes.duration;
   }
 
-  get gameMode() {
+  get _gameMode() {
     return this.data.attributes.gameMode;
+  }
+
+  get gameMode() {
+    const normalizedGameMode = gameModeType.find(mode => mode.serverName === this._gameMode);
+    return normalizedGameMode ? normalizedGameMode.name : this._gameMode;
   }
 
   get patchVersion() {

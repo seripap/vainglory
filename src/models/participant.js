@@ -1,6 +1,8 @@
 import BaseModel from './';
 import actors from './resources/actors';
 import items from './resources/items';
+import skillTiers from './resources/skillTiers';
+import karma from './resources/karma';
 
 export default class Participant extends BaseModel {
 
@@ -41,6 +43,8 @@ export default class Participant extends BaseModel {
     stats.itemGrants = this.replaceItem('itemGrants', stats);
     stats.itemUses = this.replaceItem('itemUses', stats);
     stats.items = this.replaceItem('items', stats);
+    stats.skillTier = skillTiers.find(tier => tier.serverName === stats.skillTier).name || stats.skillTier;
+    stats.karmaLevel = karma.find(k => k.serverName === stats.karmaLevel).name || stats.karmaLevel;
     return stats;
   }
 
