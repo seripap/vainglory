@@ -19,6 +19,14 @@ var _items = require('./resources/items');
 
 var _items2 = _interopRequireDefault(_items);
 
+var _skillTiers = require('./resources/skillTiers');
+
+var _skillTiers2 = _interopRequireDefault(_skillTiers);
+
+var _karma = require('./resources/karma');
+
+var _karma2 = _interopRequireDefault(_karma);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -108,6 +116,12 @@ var Participant = function (_BaseModel) {
       stats.itemGrants = this.replaceItem('itemGrants', stats);
       stats.itemUses = this.replaceItem('itemUses', stats);
       stats.items = this.replaceItem('items', stats);
+      stats.skillTier = _skillTiers2.default.find(function (tier) {
+        return tier.serverName === stats.skillTier;
+      }).name || stats.skillTier;
+      stats.karmaLevel = _karma2.default.find(function (k) {
+        return k.serverName === stats.karmaLevel;
+      }).name || stats.karmaLevel;
       return stats;
     }
   }, {
