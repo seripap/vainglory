@@ -12,6 +12,10 @@ export default [
     "serverName": "*Ardan*"
   },
   {
+    "name": "Baptiste",
+    "serverName": "*Baptiste*"
+  },
+  {
     "name": "Baron",
     "serverName": "*Baron*"
   },

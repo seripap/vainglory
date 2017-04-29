@@ -1,12 +1,8 @@
-# Vainglory.js(BETA)
+# Vainglory.js
 
 [![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.org/seripap/vainglory) [![npm](https://img.shields.io/npm/v/vainglory.svg)](https://www.npmjs.com/package/vainglory)
 
-**CURRENTLY IN ACTIVE DEVELOPMENT**
-
-This is a Javascript API client wrapper for [Vainglory](http://vainglorygame.com). If you are using this package, always update to the [latest version](https://github.com/seripap/vainglory/releases) to ensure API alignment since the official API is still in Alpha.
-
-If you run into problems or find bugs, [file an issue](https://github.com/seripap/vainglory/issues).
+This is a Javascript API client wrapper for [Vainglory](http://vainglorygame.com). If you run into problems or find bugs, [file an issue](https://github.com/seripap/vainglory/issues).
 
 ## Installation
 
@@ -132,7 +128,6 @@ __Example__
 const matchId = 'f5373c40-0aa9-11e7-bcff-0667892d829e';
 vainglory.matches.single(matchId).then((match) => {
   console.log(match.assets) // array of asset
-  // If you'd like to resolve telemetry data
 }).catch((err) => console.error(err));
 ```
 
