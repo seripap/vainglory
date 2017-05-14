@@ -1,0 +1,27 @@
+exports[`Vainglory.tournament .collection should get a collection of matches 1`] = `
+Object {
+  "errors": true,
+  "messages": null,
+}
+`;
+
+exports[`Vainglory.tournament .getById should get a single player by Id 1`] = `
+Object {
+  "errors": true,
+  "messages": null,
+}
+`;
+
+exports[`Vainglory.tournament .getByName should get players by name 1`] = `
+Object {
+  "errors": true,
+  "messages": null,
+}
+`;
+
+exports[`Vainglory.tournament .single should get a single match 1`] = `
+Object {
+  "errors": true,
+  "messages": null,
+}
+`;

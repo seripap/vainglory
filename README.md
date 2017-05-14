@@ -58,15 +58,21 @@ All methods are named references from the [Official API Reference](http://develo
 * [`setRegion`](#apiSetRegion)
 * [`models`](#apiModels)
 
+<a name="matchesTOC" />
 ### Matches
 
 * [`collection`](#matchesCollection)
 * [`single`](#matchesSingle)
 
+<a name="playersTOC" />
 ### Players
 
 * [`getById`](#playersId)
 * [`getByName`](#playersName)
+
+### Tournament
+
+* [`region`](#tournament)
 
 <a name="errors" />
 
@@ -337,6 +343,40 @@ vainglory.players.getByName(playerNames).then((player) => {
 }).catch((errors) => {
   console.log(errors);
 });
+```
+
+---------------------------------------
+
+## Tournament
+
+`vainglory.tournament` 
+
+<a name="tournament" />
+
+#### region(region)
+
+Tournament data is stored in seperate shards as they take place on a private client. After you call region, you can bind the same methods you would use to call matches or player data. [Reference](https://developer.vainglorygame.com/docs#content-negotiation)
+
+__Arguments__
+- `region` [*String*] - **Optional** - Region of which tournament data to request (`na`, `eu`, `sa`, `ea`, `sg`). Note if this is blank, it will request whichever region data that was specified from `setRegion` or `region` [Reference](https://developer.vainglorygame.com/docs#regions)
+
+__Returns__
+- [Match](#matchesTOC)
+- [Player](#playerTOC)
+
+__Example__
+```javascript
+// Referencing Mathces
+vainglory.tournament.region('na').matches.collection().then((matches) => {
+  console.log(matches);
+}).catch((err) => console.log(err));
+
+// Or referencing Players
+const playerNames = ['SOMEONE','SOMEONE_ELSE'];
+
+vainglory.tournament.region('na').players.getByName(playerNames).then((players) => {
+  console.log(players);
+}).catch((err) => console.log(err));
 ```
 
 ---------------------------------------

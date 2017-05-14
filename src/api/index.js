@@ -1,6 +1,7 @@
 import pkg from '../../package.json';
 import matches from './matches';
 import players from './players';
+import tournament from './tournament';
 
 export default class Api {
   constructor(http) {
@@ -39,13 +40,15 @@ export default class Api {
   }
 
   bindTo(context) {
-    context.matches = matches(this.http);
-    context.players = players(this.http);
     // Overwrites region
     context.setRegion = this.setRegion.bind(this, context);
     // Temporarily sets region for current call
     context.region = this.region.bind(this, context);
     context.status = this.status.bind(this);
+
+    context.matches = matches(this.http);
+    context.players = players(this.http);
+    context.tournament = tournament(this.http);
   }
 
 }
