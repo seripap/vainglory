@@ -1,4 +1,4 @@
 {
   "presets": ["latest", "stage-2"],
-  "plugins": ["transform-object-rest-spread", "transform-decorators-legacy"]
+  "plugins": ["transform-object-rest-spread", "transform-decorators-legacy", "babel-plugin-transform-runtime"]
 }
