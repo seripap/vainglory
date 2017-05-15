@@ -59,16 +59,20 @@ All methods are named references from the [Official API Reference](http://develo
 * [`models`](#apiModels)
 
 <a name="matchesTOC" />
+
 ### Matches
 
 * [`collection`](#matchesCollection)
 * [`single`](#matchesSingle)
 
 <a name="playersTOC" />
+
 ### Players
 
 * [`getById`](#playersId)
 * [`getByName`](#playersName)
+
+<a name="tournamentTOC" />
 
 ### Tournament
 

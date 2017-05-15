@@ -5,9 +5,29 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _promise = require('babel-runtime/core-js/promise');
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _promise2 = _interopRequireDefault(_promise);
+
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _nodeFetch = require('node-fetch');
 
@@ -25,8 +45,6 @@ var _Errors = require('./Errors');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 var defaults = {
   host: 'https://api.dc01.gamelockerapp.com/shards/',
   region: 'na',
@@ -38,10 +56,9 @@ var Http = function () {
   function Http() {
     var apiKey = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaults;
+    (0, _classCallCheck3.default)(this, Http);
 
-    _classCallCheck(this, Http);
-
-    var requestOptions = _extends({}, defaults, options);
+    var requestOptions = (0, _extends3.default)({}, defaults, options);
     this._tempRegion = null;
     this._region = requestOptions.region.toLowerCase(), this.options = {
       url: '' + requestOptions.host,
@@ -57,7 +74,7 @@ var Http = function () {
     };
   }
 
-  _createClass(Http, [{
+  (0, _createClass3.default)(Http, [{
     key: 'getRequestedRegion',
     value: function getRequestedRegion() {
       return this.tempRegion ? this.tempRegion : this.region;
@@ -73,7 +90,7 @@ var Http = function () {
         var _iteratorError = undefined;
 
         try {
-          for (var _iterator = Object.keys(obj)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (var _iterator = (0, _getIterator3.default)((0, _keys2.default)(obj)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var property = _step.value;
 
             if (Object.prototype.hasOwnProperty.call(obj, property)) {
@@ -120,19 +137,19 @@ var Http = function () {
       var region = this.getRequestedRegion();
       switch (status) {
         case 401:
-          return _extends({}, err, { messages: _Errors.UNAUTHORIZED, region: region, debug: requestOptions, rateLimit: rateLimit });
+          return (0, _extends3.default)({}, err, { messages: _Errors.UNAUTHORIZED, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 404:
-          return _extends({}, err, { messages: _Errors.NOT_FOUND, region: region, debug: requestOptions, rateLimit: rateLimit });
+          return (0, _extends3.default)({}, err, { messages: _Errors.NOT_FOUND, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 500:
-          return _extends({}, err, { messages: _Errors.INTERNAL, region: region, debug: requestOptions, rateLimit: rateLimit });
+          return (0, _extends3.default)({}, err, { messages: _Errors.INTERNAL, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 429:
-          return _extends({}, err, { messages: _Errors.RATE_LIMIT, region: region, debug: requestOptions, rateLimit: rateLimit });
+          return (0, _extends3.default)({}, err, { messages: _Errors.RATE_LIMIT, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 503:
-          return _extends({}, err, { messages: _Errors.OFFLINE, region: region, debug: requestOptions, rateLimit: rateLimit });
+          return (0, _extends3.default)({}, err, { messages: _Errors.OFFLINE, region: region, debug: requestOptions, rateLimit: rateLimit });
         case 406:
-          return _extends({}, err, { messages: _Errors.NOT_ACCEPTABLE, region: region, debug: requestOptions, rateLimit: rateLimit });
+          return (0, _extends3.default)({}, err, { messages: _Errors.NOT_ACCEPTABLE, region: region, debug: requestOptions, rateLimit: rateLimit });
         default:
-          return _extends({}, err, { messages: _Errors.UNKNOWN, region: region, debug: requestOptions, rateLimit: rateLimit });
+          return (0, _extends3.default)({}, err, { messages: _Errors.UNKNOWN, region: region, debug: requestOptions, rateLimit: rateLimit });
       }
     }
   }, {
@@ -160,7 +177,7 @@ var Http = function () {
       var endpoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var query = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
-      var requestOptions = _extends({}, this.options);
+      var requestOptions = (0, _extends3.default)({}, this.options);
       if (endpoint === null) {
         return new Error('HTTP Error: No endpoint to provide a request to.');
       }
@@ -174,7 +191,7 @@ var Http = function () {
         requestOptions.url += '?' + this.serialize(query);
       }
 
-      return new Promise(function (resolve, reject) {
+      return new _promise2.default(function (resolve, reject) {
         var rateLimit = null;
         _this.tempRegion = null;
 
@@ -194,7 +211,7 @@ var Http = function () {
           }
           // Status code not 200
           if (body.errors) {
-            return reject(_extends({}, body, { region: region, debug: requestOptions, rateLimit: rateLimit }));
+            return reject((0, _extends3.default)({}, body, { region: region, debug: requestOptions, rateLimit: rateLimit }));
           }
 
           return resolve({
@@ -235,7 +252,6 @@ var Http = function () {
       return this._region;
     }
   }]);
-
   return Http;
 }();
 

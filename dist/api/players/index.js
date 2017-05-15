@@ -4,7 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var _isString = require('lodash/isString');
 
@@ -24,15 +34,13 @@ var _Utils = require('../../Utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 var ENDPOINT_PREFIX = 'players';
 
 exports.default = function (http) {
   var getByName = function () {
-    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(playerNames) {
+    var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(playerNames) {
       var defaults, query, response, errors, messages, model;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
+      return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -53,7 +61,7 @@ exports.default = function (http) {
 
             case 4:
               defaults = { filter: { playerName: [] } };
-              query = _extends({}, defaults, { filter: { playerNames: playerNames } });
+              query = (0, _extends3.default)({}, defaults, { filter: { playerNames: playerNames } });
 
 
               if (query.filter.playerNames) {
@@ -101,9 +109,9 @@ exports.default = function (http) {
   }();
 
   var getById = function () {
-    var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(playerId) {
+    var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(playerId) {
       var endpoint, response, errors, messages, model;
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
