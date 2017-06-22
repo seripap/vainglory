@@ -44,6 +44,10 @@ export default [
     "serverName": "*Glaive*"
   },
   {
+    "name": "Grace",
+    "serverName": "*Grace*"
+  },
+  {
     "name": "Grumpjaw",
     "serverName": "*Grumpjaw*"
   },
