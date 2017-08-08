@@ -13,7 +13,7 @@ exports.default = [{
   name: 'Blitz',
   serverName: 'blitz_pvp_ranked'
 }, {
-  name: 'Battle Royal',
+  name: 'Battle Royale',
   serverName: 'casual_aral'
 }, {
   name: 'Private',
@@ -25,6 +25,6 @@ exports.default = [{
   name: 'Private Blitz',
   serverName: 'private_party_blitz_match'
 }, {
-  name: 'Private Battle Royal',
+  name: 'Private Battle Royale',
   serverName: 'private_party_aral_match'
 }];

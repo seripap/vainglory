@@ -80,6 +80,10 @@ export default [
     "serverName": "*Rona*"
   },
   {
+    "name": "Reza",
+    "serverName": "*Reza*"
+  },
+  {
     "name": "Idris",
     "serverName": "*Idris*"
   },
