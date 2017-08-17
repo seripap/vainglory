@@ -205,6 +205,207 @@ exports.default = [{
   "serverName": "*1105_Item_SlumberingHusk*",
   "name": "Slumbering Husk"
 }, {
+  "serverName": "*Item_HalcyonPotion*",
+  "name": "Halcyon Potion"
+}, {
+  "serverName": "*Item_WeaponBlade*",
+  "name": "Weapon Blade"
+}, {
+  "serverName": "*Item_CrystalBit*",
+  "name": "Crystal Bit"
+}, {
+  "serverName": "*Item_SwiftShooter*",
+  "name": "Swift Shooter"
+}, {
+  "serverName": "*Item_SixSins*",
+  "name": "Six Sins"
+}, {
+  "serverName": "*Item_EclipsePrism*",
+  "name": "Eclipse Prism"
+}, {
+  "serverName": "*Item_BlazingSalvo*",
+  "name": "Blazing Salvo"
+}, {
+  "serverName": "*Item_Sorrowblade*",
+  "name": "Sorrowblade"
+}, {
+  "serverName": "*Item_Shatterglass*",
+  "name": "Shatterglass"
+}, {
+  "serverName": "*Item_TornadoTrigger*",
+  "name": "Tornado Trigger"
+}, {
+  "serverName": "*Item_Oakheart*",
+  "name": "Oakheart"
+}, {
+  "serverName": "*Item_Dragonheart*",
+  "name": "Dragonheart"
+}, {
+  "serverName": "*Item_LightArmor*",
+  "name": "Light Armor"
+}, {
+  "serverName": "*Item_CoatOfPlates*",
+  "name": "Coat of Plates"
+}, {
+  "serverName": "*Item_MetalJacket*",
+  "name": "Metal Jacket"
+}, {
+  "serverName": "*Item_EnergyBattery*",
+  "name": "Energy Battery"
+}, {
+  "serverName": "*Item_Hourglass*",
+  "name": "Hourglass"
+}, {
+  "serverName": "*Item_VoidBattery*",
+  "name": "Void Battery"
+}, {
+  "serverName": "*Item_Chronograph*",
+  "name": "Chronograph"
+}, {
+  "serverName": "*Item_Clockwork*",
+  "name": "Clockwork"
+}, {
+  "serverName": "*Item_SprintBoots*",
+  "name": "Sprint Boots"
+}, {
+  "serverName": "*Item_TravelBoots*",
+  "name": "Travel Boots"
+}, {
+  "serverName": "*Item_SerpentMask*",
+  "name": "Serpent Mask"
+}, {
+  "serverName": "*Item_TensionBow*",
+  "name": "Tension Bow"
+}, {
+  "serverName": "*Item_Flare*",
+  "name": "Flare"
+}, {
+  "serverName": "*Item_Bonesaw*",
+  "name": "Bonesaw"
+}, {
+  "serverName": "*Item_MinionCandy*",
+  "name": "Minion Candy"
+}, {
+  "serverName": "*Item_Shiversteel*",
+  "name": "Shiversteel"
+}, {
+  "serverName": "*Item_ReflexBlock*",
+  "name": "Reflex Block"
+}, {
+  "serverName": "*Item_Frostburn*",
+  "name": "Frostburn"
+}, {
+  "serverName": "*Item_FountainOfRenewal*",
+  "name": "Fountain of Renewal"
+}, {
+  "serverName": "*Item_Crucible*",
+  "name": "Crucible"
+}, {
+  "serverName": "*Item_JourneyBoots*",
+  "name": "Journey Boots"
+}, {
+  "serverName": "*Item_TyrantsMonocle*",
+  "name": "Tyrant's Monocle"
+}, {
+  "serverName": "*Item_Aftershock*",
+  "name": "Aftershock"
+}, {
+  "serverName": "*Item_WeaponInfusion*",
+  "name": "Weapon Infusion"
+}, {
+  "serverName": "*Item_CrystalInfusion*",
+  "name": "Crystal Infusion"
+}, {
+  "serverName": "*Item_ScoutTrap*",
+  "name": "Scout Trap"
+}, {
+  "serverName": "*Item_BrokenMyth*",
+  "name": "Broken Myth"
+}, {
+  "serverName": "*Item_WarTreads*",
+  "name": "War Treads"
+}, {
+  "serverName": "*Item_AtlasPauldron*",
+  "name": "Atlas Pauldron"
+}, {
+  "serverName": "*Item_BookOfEulogies*",
+  "name": "Book of Eulogies"
+}, {
+  "serverName": "*Item_BarbedNeedle*",
+  "name": "Barbed Needle"
+}, {
+  "serverName": "*Item_LightShield*",
+  "name": "Light Shield"
+}, {
+  "serverName": "*Item_KineticShield*",
+  "name": "Kinetic Shield"
+}, {
+  "serverName": "*Item_Aegis*",
+  "name": "Aegis"
+}, {
+  "serverName": "*Item_Lifespring*",
+  "name": "Lifespring"
+}, {
+  "serverName": "*Item_HeavySteel*",
+  "name": "Heavy Steel"
+}, {
+  "serverName": "*Item_PiercingSpear*",
+  "name": "Piercing Spear"
+}, {
+  "serverName": "*Item_BreakingPoint*",
+  "name": "Breaking Point"
+}, {
+  "serverName": "*Item_LuckyStrike*",
+  "name": "Lucky Strike"
+}, {
+  "serverName": "*Item_AlternatingCurrent*",
+  "name": "Alternating Current"
+}, {
+  "serverName": "*Item_PiercingShard*",
+  "name": "Piercing Shard"
+}, {
+  "serverName": "*Item_EveOfHarvest*",
+  "name": "Eve of Harvest"
+}, {
+  "serverName": "*Item_HeavyPrism*",
+  "name": "Heavy Prism"
+}, {
+  "serverName": "*Item_IronguardContract*",
+  "name": "Ironguard Contract"
+}, {
+  "serverName": "*Item_StormguardBanner*",
+  "name": "Stormguard Banner"
+}, {
+  "serverName": "*Item_Contraption*",
+  "name": "Contraption"
+}, {
+  "serverName": "*Item_MinionsFoot*",
+  "name": "Minion's Foot"
+}, {
+  "serverName": "*Item_ProtectorContract*",
+  "name": "Protector Contract"
+}, {
+  "serverName": "*Item_HalcyonChargers*",
+  "name": "Halcyon Chargers"
+}, {
+  "serverName": "*Item_Flaregun*",
+  "name": "Flare Gun"
+}, {
+  "serverName": "*Item_Stormcrown*",
+  "name": "Stormcrown"
+}, {
+  "serverName": "*Item_PoisonedShiv*",
+  "name": "Poisoned Shiv"
+}, {
+  "serverName": "*Item_NullwaveGauntlet*",
+  "name": "Nullwave Gauntlet"
+}, {
+  "serverName": "*Item_Echo*",
+  "name": "Echo"
+}, {
+  "serverName": "*Item_SlumberingHusk*",
+  "name": "Slumbering Husk"
+}, {
   "serverName": "Aftershock",
   "name": "Aftershock"
 }, {

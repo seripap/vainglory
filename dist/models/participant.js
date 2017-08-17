@@ -110,6 +110,20 @@ var Participant = function (_BaseModel) {
       return stats[key];
     }
   }, {
+    key: 'replaceItemArray',
+    value: function replaceItemArray(key, stats) {
+      stats[key].forEach(function (element, index) {
+        var normalizedName = _items2.default.find(function (item) {
+          return item.serverName === element;
+        });
+        if (normalizedName) {
+          stats[key][index] = normalizedName.name;
+        }
+      });
+
+      return stats.items;
+    }
+  }, {
     key: '_actor',
     get: function get() {
       return this.raw.attributes.actor;
@@ -135,7 +149,7 @@ var Participant = function (_BaseModel) {
       var stats = this.raw.attributes.stats;
       stats.itemGrants = this.replaceItem('itemGrants', stats);
       stats.itemUses = this.replaceItem('itemUses', stats);
-      stats.items = this.replaceItem('items', stats);
+      stats.items = this.replaceItemArray('items', stats);
       stats.skillTier = _skillTiers2.default.find(function (tier) {
         return tier.serverName === stats.skillTier;
       }).name || stats.skillTier;
