@@ -1,4 +1,6 @@
 import BaseModel from './';
+import skillTiers from './resources/skillTiers';
+import karma from './resources/karma';
 
 export default class Player extends BaseModel {
 
@@ -15,7 +17,11 @@ export default class Player extends BaseModel {
   }
 
   get stats() {
-    return this.data.attributes.stats;
+    const stats = this.raw.attributes.stats;
+    stats.skillTier = skillTiers.find(tier => tier.serverName === stats.skillTier).name || stats.skillTier;
+    stats.karmaLevel = karma.find(k => k.serverName === stats.karmaLevel).name || stats.karmaLevel;
+
+    return stats;
   }
 
   get titleId() {
