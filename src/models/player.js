@@ -18,8 +18,12 @@ export default class Player extends BaseModel {
 
   get stats() {
     const stats = this.raw.attributes.stats;
-    stats.skillTier = skillTiers.find(tier => tier.serverName === stats.skillTier).name || stats.skillTier;
-    stats.karmaLevel = karma.find(k => k.serverName === stats.karmaLevel).name || stats.karmaLevel;
+    
+    const skillTier = skillTiers.find(tier => tier.serverName === stats.skillTier);
+    const karmaLevel = karma.find(k => k.serverName === stats.karmaLevel);
+
+    stats.skillTier = skillTier ? skillTier.name : stats.skillTier;
+    stats.karmaLevel = karmaLevel ? karmaLevel.name : stats.karmaLevel;
 
     return stats;
   }
