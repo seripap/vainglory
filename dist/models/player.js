@@ -29,6 +29,14 @@ var _ = require('./');
 
 var _2 = _interopRequireDefault(_);
 
+var _skillTiers = require('./resources/skillTiers');
+
+var _skillTiers2 = _interopRequireDefault(_skillTiers);
+
+var _karma = require('./resources/karma');
+
+var _karma2 = _interopRequireDefault(_karma);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Player = function (_BaseModel) {
@@ -52,7 +60,19 @@ var Player = function (_BaseModel) {
   }, {
     key: 'stats',
     get: function get() {
-      return this.data.attributes.stats;
+      var stats = this.raw.attributes.stats;
+
+      var skillTier = _skillTiers2.default.find(function (tier) {
+        return tier.serverName === stats.skillTier;
+      });
+      var karmaLevel = _karma2.default.find(function (k) {
+        return k.serverName === stats.karmaLevel;
+      });
+
+      stats.skillTier = skillTier ? skillTier.name : stats.skillTier;
+      stats.karmaLevel = karmaLevel ? karmaLevel.name : stats.karmaLevel;
+
+      return stats;
     }
   }, {
     key: 'titleId',

@@ -100,17 +100,21 @@ exports.default = function (http) {
   var collection = function () {
     var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
       var collectionOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var now, minus3Hours, defaults, query, response, errors, messages, model;
+      var now, minus28Days, defaults, query, response, errors, messages, model;
       return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               now = new Date();
-              minus3Hours = new Date(new Date() * 1 - 1000 * 3600 * 3);
+              minus28Days = new Date();
+
+
+              minus28Days.setDate(now.getDate() - 28);
+
               defaults = {
                 page: { offset: 0, limit: 50 },
                 sort: 'createdAt',
-                filter: { 'createdAt-start': minus3Hours.toISOString(), 'createdAt-end': now.toISOString(), playerNames: [], teamNames: [] }
+                filter: { 'createdAt-start': minus28Days.toISOString(), 'createdAt-end': now.toISOString(), playerNames: [], teamNames: [] }
               };
               query = (0, _extends3.default)({}, defaults, collectionOptions);
 
@@ -119,39 +123,39 @@ exports.default = function (http) {
                 query.filter.playerNames = (0, _Utils.encodePlayerNames)(query.filter.playerNames);
               }
 
-              _context2.prev = 5;
-              _context2.next = 8;
+              _context2.prev = 6;
+              _context2.next = 9;
               return http.execute('GET', '' + ENDPOINT_PREFIX, query);
 
-            case 8:
+            case 9:
               response = _context2.sent;
               errors = response.errors, messages = response.messages;
 
               if (!errors) {
-                _context2.next = 12;
+                _context2.next = 13;
                 break;
               }
 
               return _context2.abrupt('return', (0, _Errors.normalizeError)(messages));
 
-            case 12:
+            case 13:
               model = (0, _parser2.default)('matches', response.body);
 
               model.extend('rateLimit', response.rateLimit);
 
               return _context2.abrupt('return', model);
 
-            case 17:
-              _context2.prev = 17;
-              _context2.t0 = _context2['catch'](5);
+            case 18:
+              _context2.prev = 18;
+              _context2.t0 = _context2['catch'](6);
               return _context2.abrupt('return', (0, _Errors.normalizeError)(null, _context2.t0));
 
-            case 20:
+            case 21:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, this, [[5, 17]]);
+      }, _callee2, this, [[6, 18]]);
     }));
 
     return function collection() {

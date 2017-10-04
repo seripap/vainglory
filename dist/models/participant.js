@@ -150,12 +150,17 @@ var Participant = function (_BaseModel) {
       stats.itemGrants = this.replaceItem('itemGrants', stats);
       stats.itemUses = this.replaceItem('itemUses', stats);
       stats.items = this.replaceItemArray('items', stats);
-      stats.skillTier = _skillTiers2.default.find(function (tier) {
+
+      var skillTier = _skillTiers2.default.find(function (tier) {
         return tier.serverName === stats.skillTier;
-      }).name || stats.skillTier;
-      stats.karmaLevel = _karma2.default.find(function (k) {
+      });
+      var karmaLevel = _karma2.default.find(function (k) {
         return k.serverName === stats.karmaLevel;
-      }).name || stats.karmaLevel;
+      });
+
+      stats.skillTier = skillTier ? skillTier.name : stats.skillTier;
+      stats.karmaLevel = karmaLevel ? karmaLevel.name : stats.karmaLevel;
+
       return stats;
     }
   }, {
