@@ -79,24 +79,25 @@ export default class Http {
     return queries.join('&');
   }
 
-  parseErrors(status, requestOptions, rateLimit) {
+  parseErrors(res, requestOptions, rateLimit) {
+    const { status } = res;
     const err = { errors: true };
     const region = this.getRequestedRegion();
     switch (status) {
       case 401:
-        return { ...err, messages: UNAUTHORIZED, region, debug: requestOptions, rateLimit };
+        return { ...err, messages: UNAUTHORIZED, region, debug: requestOptions, rateLimit, ...res };
       case 404:
-        return  { ...err, messages: NOT_FOUND, region, debug: requestOptions, rateLimit };
+        return  { ...err, messages: NOT_FOUND, region, debug: requestOptions, rateLimit, ...res };
       case 500:
-        return  { ...err, messages: INTERNAL, region, debug: requestOptions, rateLimit };
+        return  { ...err, messages: INTERNAL, region, debug: requestOptions, rateLimit, ...res };
       case 429:
-        return  { ...err, messages: RATE_LIMIT, region, debug: requestOptions, rateLimit };
+        return  { ...err, messages: RATE_LIMIT, region, debug: requestOptions, rateLimit, ...res };
       case 503:
-        return  { ...err, messages: OFFLINE, region, debug: requestOptions, rateLimit };
+        return  { ...err, messages: OFFLINE, region, debug: requestOptions, rateLimit, ...res };
       case 406:
-        return  { ...err, messages: NOT_ACCEPTABLE, region, debug: requestOptions, rateLimit };
+        return  { ...err, messages: NOT_ACCEPTABLE, region, debug: requestOptions, rateLimit, ...res };
       default:
-        return  { ...err, messages: UNKNOWN, region, debug: requestOptions, rateLimit };
+        return  { ...err, messages: UNKNOWN, region, debug: requestOptions, rateLimit, ...res };
     }
   }
 
@@ -138,7 +139,7 @@ export default class Http {
       }).then((res) => {
         rateLimit = this.parseRateLimit(res.headers);
         if (res.status !== 200) {
-          return this.parseErrors(res.status, requestOptions, rateLimit);
+          return this.parseErrors(res, requestOptions, rateLimit);
         }
         return res.json();
       }).then((body) => {

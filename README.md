@@ -237,7 +237,9 @@ __Arguments__
 
 ```javascript
 const now = new Date();
-const minus3Hours = new Date(new Date() * 1 - 1000 * 3600 * 3);
+const minus28days = new Date();
+
+minus28Days.setDate(now.getDate() - 28);
 
 /* defaults */
 const options = {
@@ -247,7 +249,7 @@ const options = {
   },
   sort: 'createdAt', // -createdAt for reverse
   filter: {
-    'createdAt-start': minus3Hours.toISOString(), // ISO Date
+    'createdAt-start': minus28days.toISOString(), // ISO Date
     'createdAt-end': now.toISOString(), // ISO Date
     playerNames: [],
     teamNames: [],

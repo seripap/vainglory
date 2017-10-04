@@ -36,12 +36,14 @@ export default (http) => {
 
   async function collection(collectionOptions = {}) {
     const now = new Date();
-    const minus3Hours = new Date(new Date() * 1 - 1000 * 3600 * 3);
+    const minus28Days = new Date();
+
+    minus28Days.setDate(now.getDate() - 28);
 
     const defaults = {
       page: { offset: 0, limit: 50 },
       sort: 'createdAt',
-      filter: { 'createdAt-start': minus3Hours.toISOString(), 'createdAt-end': now.toISOString(), playerNames: [], teamNames: [] },
+      filter: { 'createdAt-start': minus28Days.toISOString(), 'createdAt-end': now.toISOString(), playerNames: [], teamNames: [] },
     };
 
     const query = { ...defaults, ...collectionOptions };
