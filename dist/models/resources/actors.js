@@ -28,6 +28,9 @@ exports.default = [{
   "name": "Celeste",
   "serverName": "*Celeste*"
 }, {
+  "name": "Churnwalker",
+  "serverName": "*Churnwalker*"
+}, {
   "name": "Flicker",
   "serverName": "*Flicker*"
 }, {

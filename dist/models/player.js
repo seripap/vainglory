@@ -58,6 +58,11 @@ var Player = function (_BaseModel) {
       return this.data.attributes.shardId;
     }
   }, {
+    key: 'createdAt',
+    get: function get() {
+      return this.data.attributes.createdAt;
+    }
+  }, {
     key: 'stats',
     get: function get() {
       var stats = this.raw.attributes.stats;
