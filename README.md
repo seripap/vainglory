@@ -469,3 +469,4 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 - `.shardId`
 - `.stats`
 - `.titleId`
+- `.createdAt`

@@ -15,6 +15,10 @@ export default class Player extends BaseModel {
   get shardId() {
     return this.data.attributes.shardId;
   }
+  
+  get createdAt() {
+    return this.data.attributes.createdAt;
+  }
 
   get stats() {
     const stats = this.raw.attributes.stats;
