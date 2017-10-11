@@ -32,6 +32,10 @@ export default [
     "serverName": "*Celeste*"
   },
   {
+    "name": "Churnwalker",
+    "serverName": "*Churnwalker*"
+  },
+  {
     "name": "Flicker",
     "serverName": "*Flicker*"
   },
