@@ -342,10 +342,12 @@ __Example__
 ```javascript
 const playerNames = ['famous'];
 
-vainglory.players.getByName(playerNames).then((player) => {
-  if (player.errors) return;
-  console.log(player.id);
-  console.log(player.stats);
+vainglory.players.getByName(playerNames).then((players) => {
+  if (players.errors || players.player) return;
+  players.player.forEach(player => {
+    console.log(player.id);
+    console.log(player.stats);
+  }
 }).catch((errors) => {
   console.log(errors);
 });
