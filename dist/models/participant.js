@@ -127,20 +127,20 @@ var Participant = function (_BaseModel) {
   }, {
     key: 'actor',
     get: function get() {
-      var badServerTokenMapping = {
-        '*Hero009*': 'Krul',
-        '*Hero010*': 'Skaarf',
-        '*Sayoc*': 'Taka',
-        '*Hero016*': 'Rona'
-      };
+      var actor = this.raw.attributes.actor;
 
-      var match = /^\*(.*)\*$/.exec(token);
 
-      if (match) {
-        return badServerTokenMapping[token] || null;
+      var badServerNames = [{ token: '*Hero009*', name: 'Krul' }, { token: '*Hero010*', name: 'Skaarf' }, { token: '*Sayoc*', name: 'Taka' }, { token: '*Hero016*', name: 'Rona' }];
+
+      var match = badServerNames.filter(function (item) {
+        return item.token === actor;
+      });
+
+      if (match.length > 0) {
+        return match[0].name;
       }
 
-      return token.replace(/\*/g, '');
+      return actor.replace(/\*/g, '');
     }
   }, {
     key: '_stats',

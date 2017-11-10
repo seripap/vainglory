@@ -6,6 +6,10 @@ Changelog is organized as so: VERSION NUMBER - OPTIONAL TITLE - RELEASE DATE
 
 ---
 
+## v1.3.5 - Fixed v1.3.4 regression issue, add mappings to new items - 11.12.2017
+- Fixed `.actor` returning an error, introduced in v1.3.4. Sorry about that
+- Add item mappings for Spellsword, Spellfire, Healing Flask
+
 ## v1.3.4 - Future proofing + Support for Vainglory Patch v2.10 - 11.12.2017
 - Added support for `.skillTier` and `.karmaLevel` for *Player* (via #25 @PierreAndreis) 
 - Added support for all new actors going forward (via #26 @PierreAndreis) 
