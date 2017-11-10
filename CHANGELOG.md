@@ -6,6 +6,11 @@ Changelog is organized as so: VERSION NUMBER - OPTIONAL TITLE - RELEASE DATE
 
 ---
 
+## v1.3.4 - Future proofing + Support for Vainglory Patch v2.10 - 11.12.2017
+- Added support for `.skillTier` and `.karmaLevel` for *Player* (via #25 @PierreAndreis) 
+- Added support for all new actors going forward (via #26 @PierreAndreis) 
+- Added [CHANGELOG](https://github.com/seripap/vainglory/blob/master/CHANGELOG.md)
+
 ## v1.3.3 - Support for Vainglory Patch v2.9 - 10.11.2017
 - Add Churnwalker as a resource
 - Support for createdAt inside Player object (via @PierreAndreis #22) 

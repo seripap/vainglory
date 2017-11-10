@@ -37,10 +37,6 @@ var _ = require('./');
 
 var _2 = _interopRequireDefault(_);
 
-var _actors = require('./resources/actors');
-
-var _actors2 = _interopRequireDefault(_actors);
-
 var _items = require('./resources/items');
 
 var _items2 = _interopRequireDefault(_items);
@@ -131,12 +127,20 @@ var Participant = function (_BaseModel) {
   }, {
     key: 'actor',
     get: function get() {
-      var _this2 = this;
+      var badServerTokenMapping = {
+        '*Hero009*': 'Krul',
+        '*Hero010*': 'Skaarf',
+        '*Sayoc*': 'Taka',
+        '*Hero016*': 'Rona'
+      };
 
-      var normalizedActor = _actors2.default.find(function (actor) {
-        return actor.serverName === _this2.raw.attributes.actor;
-      });
-      return normalizedActor ? normalizedActor.name : this.raw.attributes.actor;
+      var match = /^\*(.*)\*$/.exec(token);
+
+      if (match) {
+        return badServerTokenMapping[token] || null;
+      }
+
+      return token.replace(/\*/g, '');
     }
   }, {
     key: '_stats',
