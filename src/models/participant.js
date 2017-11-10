@@ -40,20 +40,22 @@ export default class Participant extends BaseModel {
   }
 
   get actor() {
-    const badServerTokenMapping = {
-      '*Hero009*': 'Krul',
-      '*Hero010*': 'Skaarf',
-      '*Sayoc*': 'Taka',
-      '*Hero016*': 'Rona',
-    };
-    
-    const match = /^\*(.*)\*$/.exec(token);
-    
-    if (match) {
-      return badServerTokenMapping[token] || null;
+    const { actor } = this.raw.attributes;
+
+    const badServerNames = [
+      { token: '*Hero009*', name: 'Krul' },
+      { token: '*Hero010*', name: 'Skaarf'},
+      { token: '*Sayoc*', name: 'Taka'},
+      { token: '*Hero016*', name: 'Rona'}
+    ];
+
+    const match = badServerNames.filter((item) => item.token === actor);
+
+    if (match.length > 0) {
+      return match[0].name;
     }
-    
-    return token.replace(/\*/g, '');
+
+    return actor.replace(/\*/g, '');
   }
 
   get _stats() {
