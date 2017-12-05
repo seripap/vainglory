@@ -6,6 +6,9 @@ Changelog is organized as so: VERSION NUMBER - OPTIONAL TITLE - RELEASE DATE
 
 ---
 
+## v1.3.6 - Support for Vainglory 2.11 - 12.05.2017
+- Add support for Onslaught matches (#27 va @PierreAndreis)
+
 ## v1.3.5 - Fixed v1.3.4 regression issue, add mappings to new items - 11.12.2017
 - Fixed `.actor` returning an error, introduced in v1.3.4. Sorry about that
 - Add item mappings for Spellsword, Spellfire, Healing Flask
