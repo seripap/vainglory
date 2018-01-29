@@ -1,5 +1,4 @@
 import BaseModel from './';
-import actors from './resources/actors';
 import items from './resources/items';
 import skillTiers from './resources/skillTiers';
 import karma from './resources/karma';
@@ -41,8 +40,22 @@ export default class Participant extends BaseModel {
   }
 
   get actor() {
-    const normalizedActor = actors.find(actor => actor.serverName === this.raw.attributes.actor);
-    return normalizedActor ? normalizedActor.name : this.raw.attributes.actor;
+    const { actor } = this.raw.attributes;
+
+    const badServerNames = [
+      { token: '*Hero009*', name: 'Krul' },
+      { token: '*Hero010*', name: 'Skaarf'},
+      { token: '*Sayoc*', name: 'Taka'},
+      { token: '*Hero016*', name: 'Rona'}
+    ];
+
+    const match = badServerNames.filter((item) => item.token === actor);
+
+    if (match.length > 0) {
+      return match[0].name;
+    }
+
+    return actor.replace(/\*/g, '');
   }
 
   get _stats() {

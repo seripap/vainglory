@@ -15,6 +15,14 @@ export default [{
   serverName: 'casual_aral',
 },
 {
+  name: 'Private Onslaught',
+  serverName: 'private_party_blitz_rounds_match',
+},      
+{
+  name: 'Onslaught',
+  serverName: 'blitz_rounds_pvp_casual',
+},
+{
   name: 'Private',
   serverName: 'private',
 },

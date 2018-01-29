@@ -594,4 +594,16 @@ exports.default = [{
 }, {
   "serverName": "Weapon3",
   "name": "Sorrowblade"
+}, {
+  "serverName": "Halcyon Rapier",
+  "name": "Spellsword"
+}, {
+  "serverName": "*Item_Spellsword*",
+  "name": "Spellsword"
+}, {
+  "serverName": "*Item_Spellfire*",
+  "name": "Spellfire"
+}, {
+  "serverName": "*Item_HealingFlask*",
+  "name": "Healing Flask"
 }];

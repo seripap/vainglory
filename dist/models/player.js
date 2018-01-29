@@ -63,21 +63,25 @@ var Player = function (_BaseModel) {
       return this.data.attributes.createdAt;
     }
   }, {
-    key: 'stats',
+    key: 'skillTier',
     get: function get() {
       var stats = this.raw.attributes.stats;
-
-      var skillTier = _skillTiers2.default.find(function (tier) {
+      return _skillTiers2.default.find(function (tier) {
         return tier.serverName === stats.skillTier;
-      });
-      var karmaLevel = _karma2.default.find(function (k) {
-        return k.serverName === stats.karmaLevel;
-      });
-
-      stats.skillTier = skillTier ? skillTier.name : stats.skillTier;
-      stats.karmaLevel = karmaLevel ? karmaLevel.name : stats.karmaLevel;
-
-      return stats;
+      }) || null;
+    }
+  }, {
+    key: 'karmaLevel',
+    get: function get() {
+      var stats = this.raw.attributes.stats;
+      return _karma2.default.find(function (tier) {
+        return tier.serverName === stats.karmaLevel;
+      }) || null;
+    }
+  }, {
+    key: 'stats',
+    get: function get() {
+      return this.raw.attributes.stats;
     }
   }, {
     key: 'titleId',
