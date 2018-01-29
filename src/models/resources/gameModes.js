@@ -37,4 +37,8 @@ export default [{
 {
   name: 'Private Battle Royale',
   serverName: 'private_party_aral_match',
+},
+{
+  name: '5v5 Casual',
+  serverName: '5v5_pvp_casual',
 }];
