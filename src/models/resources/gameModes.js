@@ -41,4 +41,8 @@ export default [{
 {
   name: '5v5 Casual',
   serverName: '5v5_pvp_casual',
+},
+{
+  name: '5v5 Private',
+  serverName: 'private_party_vg_5v5'
 }];
