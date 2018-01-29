@@ -33,4 +33,10 @@ exports.default = [{
 }, {
   name: 'Private Battle Royale',
   serverName: 'private_party_aral_match'
+}, {
+  name: 'Casual 5v5',
+  serverName: '5v5_pvp_casual'
+}, {
+  name: 'Private 5v5',
+  serverName: 'private_party_vg_5v5'
 }];

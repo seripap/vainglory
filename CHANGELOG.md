@@ -6,6 +6,9 @@ Changelog is organized as so: VERSION NUMBER - OPTIONAL TITLE - RELEASE DATE
 
 ---
 
+## v1.3.7 - Support for Vainglory 2.12 - 01.29.2018
+- Add `serverName` parsing for 5v5 (#29 via @PierreAndreis)
+
 ## v1.3.6 - Support for Vainglory 2.11 - 12.05.2017
 - Add support for Onslaught matches (#27 va @PierreAndreis)
 
