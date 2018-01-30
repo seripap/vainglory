@@ -805,47 +805,43 @@ export default [
   },
   {
   	"serverName": "*Item_VisionTotem*",
-  	"name": "Vision Totem"
+  	"name": "Scout Cam"
   },
   {
   	"serverName": "Vision Totem",
-  	"name": "Vision Totem"
+  	"name": "Scout Cam"
   },
   {
   	"serverName": "*Item_TotemMultiplier*",
-  	"name": "Multi-Cam"
+  	"name": "ScoutPak"
   },
   {
   	"serverName": "Totem Multiplier",
-  	"name": "Multi-Cam"
+  	"name": "ScoutPak"
   },
   {
   	"serverName": "*Item_TotemEnhancer*",
-  	"name": "Buffed Cam"
+  	"name": "SuperScout"
   },
   {
-  	"serverName": "Totem Buffer",
-  	"name": "Buffed Cam"
+  	"serverName": "Totem Enhancer",
+  	"name": "SuperScout"
   },
   {
   	"serverName": "*Item_TotemBuffer*",
-  	"name": "Boosted Cam"
+  	"name": "ScoutTuff"
   },
   {
   	"serverName": "Totem Buffer",
-  	"name": "Boosted Cam"
-  },
-  {
-  	"serverName": "Vision Totem",
-  	"name": "Vision Totem"
+  	"name": "ScoutTuff"
   },
   {
   	"serverName": "*Item_FlareGun_Beta*",
-  	"name": "Flaregun 5v5"
+  	"name": "Flaregun Loader"
   },
   {
   	"serverName": "Flaregun_Beta",
-  	"name": "Flaregun 5v5"
+  	"name": "Flaregun Loader"
   },
   {
   	"serverName": "*Item_WarpGenerator*",
