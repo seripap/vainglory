@@ -802,5 +802,57 @@ export default [
   {
     "serverName": "*Item_HealingFlask*",
     "name": "Healing Flask"
-  }
+  },
+  {
+  	"serverName": "*Item_VisionTotem*",
+  	"name": "Vision Totem"
+  },
+  {
+  	"serverName": "Vision Totem",
+  	"name": "Vision Totem"
+  },
+  {
+  	"serverName": "*Item_TotemMultiplier*",
+  	"name": "Multi-Cam"
+  },
+  {
+  	"serverName": "Totem Multiplier",
+  	"name": "Multi-Cam"
+  },
+  {
+  	"serverName": "*Item_TotemEnhancer*",
+  	"name": "Buffed Cam"
+  },
+  {
+  	"serverName": "Totem Buffer",
+  	"name": "Buffed Cam"
+  },
+  {
+  	"serverName": "*Item_TotemBuffer*",
+  	"name": "Boosted Cam"
+  },
+  {
+  	"serverName": "Totem Buffer",
+  	"name": "Boosted Cam"
+  },
+  {
+  	"serverName": "Vision Totem",
+  	"name": "Vision Totem"
+  },
+  {
+  	"serverName": "*Item_FlareGun_Beta*",
+  	"name": "Flaregun 5v5"
+  },
+  {
+  	"serverName": "Flaregun_Beta",
+  	"name": "Flaregun 5v5"
+  },
+  {
+  	"serverName": "*Item_WarpGenerator*",
+  	"name": "Teleport Boots"
+  },
+  {
+  	"serverName": "Warp Generator",
+  	"name": "Teleport Boots"
+  },
 ]
