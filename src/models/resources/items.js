@@ -850,5 +850,5 @@ export default [
   {
   	"serverName": "Warp Generator",
   	"name": "Teleport Boots"
-  },
+  }
 ]
