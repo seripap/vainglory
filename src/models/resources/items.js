@@ -802,5 +802,53 @@ export default [
   {
     "serverName": "*Item_HealingFlask*",
     "name": "Healing Flask"
+  },
+  {
+  	"serverName": "*Item_VisionTotem*",
+  	"name": "Scout Cam"
+  },
+  {
+  	"serverName": "Vision Totem",
+  	"name": "Scout Cam"
+  },
+  {
+  	"serverName": "*Item_TotemMultiplier*",
+  	"name": "ScoutPak"
+  },
+  {
+  	"serverName": "Totem Multiplier",
+  	"name": "ScoutPak"
+  },
+  {
+  	"serverName": "*Item_TotemEnhancer*",
+  	"name": "SuperScout"
+  },
+  {
+  	"serverName": "Totem Enhancer",
+  	"name": "SuperScout"
+  },
+  {
+  	"serverName": "*Item_TotemBuffer*",
+  	"name": "ScoutTuff"
+  },
+  {
+  	"serverName": "Totem Buffer",
+  	"name": "ScoutTuff"
+  },
+  {
+  	"serverName": "*Item_FlareGun_Beta*",
+  	"name": "Flaregun Loader"
+  },
+  {
+  	"serverName": "Flaregun_Beta",
+  	"name": "Flaregun Loader"
+  },
+  {
+  	"serverName": "*Item_WarpGenerator*",
+  	"name": "Teleport Boots"
+  },
+  {
+  	"serverName": "Warp Generator",
+  	"name": "Teleport Boots"
   }
 ]
