@@ -6,6 +6,9 @@ Changelog is organized as so: VERSION NUMBER - OPTIONAL TITLE - RELEASE DATE
 
 ---
 
+## v1.3.8 - New Items Mapping - 02.01.2018
+- Add mapping to new items (#30 via @PierreAndreis)
+
 ## v1.3.7 - Support for Vainglory 2.12 - 01.29.2018
 - Add `serverName` parsing for 5v5 (#29 via @PierreAndreis)
 
