@@ -620,10 +620,10 @@ exports.default = [{
   "name": "ScoutPak"
 }, {
   "serverName": "*Item_TotemEnhancer*",
-  "name": "SuperScout"
+  "name": "SuperScout 2000"
 }, {
   "serverName": "Totem Enhancer",
-  "name": "SuperScout"
+  "name": "SuperScout 2000"
 }, {
   "serverName": "*Item_TotemBuffer*",
   "name": "ScoutTuff"
