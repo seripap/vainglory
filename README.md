@@ -413,13 +413,15 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 [Ref](https://developer.vainglorygame.com/docs#matches)
 
 - `.assets` - Array of [Asset](#assetModel)
-- `.createdAt`
-- `.duration`
-- `.gameMode`
-- `.patchVersion`
-- `.shardId`
-- `.stats`
-- `.titleId`
+- `.createdAt` - a string, the match timestamp, suitable for passing to JavaScript `Date` constructor.  Note that this is the time when the match was initiated, which is the start of the hero pick phase.  To find when the first spawns on the map were, see the timestamps on individual events in the telemetry data.
+- `.duration` - an integer, match duration in seconds
+- `.gameMode` - a string, such as `"Casual 5v5"` ([see full list here](src/models/resources/gameModes.js))
+- `.patchVersion` - a string, which Vainglory update the match was played on, such as `"3.1"`
+- `.shardId` - a string, the region from which the match was fetched, in lower case, such as `"na"`
+- `.stats` - an object with these attributes:
+   - `endGameReason` - a string, such as `"victory"` or `"surrender"`
+   - `queue` - a string, such as `"5v5_pvp_ranked"`
+- `.titleId` - always the string `"semc-vainglory"`
 - `.rosters` - Array of [Roster](#rosterModel)
 
 <a name="assetModel" />
@@ -428,12 +430,12 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 
 [Ref](https://developer.vainglorygame.com/docs#telemetry)
 
-- `.URL`
-- `.contentType`
-- `.createdAt`
-- `.description`
-- `.filename`
-- `.name`
+- `.URL` - a string, the URL of where to download the asset
+- `.contentType` - this field is not always present
+- `.createdAt` - match timestamp as a string, suitable for passing to JavaScript `Date` constructor
+- `.description` - this field is not always present, and is sometimes the empty string
+- `.filename` - meaning uncertain
+- `.name` - a string, such as `"telemetry"`
 - `.resolve()` - Returns promise; resolves `.URL` data
 
 <a name="rosterModel" />
@@ -442,7 +444,14 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 
 [Ref](https://developer.vainglorygame.com/docs#rosters)
 
-- `.stats`
+- `.stats` - an object with these attributes:
+   - `acesEarned` - an integer, total number of aces earned by the team in the match
+   - `gold` - an integer, total gold earned by the team in the match
+   - `heroKills` - an integer, total number of hero kills earned by the team in the match
+   - `krakenCaptures` - an integer, total number of times the team captured the Kraken in the match
+   - `side` - a string, either `"left/blue"` or `"right/red"`
+   - `turretKills` - an integer, total number of turrets the team destroyed in the match
+   - `turretsRemaining` - an integer, total number of turrets the team had remaining on their side at match end
 - `.participants` - Array of [Participant](#participantModel)
 
 <a name="participantModel" />
@@ -451,10 +460,33 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 
 [Ref](https://developer.vainglorygame.com/docs#participants)
 
-- `._actor`
-- `.actor`
-- `._stats`
-- `.stats`
+- `._actor` - original actor data before this module did cleanup on it
+- `.actor` - name of hero used by this participant, as a string ([see hero name cleanup details here](https://github.com/seripap/vainglory/blob/master/src/models/participant.js#L42))
+- `._stats` - original stats data before this module did cleanup on it
+- `.stats` - cleaned up participant stats, an object with these attributes:
+   - `assists` - an integer, the number of assists the player did (the third number in KDA)
+   - `crystalMineCaptures` - an integer, the number of times the player killed the crystal sentry
+   - `deaths` - an integer, number of times the player died (the second number in KDA)
+   - `farm` - an integer, meaning unclear, possibly number of monsters/minions killed
+   - `firstAfkTime` - an integer, the number of seconds into the match the player first went AFK, or -1 if they never did
+   - `gold` - a number (not usually an integer), total gold earned by this player throughout the match
+   - `goldMineCaptures` - an integer, the number of times the player killed the gold miner
+   - `itemGrants` - an object whose keys are the names of the items the player purchased, and whose values are the number of times the player purchased that item; example: `{"Weapon Blade":2,"Six Sins":1,"Heavy Steel":1,"Sorrowblade":1,...}`
+   - `itemSells` - similar in structure to the previous, but for selling items
+   - `itemUses` - an object whose keys are the names of items the player used, and whose values are the number of times the player used the item; example: `{"Travel Boots":3,"Scout Cam":3,...}`
+   - `items` - array of strings, all items the player possessed at the end of the match
+   - `jungleKills` - number of kills in jungle camps
+   - `karmaLevel` - a string, one of the three [listed here](src/models/resources/karma.js)
+   - `kills` - an integer, the number of kills the player did (the first number in KDA)
+   - `krakenCaptures` - an integer, the number of times the player captured the Kraken
+   - `level` - an integer, the level of the player (in the sense of gaining experience post-match to level up your account)
+   - `minionKills` - an integer, the number of minions the player killed (including jungle creeps)
+   - `nonJungleMinionKills` - an integer, the number of minions the player killed (excluding jungle creeps)
+   - `skillTier` - a string such as `"Rock Solid - Gold"`, as provided by [this lookup table](src/models/resources/skillTiers.js)
+   - `skinKey` - a string naming the skin the player used, such as `"Gwen_DefaultSkin"`
+   - `turretCaptures` - an integer, the number of turrets the player destroyed
+   - `wentAfk` - a boolean (true or false), whether the player went AFK during the match
+   - `winner` - a boolean (true or false), whether the player was on the winning team
 - `.player` - [Player](#playerModel)
 
 <a name="playersModel" />
@@ -467,10 +499,32 @@ For fields in `participant` such as `actor` or `itemGrants`, server will return 
 
 ### Player
 
-- `.name`
-- `.shardId`
-- `.stats`
-- `.titleId`
-- `.skillTier`
-- `.karmaLevel`
-- `.createdAt`
+- `.name` - a string, the player's IGN
+- `.shardId` - region from which the match was fetched, in lower case (e.g., `"na"`)
+- `.stats` - an object with the following attributes:
+   - `elo_earned_season_4` - deprecated; use `rankPoints` instead, documented below
+   - `elo_earned_season_5` - deprecated; use `rankPoints` instead, documented below
+   - `elo_earned_season_6` - deprecated; use `rankPoints` instead, documented below
+   - `elo_earned_season_7` - deprecated; use `rankPoints` instead, documented below
+   - `elo_earned_season_8` - deprecated; use `rankPoints` instead, documented below
+   - `elo_earned_season_9` - deprecated; use `rankPoints` instead, documented below
+   - `gamesPlayed` - object whose keys are various match types (aral, blitz, blitz_rounds, casual, casual_5v5, ranked, etc.) and whose values are the number of times the player has played that match type
+   - `guildTag` - a string of up to 4 characters, the player's guild tag, or the empty string if the player has no guild
+   - `karmaLevel` - an integer, one of the three [listed here](src/models/resources/karma.js)
+   - `level` - an integer, the level of the player (in the sense of gaining experience post-match to level up your account)
+   - `lifetimeGold` - meaning unclear
+   - `lossStreak` - number of matches the player has lost in a row, or 0 if the last match was a win (but sometimes this number and `winStreak` are both zero, impossibly)
+   - `played` - meaning unclear
+   - `played_aral` - deprecated; use `gamesPlayed` instead, documented above
+   - `played_blitz` - deprecated; use `gamesPlayed` instead, documented above
+   - `played_casual` - deprecated; use `gamesPlayed` instead, documented above
+   - `played_ranked` - deprecated; use `gamesPlayed` instead, documented above
+   - `rankPoints` - an object whose keys are `"blitz"` and `"ranked"` and whose values are the player's precise numerical ranks in each of those match types (5v5 rank values not yet supplied)
+   - `skillTier` - an integer, which can be decoded by [this lookup table](src/models/resources/skillTiers.js)
+   - `winStreak` - number of matches the player has lost in a row, or 0 if the last match was a win (but sometimes this number and `lossStreak` are both zero, impossibly)
+   - `wins` - an integer, number of games won
+   - `xp` - an integer, number of experience points earned (in post-match rewards, for leveling the player's account)
+- `.titleId` - always the string `"semc-vainglory"`
+- `.skillTier` - an object containing both `serverName` and `name` properties, from the list in [this lookup table](src/models/resources/skillTiers.js)
+- `.karmaLevel` - an object containing both `serverName` and `name` properties, from the list in [this lookup table](src/models/resources/karma.js)
+- `.createdAt` - meaning unclear; this attribute is not always present
