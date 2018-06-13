@@ -1,5 +1,4 @@
 import BaseModel from './';
-import items from './resources/items';
 import skillTiers from './resources/skillTiers';
 import karma from './resources/karma';
 
@@ -14,25 +13,17 @@ export default class Participant extends BaseModel {
 
   replaceItem(key, stats) {
     for (const property of Object.keys(stats[key])) {
-      const normalizedName = items.find((item) => item.serverName === property);
-      if (normalizedName) {
-        stats[key][normalizedName.name] = stats[key][property];
+      const itemRegex = /^(.*)_(.*?)\*/gm;
+      const itemNameParts = itemRegex.exec(property);
+
+      // Items are referenced as *XX_Item_ItemName* whereas ItemName will be in the 3rd group of the regex
+      if (itemNameParts.length === 3) {
+        const realName = itemNameParts[2].trim();
+        stats[key][realName] = stats[key][property];
         delete stats[key][property];
       }
     }
-
     return stats[key];
-  }
-
-  replaceItemArray(key, stats) {
-      stats[key].forEach((element, index) => {
-          const normalizedName = items.find((item) => item.serverName === element);
-          if (normalizedName) {
-              stats[key][index] = normalizedName.name;
-          }
-      });
-
-      return stats.items;
   }
 
   get _actor() {
@@ -66,7 +57,7 @@ export default class Participant extends BaseModel {
     const stats = this.raw.attributes.stats;
     stats.itemGrants = this.replaceItem('itemGrants', stats);
     stats.itemUses = this.replaceItem('itemUses', stats);
-    stats.items = this.replaceItemArray('items', stats);
+    stats.itemSells = this.replaceItem('itemSells', stats);
 
     const skillTier = skillTiers.find(tier => tier.serverName === stats.skillTier);
     const karmaLevel = karma.find(k => k.serverName === stats.karmaLevel);
