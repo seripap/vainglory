@@ -39,4 +39,7 @@ exports.default = [{
 }, {
   name: 'Private 5v5',
   serverName: 'private_party_vg_5v5'
+}, {
+  name: 'Ranked 5v5',
+  serverName: '5v5_pvp_ranked'
 }];

@@ -620,10 +620,10 @@ exports.default = [{
   "name": "ScoutPak"
 }, {
   "serverName": "*Item_TotemEnhancer*",
-  "name": "SuperScout 2000"
+  "name": "SuperScout"
 }, {
   "serverName": "Totem Enhancer",
-  "name": "SuperScout 2000"
+  "name": "SuperScout"
 }, {
   "serverName": "*Item_TotemBuffer*",
   "name": "ScoutTuff"
@@ -642,4 +642,22 @@ exports.default = [{
 }, {
   "serverName": "Warp Generator",
   "name": "Teleport Boots"
+}, {
+  "serverName": "*Item_RooksDecree*",
+  "name": "Rooks Decree"
+}, {
+  "serverName": "*Item_Pulseweave*",
+  "name": "Pulseweave"
+}, {
+  "serverName": "*Item_CapacitorPlate*",
+  "name": "Capacitor Plate"
+}, {
+  "serverName": "Item_RooksDecree",
+  "name": "Rooks Decree"
+}, {
+  "serverName": "Item_Pulseweave",
+  "name": "Pulseweave"
+}, {
+  "serverName": "Item_CapacitorPlate",
+  "name": "Capacitor Plate"
 }];
