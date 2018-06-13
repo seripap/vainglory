@@ -862,5 +862,16 @@ export default [
   {
     "serverName": "*Item_CapacitorPlate*",
     "name": "Capacitor Plate"
+  },
+  {
+    "serverName": "Item_RooksDecree",
+    "name": "Rooks Decree"
+  }, {
+    "serverName": "Item_Pulseweave",
+    "name": "Pulseweave"
+  },
+  {
+    "serverName": "Item_CapacitorPlate",
+    "name": "Capacitor Plate"
   }
 ]
