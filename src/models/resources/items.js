@@ -850,5 +850,17 @@ export default [
   {
   	"serverName": "Warp Generator",
   	"name": "Teleport Boots"
+  },
+  {
+    "serverName": "*Item_RooksDecree*",
+    "name": "Rooks Decree"
+  },
+  {
+    "serverName": "*Item_Pulseweave*",
+    "name": "Pulseweave"
+  },
+  {
+    "serverName": "*Item_CapacitorPlate*",
+    "name": "Capacitor Plate"
   }
 ]
