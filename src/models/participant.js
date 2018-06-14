@@ -1,4 +1,5 @@
 import BaseModel from './';
+import items from './resources/items';
 import skillTiers from './resources/skillTiers';
 import karma from './resources/karma';
 
@@ -13,17 +14,27 @@ export default class Participant extends BaseModel {
 
   replaceItem(key, stats) {
     for (const property of Object.keys(stats[key])) {
-      const itemRegex = /^(.*)_(.*?)\*/gm;
-      const itemNameParts = itemRegex.exec(property);
-
-      // Items are referenced as *XX_Item_ItemName* whereas ItemName will be in the 3rd group of the regex
-      if (itemNameParts.length === 3) {
-        const realName = itemNameParts[2].trim();
-        stats[key][realName] = stats[key][property];
-        delete stats[key][property];
+      const normalizedName = items.find((item) => item.serverName === property);
+      // Find item from resources first
+      if (normalizedName) {
+        stats[key][normalizedName.name] = stats[key][property];
+      } else {
+        // If it's not found, try regex matching
+        const regexName = this.replaceItemRegex(property);
+        stats[key][regexName] = stats[key][property];
       }
+
+      delete stats[key][property];
     }
+
     return stats[key];
+  }
+
+  replaceItemRegex(property) {
+    const itemRegex = /(.*)Item_(.*?)/gm;
+    const cleanedProperty = property.replace(itemRegex, '').replace(/\*/g, '').trim();
+
+    return cleanedProperty.split(/(?=[A-Z])/).join(' ');
   }
 
   get _actor() {
