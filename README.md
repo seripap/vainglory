@@ -1,3 +1,9 @@
+# Depreciation Notice
+
+This package and repository is no longer maintained as the official API no longer exist.
+
+---
+
 # Vainglory.js
 
 [![Build Status](https://travis-ci.org/seripap/vainglory.svg?branch=master)](https://travis-ci.org/seripap/vainglory) [![npm](https://img.shields.io/npm/v/vainglory.svg)](https://www.npmjs.com/package/vainglory)
